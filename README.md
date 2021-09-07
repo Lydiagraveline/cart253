@@ -1,2 +1,2 @@
-# cart253
-Course work for Creative Computing 1
+# CART253 - Creative Computing 1
+Course work for CART253
