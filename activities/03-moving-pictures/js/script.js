@@ -8,26 +8,16 @@ author, and this description to match your project!
 
 "use strict";
 
+let bg = {
 
-/**
-Description of preload
-*/
-function preload() {
+};
 
-}
-
-
-/**
-Description of setup
-*/
 function setup() {
 
 }
 
 
-/**
-Description of draw()
-*/
+
 function draw() {
 
 }
