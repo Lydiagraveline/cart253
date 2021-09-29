@@ -12,7 +12,7 @@ let feelings = {
   y: 100,
   vx: 0,
   vy: 0,
-  speed: 3,
+  speed: 5,
   size: 150,
 }
 
@@ -38,7 +38,7 @@ let user = {
   x: 0,
   y: 0,
   size: 100,
-  speed: 5,
+  speed: 2,
   vx: 0,
   vy: 0,
 }
