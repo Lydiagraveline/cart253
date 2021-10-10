@@ -12,69 +12,103 @@ let diver = { //user controlled
     x: 350,
     y: 100,
     size: 50,
-    speed: 2
+    speed: 2.5
 };
 
 // Creates a new JavaScript Object describing water
-let water = {
-  surface: 100
+let ocean = {
+  surface: 100,
+  floor: undefined //Defined in setup()
 };
 
-// Creates a new JavaScript Object describing a pearl
-  let pearl = {
-    x: 0,
-    y: 0,
-    size: 35
-  };
+let timer = {
+  x: 400,
+  y: 50,
+  speedDecrease: 0.2,
+  speedIncrease: 1,
+  max: 400,
+}
 
-let pearl1;
+let allFish = [];
+let numFish = 5;
 
-let allFish = []
-let numFish = 10
+let pearls = [];
+let numPearls = 3;
+
+var score;
 
 
 function setup() {
   createCanvas(700, windowHeight);
+  // Sets the ocean floor
+  ocean.floor = height - 30;
 
 
   // Spawns fish
   for (let i = 0; i < numFish; i++) {
     allFish.push(new fish());
   }
+  for (let i = 0; i < numPearls; i++) {
+    pearls.push(new Pearl());
+  }
+
+  // Score begins at zero
+  score = 0;
 
 }
-
-
 
 function draw() {
   background(135, 206, 235);
 
+
+
+  displayScore();
   displayDiver();
   diverMovement();
-  displayPearl(pearl1);
-  displayWave();
+  displayOcean();
+  displayTimer();
+  checkTimerEnd();
 
+  updatePearlAndCheckScore();
 
   updateFishAndCheckCollisions();
 }
 
-function displayPearl() {
-  pearl.x = width/2;
-  pearl.y = height - pearl.size;
+ function displayTimer() {
+   push();
+   noStroke();
+   fill(255);
+   rect(timer.x, timer.y, timer.x, 5);
+   pop();
 
-  push();
-  noStroke();
-  fill(255);
-  ellipse(pearl.x, pearl.y, pearl.size);
-  pop();
+   if (diver.y > ocean.surface) {
+  	timer.x += timer.speedDecrease;
+  } else if (diver.y === ocean.surface && timer.x >= timer.max) {
+      timer.x -= timer.speedIncrease
+  }
 }
 
-// Displays the water
-function displayWave() {
+function checkTimerEnd() {
+  if (timer.x === width) {
+    endLoop();
+  }
+}
+
+function displayScore(){
+  textSize (20);
+  text((score), 50, 50);
+}
+
+// Displays the ocean
+function displayOcean() {
   push();
   noStroke();
+  // Displays the blue water
   fill(0, 128, 128, 127);
-  rect(0, water.surface, width, height);
+  rect(0, ocean.surface, width, height);
+  // Displays the ocean floor
+  fill(194, 178, 128);
+  rect(0, height - 30, width, height);
   pop();
 }
 
@@ -104,10 +138,11 @@ function diverMovement() {
     diver.y += diver.speed;
   }
   // Contrain diver's x and y position
-  diver.y = constrain(diver.y, water.surface, height); // Prevent's diver from swimming above water
+  diver.y = constrain(diver.y, ocean.surface, height); // Prevent's diver from swimming above water
   diver.x = constrain(diver.x, 0, width)
 }
 
+// Updates fish and checks for overlap
 function updateFishAndCheckCollisions() {
   for (let i = 0; i < allFish.length; i++) {
     allFish[i].updateFish();
@@ -115,6 +150,19 @@ function updateFishAndCheckCollisions() {
 
     if (allFish[i].overlappedDiver()){
       endLoop();
+    }
+  }
+}
+
+// Updates score when pearl is collected, then repawns a new pearl
+function updatePearlAndCheckScore() {
+  for (let i = 0; i < pearls.length; i++){
+    pearls[i].display();
+
+    if (pearls[i].isFound()){
+      score ++
+      pearls[i].update();
+
     }
   }
 }

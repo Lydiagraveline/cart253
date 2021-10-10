@@ -1,14 +1,16 @@
 class fish {
 
   constructor() {
-    this.size = 25; // Size of the fish
-    this.speed = 3; // Speed of the fish
+    this.size = random(20, 30); // Size of the fish
+    this.speed = random(0.5, 2); // Speed of the fish
     this.resetFish();  // Fish are reset at start of program
     }
 
   // Spawns the fish at the left or right side of screen & gives direction based on which side they spawn
   resetFish() {
-    this.y = random(water.surface + 100, height - 100)
+
+
+    this.y = random(ocean.surface + 100, ocean.floor - 50)
 
     let spawnLeftSide = random(1) < 0.5;
     if (spawnLeftSide) {
@@ -24,9 +26,9 @@ class fish {
   // Moves the fish based on the direction & resets fish when they've gone off screen
   updateFish() {
     if (this.isGoingLeft) {
-      this.x = this.x - this.speed;
+      this.x = this.x - this.speed - score*0.1;
     } else {
-      this.x = this.x + this.speed;
+      this.x = this.x + this.speed + score*0.1;
     }
     if (this.isOffScreen()) {
       this.resetFish();
@@ -55,7 +57,7 @@ class fish {
     if (dist(this.x, this.y, diver.x, diver.y) < this.size/2 + diver.size/2) {
       return true;
     }
-    return false;
+      return false;
   }
 
 }
