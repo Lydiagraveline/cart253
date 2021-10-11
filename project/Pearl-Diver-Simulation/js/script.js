@@ -30,12 +30,14 @@ let timer = {
 }
 
 let allFish = [];
-let numFish = 5;
+let numFish = 10;
 
 let pearls = [];
 let numPearls = 3;
 
-var score;
+let state = `simulation` //can be Start, Simulation, End
+
+let score;
 
 
 function setup() {
@@ -61,17 +63,20 @@ function draw() {
   background(135, 206, 235);
 
 
+  if (state === `simulation`) {
+    displayScore();
+    displayDiver();
+    diverMovement();
+    displayOcean();
+    displayTimer();
+    checkTimerEnd();
+    updatePearlAndCheckScore();
+    updateFishAndCheckCollisions();
+    }
+  else if (state === `Game Over`){
+    displayGameOver();
+  }
 
-  displayScore();
-  displayDiver();
-  diverMovement();
-  displayOcean();
-  displayTimer();
-  checkTimerEnd();
-
-  updatePearlAndCheckScore();
-
-  updateFishAndCheckCollisions();
 }
 
  function displayTimer() {
@@ -89,8 +94,8 @@ function draw() {
 }
 
 function checkTimerEnd() {
-  if (timer.x === width) {
-    endLoop();
+  if (timer.x >= width) {
+    state = `Game Over`;
   }
 }
 
@@ -149,7 +154,7 @@ function updateFishAndCheckCollisions() {
   	allFish[i].displayFish();
 
     if (allFish[i].overlappedDiver()){
-      endLoop();
+      state = `Game Over`;
     }
   }
 }
@@ -166,3 +171,13 @@ function updatePearlAndCheckScore() {
     }
   }
 }
+
+function displayGameOver(){
+  push();
+  fill(255);
+  textAlign(CENTER, CENTER);
+  textSize(32);
+  text(`Game Over X_X`,width/2, height/2);
+  text((score), width/2, height/2 + 100)
+  pop();
+ }
