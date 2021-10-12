@@ -1,7 +1,7 @@
 class fish {
 
   constructor() {
-    this.size = random(20, 30); // Size of the fish
+    this.size = random(30, 50); // Size of the fish
     this.speed = random(0.5, 2); // Speed of the fish
     this.resetFish();  // Fish are reset at start of program
     }
@@ -27,8 +27,12 @@ class fish {
   updateFish() {
     if (this.isGoingLeft) {
       this.x = this.x - this.speed - score*0.1;
+
+
     } else {
       this.x = this.x + this.speed + score*0.1;
+
+
     }
     if (this.isOffScreen()) {
       this.resetFish();
@@ -48,7 +52,17 @@ class fish {
   // Displays the fish on the canvas
   displayFish() {
     push();
-    fill(200);
+    imageMode(CENTER);
+
+    // Displays image of fish facing the direction it moves in
+    if (this.isGoingLeft) {
+      image(fishImg2,this.x,this.y,this.size,this.size);
+    }
+    else {
+      image(fishImg,this.x,this.y,this.size,this.size);
+    }
+    noFill();
+    noStroke();
     ellipse(this.x, this.y, this.size);
     pop();
   }

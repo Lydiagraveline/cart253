@@ -35,10 +35,16 @@ let numFish = 10;
 let pearls = [];
 let numPearls = 3;
 
-let state = `simulation` //can be Start, Simulation, End
+let state = `title` //can be Start, Simulation, End
 
 let score;
 
+let fishImg;
+let fishImg2;
+function preload() {
+  fishImg = loadImage ('assets/images/fish.png');
+  fishImg2 = loadImage ('assets/images/fish2.png');
+}
 
 function setup() {
   createCanvas(700, windowHeight);
@@ -62,8 +68,10 @@ function setup() {
 function draw() {
   background(135, 206, 235);
 
-
-  if (state === `simulation`) {
+  if (state === `title`) {
+    title();
+  }
+  else if (state === `simulation`) {
     displayScore();
     displayDiver();
     diverMovement();
@@ -74,9 +82,15 @@ function draw() {
     updateFishAndCheckCollisions();
     }
   else if (state === `Game Over`){
-    displayGameOver();
+    gameOver();
   }
 
+}
+
+function mousePressed() {
+  if (state === `title`) {
+    state = `simulation`
+  }
 }
 
  function displayTimer() {
@@ -172,7 +186,21 @@ function updatePearlAndCheckScore() {
   }
 }
 
-function displayGameOver(){
+function title() {
+  push();
+  textAlign(CENTER, CENTER);
+
+  textSize(32);
+  text(`Pearl Diver`,width/2, height/2);
+
+  textSize(20);
+  fill(255);
+  text (`Collect pearls. Don't hit fish. Remember to breath air`, width/2, 64 + height/2 );
+
+  pop();
+}
+
+function gameOver(){
   push();
   fill(255);
   textAlign(CENTER, CENTER);
