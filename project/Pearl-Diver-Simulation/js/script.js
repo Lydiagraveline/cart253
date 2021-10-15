@@ -49,14 +49,16 @@ let state = `title` //can be Start, Simulation, Game Over
 let score;
 
 // Images
-let fishImg;
-let fishImg2;
+let oysterImg;
+let fishImg;    // Fish facing left
+let fishImg2;   // Fish facing right
 let vignette;
   let alpha = 0; // transparency of vignette, which will decrease as the user runs out of air
 
 function preload() {
-  fishImg = loadImage ('assets/images/fish.png');   // Fish facing left
-  fishImg2 = loadImage ('assets/images/fish2.png');  // Fish facing right
+  oysterImg = loadImage ('assets/images/oyster.png');
+  fishImg = loadImage ('assets/images/fish.png');
+  fishImg2 = loadImage ('assets/images/fish2.png');
   vignette = loadImage ('assets/images/vignette.png');
 }
 
@@ -165,7 +167,7 @@ function displayOcean() {
   fill(0, 128, 128, 127);
   rect(0, ocean.surface, width, height);
   // Displays the ocean floor
-  fill(194, 178, 128);
+  fill(204,173,142);
   rect(0, height - 30, width, height);
   pop();
 }
@@ -173,7 +175,7 @@ function displayOcean() {
 // Displays the diver as an ellipse
 function displayDiver() {
   noStroke();
-  fill(255);
+  fill(s);
   ellipse(diver.x, diver.y, diver.size)
 }
 
@@ -242,18 +244,24 @@ function fishAnimation() {
 
 //displays the title screen
 function title() {
+  background (244,233,232);
   fishAnimation();
 
   push();
+
+  image(oysterImg, width/2, height/2 - 200)
+
   textAlign(CENTER, CENTER);
-  fill(255);
 
+  fill(221,188,200);
   textSize(50);
-  text(`Pearl Diver`,width/2, height/2 - 80);
+  text(`♥*♡∞:｡. Pearl Diver .｡:∞♡*♥`,width/2, height/2 - 80);
+  fill(255);
+  text(`♡━━━━◦ ✤ ◦━━━━♡`,width/2, height/2 - 30);
 
-  textSize(30);
-  fill(0, 128, 128, 127)
-  text (`Collect pearls. Don't hit fish. Remember to breath.`, width/2, height/2);
+  textSize(23);
+  fill(221,203,194)
+  text (`Collect pearls. Don't hit fish. Remember to breath.`, width/2, height/2 + 20);
 
   pop();
 }
@@ -279,7 +287,7 @@ function gameOver(){
   if (timer.x >= width) {
     fill(0, 128, 128, 127)
    textSize(25);
-   text(`You forgot to breath...`,width/2, height/2 - 30);
+   text(`You forgot to breathe...`,width/2, height/2 - 30);
  }
  pop();
 }
