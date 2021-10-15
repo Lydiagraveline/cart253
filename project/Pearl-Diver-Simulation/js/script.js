@@ -21,12 +21,21 @@ let ocean = {
   floor: undefined //Defined in setup()
 };
 
+// Creates a new JavaScript Object describing a timer that indicates the user's "breath"
 let timer = {
   x: 400,
   y: 50,
-  speedDecrease: 0.2,
-  speedIncrease: 1,
+  speedDecrease: 0.2, // Speed of the user loosing breath underwater
+  speedIncrease: 1,   // Speed of the user inhaling above water
   max: 400,
+}
+
+// Creates a new JavaScript Object describing a fish that will move across the title screen + end screen
+let animation = {
+  x: -100,
+  y: 0,
+  vx: 2,
+  size: 150,
 }
 
 let allFish = [];
@@ -35,22 +44,22 @@ let numFish = 10;
 let pearls = [];
 let numPearls = 3;
 
-let state = `title` //can be Start, Simulation, End
+let state = `title` //can be Start, Simulation, Game Over
 
 let score;
 
+// Images
 let fishImg;
 let fishImg2;
 function preload() {
-  fishImg = loadImage ('assets/images/fish.png');
-  fishImg2 = loadImage ('assets/images/fish2.png');
+  fishImg = loadImage ('assets/images/fish.png');   // Fish facing left
+  fishImg2 = loadImage ('assets/images/fish2.png');  // Fish facing right
 }
 
 function setup() {
-  createCanvas(700, windowHeight);
+  createCanvas(700, 700);
   // Sets the ocean floor
   ocean.floor = height - 30;
-
 
   // Spawns fish
   for (let i = 0; i < numFish; i++) {
@@ -65,6 +74,7 @@ function setup() {
 
 }
 
+// Runs the title screen, the simulation, and the end screen
 function draw() {
   background(135, 206, 235);
 
@@ -72,34 +82,46 @@ function draw() {
     title();
   }
   else if (state === `simulation`) {
-    displayScore();
-    displayDiver();
-    diverMovement();
-    displayOcean();
-    displayTimer();
-    checkTimerEnd();
-    updatePearlAndCheckScore();
-    updateFishAndCheckCollisions();
+    simulation();
     }
   else if (state === `Game Over`){
     gameOver();
   }
-
 }
 
+function simulation() {
+  displayTimer();
+  displayScore();
+  displayDiver();
+  diverMovement();
+  displayOcean();
+  checkTimerEnd();
+  updatePearlAndCheckScore();
+  updateFishAndCheckCollisions();
+}
+
+// When the user clicks on the title screen, the game begins
 function mousePressed() {
   if (state === `title`) {
     state = `simulation`
   }
 }
 
- function displayTimer() {
-   push();
-   noStroke();
-   fill(255);
-   rect(timer.x, timer.y, timer.x, 5);
-   pop();
+// Displays a rectangle that indicates the user's breath, which decreases when underwater
+function displayTimer() {
+  push();
+  noStroke();
+    // When the user is almost out of breath, the display turns red and a gradient appears
+    if (timer.x > width - 50) {
+      fill(255,0,0);
+      drawGradient();
+    } else {
+      fill(255);
+    }
+  rect(timer.x, timer.y, timer.x, 5);
+  pop();
 
+// Decreases slowly when user is underwater, and quickly increases when player resurfaces
    if (diver.y > ocean.surface) {
   	timer.x += timer.speedDecrease;
   } else if (diver.y === ocean.surface && timer.x >= timer.max) {
@@ -107,12 +129,18 @@ function mousePressed() {
   }
 }
 
+function drawGradient() {
+
+}
+
+// If the player runs out of breath, the game ends
 function checkTimerEnd() {
   if (timer.x >= width) {
     state = `Game Over`;
   }
 }
 
+// Displays the player's score in the upper right corner
 function displayScore(){
   textSize (20);
   text((score), 50, 50);
@@ -166,7 +194,7 @@ function updateFishAndCheckCollisions() {
   for (let i = 0; i < allFish.length; i++) {
     allFish[i].updateFish();
   	allFish[i].displayFish();
-
+    // If a fish overlaps the user, the game ends
     if (allFish[i].overlappedDiver()){
       state = `Game Over`;
     }
@@ -186,26 +214,59 @@ function updatePearlAndCheckScore() {
   }
 }
 
+//Animation of a fish moving from left to right, displays on the title screen and end screen
+function fishAnimation() {
+  animation.y = height/2 + 160
+
+  imageMode(CENTER);
+  image(fishImg, animation.x,animation.y,animation.size,animation.size);
+  animation.x += animation.vx
+
+  //resets animation when is goes off screen
+  if (animation.x === width + animation.size) {
+    animation.x = -100
+  }
+
+}
+
+//displays the title screen
 function title() {
+  fishAnimation();
+
   push();
   textAlign(CENTER, CENTER);
-
-  textSize(32);
-  text(`Pearl Diver`,width/2, height/2);
-
-  textSize(20);
   fill(255);
-  text (`Collect pearls. Don't hit fish. Remember to breath air`, width/2, 64 + height/2 );
+
+  textSize(50);
+  text(`Pearl Diver`,width/2, height/2 - 80);
+
+  textSize(30);
+  fill(0, 128, 128, 127)
+  text (`Collect pearls. Don't hit fish. Remember to breath.`, width/2, height/2);
 
   pop();
 }
 
+//displays the end screen
 function gameOver(){
+  fishAnimation();
+
   push();
   fill(255);
   textAlign(CENTER, CENTER);
-  textSize(32);
-  text(`Game Over X_X`,width/2, height/2);
-  text((score), width/2, height/2 + 100)
-  pop();
+
+  textSize(50);
+  text(`x_x`,width/2, height/2 - 150);
+  text(`GAME OVER`,width/2, height/2 - 80);
+
+  textSize(40);
+  text(`You got `+(score)+` pearls!`, width/2, height/2 + 10);
+
+  // If player runs out of breath, the end screen gets an extra line
+  if (timer.x >= width) {
+    fill(0, 128, 128, 127)
+   textSize(25);
+   text(`You forgot to breath...`,width/2, height/2 - 30);
  }
+ pop();
+}
