@@ -82,7 +82,7 @@ function setup() {
 
 // Runs the title screen, the simulation, and the end screen
 function draw() {
-  background(135, 206, 235);
+  background(135, 204, 204);
 
   if (state === `title`) {
     title();
@@ -100,9 +100,9 @@ function simulation() {
   displayScore();
   displayDiver();
   diverMovement();
+  updateFishAndCheckCollisions();
   displayOcean();
   updatePearlAndCheckScore();
-  updateFishAndCheckCollisions();
 }
 
 // When the user clicks on the title screen, the game begins
@@ -124,7 +124,7 @@ function displayTimer() {
       alpha = alpha + 1
       drawVignette();
     } else {
-      fill(255);
+      fill(208, 244, 245);
     }
   rect(timer.x, timer.y, timer.x, 5);
   pop();
@@ -155,8 +155,11 @@ function checkTimerEnd() {
 
 // Displays the player's score in the upper right corner
 function displayScore(){
+  push();
+  fill(208, 244, 245);
   textSize (20);
   text((score), 50, 50);
+  pop();
 }
 
 // Displays the ocean
@@ -164,7 +167,7 @@ function displayOcean() {
   push();
   noStroke();
   // Displays the blue water
-  fill(0, 128, 128, 127);
+  fill(46, 128, 128, 150);
   rect(0, ocean.surface, width, height);
   // Displays the ocean floor
   fill(204,173,142);
@@ -175,7 +178,7 @@ function displayOcean() {
 // Displays the diver as an ellipse
 function displayDiver() {
   noStroke();
-  fill(s);
+  fill(255);
   ellipse(diver.x, diver.y, diver.size)
 }
 
@@ -253,7 +256,8 @@ function title() {
 
   textAlign(CENTER, CENTER);
 
-  fill(221,188,200);
+
+  fill(228,147,145);
   textSize(50);
   text(`♥*♡∞:｡. Pearl Diver .｡:∞♡*♥`,width/2, height/2 - 80);
   fill(255);
