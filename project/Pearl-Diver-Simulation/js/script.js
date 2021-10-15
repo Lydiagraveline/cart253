@@ -51,9 +51,13 @@ let score;
 // Images
 let fishImg;
 let fishImg2;
+let vignette;
+  let alpha = 0; // transparency of vignette, which will decrease as the user runs out of air
+
 function preload() {
   fishImg = loadImage ('assets/images/fish.png');   // Fish facing left
   fishImg2 = loadImage ('assets/images/fish2.png');  // Fish facing right
+  vignette = loadImage ('assets/images/vignette.png');
 }
 
 function setup() {
@@ -95,7 +99,6 @@ function simulation() {
   displayDiver();
   diverMovement();
   displayOcean();
-  checkTimerEnd();
   updatePearlAndCheckScore();
   updateFishAndCheckCollisions();
 }
@@ -109,12 +112,15 @@ function mousePressed() {
 
 // Displays a rectangle that indicates the user's breath, which decreases when underwater
 function displayTimer() {
+  checkTimerEnd();
+
   push();
   noStroke();
-    // When the user is almost out of breath, the display turns red and a gradient appears
-    if (timer.x > width - 50) {
+    // When the user is almost out of breath, the display turns red and a vignette appears
+    if (timer.x > width - 100) {
       fill(255,0,0);
-      drawGradient();
+      alpha = alpha + 1
+      drawVignette();
     } else {
       fill(255);
     }
@@ -129,8 +135,13 @@ function displayTimer() {
   }
 }
 
-function drawGradient() {
-
+// Vingnette that appears when user is running out of brath, and during the end screen
+function drawVignette() {
+  push();
+  imageMode(CORNER);
+  tint(255, alpha);
+  image(vignette, 0, 0, width, height);
+  pop();
 }
 
 // If the player runs out of breath, the game ends
@@ -250,6 +261,8 @@ function title() {
 //displays the end screen
 function gameOver(){
   fishAnimation();
+  alpha = 100;
+  drawVignette()
 
   push();
   fill(255);
