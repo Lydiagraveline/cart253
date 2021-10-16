@@ -38,6 +38,8 @@ let animation = {
   size: 150,
 }
 
+let button;   // Button that displays 'how to play' insturctions when clicked
+
 let allFish = [];
 let numFish = 10;
 
@@ -50,6 +52,7 @@ let score;
 
 // Images
 let oysterImg;
+let instructionsImg;
 let fishImg;    // Fish facing left
 let fishImg2;   // Fish facing right
 let vignette;
@@ -57,6 +60,7 @@ let vignette;
 
 function preload() {
   oysterImg = loadImage ('assets/images/oyster.png');
+  instructionsImg = loadImage ('assets/images/instructions.png');
   fishImg = loadImage ('assets/images/fish.png');
   fishImg2 = loadImage ('assets/images/fish2.png');
   vignette = loadImage ('assets/images/vignette.png');
@@ -64,6 +68,7 @@ function preload() {
 
 function setup() {
   createCanvas(700, 700);
+
   // Sets the ocean floor
   ocean.floor = height - 30;
 
@@ -106,7 +111,7 @@ function simulation() {
 }
 
 // When the user clicks on the title screen, the game begins
-function mousePressed() {
+function keyPressed() {
   if (state === `title`) {
     state = `simulation`
   }
@@ -245,28 +250,49 @@ function fishAnimation() {
 
 }
 
+
+function instructions() {
+  push();
+  noStroke();
+
+  // Draws a rectangle behind the text
+  rectMode(CENTER);
+  fill(232,222,218);
+  rect(width/2, 305, 150, 50, 20);
+
+  // Text
+  textAlign(CENTER);
+  fill(129, 122, 145);
+  textSize(18);
+  text('How to play', width/2, 310);
+
+  // Displays the instructions when the mouse is over the rectangle
+  let d = dist(mouseX, mouseY, width/2, 310)
+  if (d < 100){
+    fill(135, 204, 204);
+    rect(width/2, height/2 + 5 + 125, 650, 400, 20);
+    image(instructionsImg, width/2, height/2 + 125);
+  }
+  pop();
+}
+
 //displays the title screen
 function title() {
   background (244,233,232);
+
   fishAnimation();
+  instructions();
+  image(oysterImg, width/2, 75);
 
   push();
 
-  image(oysterImg, width/2, height/2 - 200)
-
   textAlign(CENTER, CENTER);
-
 
   fill(228,147,145);
   textSize(50);
-  text(`♥*♡∞:｡. Pearl Diver .｡:∞♡*♥`,width/2, height/2 - 80);
+  text(`♥*♡∞:｡. Pearl Diver .｡:∞♡*♥`,width/2, 175);
   fill(255);
-  text(`♡━━━━◦ ✤ ◦━━━━♡`,width/2, height/2 - 30);
-
-  textSize(23);
-  fill(221,203,194)
-  text (`Collect pearls. Don't hit fish. Remember to breath.`, width/2, height/2 + 20);
-
+  text(`♡━━━━◦ ✤ ◦━━━━♡`,width/2, 240);
   pop();
 }
 
