@@ -8,17 +8,23 @@ author, and this description to match your project!
 
 "use strict";
 
+let user = {
+  x: undefined,
+  y: undefined,
+  size: 50,
+}
+
 let school = []; // Create an empty array and assign it to the school variable
+let schoolSize = 1;
 
 function setup() {
   createCanvas(600, 600);
 
   // Create four fish, positioned randomly, storing each one in four successive
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < schoolSize; i++) {
     school[i] = createFish(random(0, width), random(0, height));
   }
 }
-
 
 // createFish(x,y)
 // Creates a new JavaScript Object describing a fish and returns it
@@ -34,16 +40,23 @@ function createFish(x, y) {
   return fish;
 }
 
+
+
 // draw()
-// Moves and displays our fish
+// Moves and displays our fish + the user
 function draw() {
   background(95,158,160);
 
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < school.length; i++) {
       moveFish(school[i]);
       displayFish(school[i]);
   }
-  
+
+  displayUser();
+  reproduce()
+
+
+
 }
 
 // moveFish(fish)
@@ -73,4 +86,15 @@ function displayFish(fish) {
   noStroke();
   ellipse(fish.x, fish.y, fish.size);
   pop();
+}
+
+function displayUser() {
+  push();
+  noStroke();
+  ellipse (mouseX, mouseY, user.size);
+  pop();
+}
+
+
+
 }
