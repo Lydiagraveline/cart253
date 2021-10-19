@@ -10,7 +10,7 @@ class fish {
 
   // Spawns the fish at the left or right side of screen & gives direction based on which side they spawn
   resetFish() {
-    this.y = random(ocean.surface + 100, ocean.floor - 50)
+    this.y = random(ocean.surface + 100, ocean.floor - 50);
 
     let spawnLeftSide = random(1) < 0.5;
     if (spawnLeftSide) {
