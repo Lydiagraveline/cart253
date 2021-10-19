@@ -20,7 +20,6 @@ class fish {
       this.x = random(width, width * 2);
       this.isGoingLeft = true;
       }
-
     }
 
   // Moves the fish based on the direction & resets fish when they've gone off screen

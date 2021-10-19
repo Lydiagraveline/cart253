@@ -1,6 +1,6 @@
 /**
-Title of Project
-Author Name
+Age of Aquariums
+Lydia Graveline
 
 This is a template. You must fill in the title,
 author, and this description to match your project!
@@ -8,14 +8,17 @@ author, and this description to match your project!
 
 "use strict";
 
+//New javascript object describing the user-controlled shape
 let user = {
   x: undefined,
   y: undefined,
   size: 50,
 }
 
-let school = []; // Create an empty array and assign it to the school variable
-let schoolSize = 1;
+// Create an empty array and assign it to the school variable
+let school = [];
+let schoolSize = 1; // Amount of fish the program begins with
+
 
 function setup() {
   createCanvas(600, 600);
@@ -35,27 +38,39 @@ function createFish(x, y) {
     size: 50,
     vx: 0,
     vy: 0,
-    speed: 2
+    speed: 2,
   };
   return fish;
 }
-
-
 
 // draw()
 // Moves and displays our fish + the user
 function draw() {
   background(95,158,160);
-
+  userInput();
   for (let i = 0; i < school.length; i++) {
       moveFish(school[i]);
       displayFish(school[i]);
   }
 
-  displayUser();
-  reproduce()
+  displayUser(user);
 
+}
 
+function addNewFish(fish, user) {
+    let newFish = createFish(user.x, user.y);
+    console.log(`newFish`);
+    school.push(newFish);
+}
+
+function mouseReleased() {
+  for (let i = 0; i < school.length; i++) {
+    let d = dist(user.x, user.y, school[i].x, school[i].y);
+    if (d < user.size/2 + school[i].size/2) {
+      addNewFish(school[i], user);
+      break;
+    }
+  }
 
 }
 
@@ -78,6 +93,7 @@ function moveFish(fish) {
   fish.y = constrain(fish.y, 0, height);
 }
 
+
 // displayFish(fish)
 // Displays the provided fish on the canvas
 function displayFish(fish) {
@@ -88,13 +104,15 @@ function displayFish(fish) {
   pop();
 }
 
-function displayUser() {
-  push();
-  noStroke();
-  ellipse (mouseX, mouseY, user.size);
-  pop();
+function userInput() {
+  user.x = mouseX;
+  user.y = mouseY;
 }
 
-
-
+// Displays the user as an ellipse
+function displayUser(user) {
+  push();
+  noStroke();
+  ellipse (user.x, user.y, user.size);
+  pop();
 }
