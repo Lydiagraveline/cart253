@@ -41,7 +41,7 @@ let animation = {
 let allFish = [];
 let numFish = 10; //total number of dangerous fish, adjust for difficulty
 
-// Pealrs
+// Pearls
 let pearls = [];
 let numPearls = 3; // total number of pearls at the bottom of the ocean
 
@@ -152,7 +152,7 @@ function displayTimer() {
    if (diver.y > ocean.surface) {
   	timer.x += timer.speedDecrease;
   } else if (diver.y === ocean.surface && timer.x >= timer.max) {
-      timer.x -= timer.speedIncrease
+      timer.x -= timer.speedIncrease;
   }
 }
 
@@ -185,12 +185,11 @@ function displayScore(){
   drawingContext.shadowOffsetX = -5;
   drawingContext.shadowOffsetY = 5;
   drawingContext.shadowBlur = 10;
-  drawingContext.shadowColor = `#436666`
-  image(pearlImg, 50, 45, 40, 40)
+  drawingContext.shadowColor = `#436666`;
+  image(pearlImg, 50, 45, 40, 40);
 
   pop();
 }
-
 
 // Displays the ocean
 function displayOcean() {
@@ -214,7 +213,7 @@ function displayOcean() {
 function displayDiver() {
   noStroke();
   fill(255);
-  ellipse(diver.x, diver.y, diver.size)
+  ellipse(diver.x, diver.y, diver.size);
 }
 
 // Allows player to control the diver using WASD and contrains the diver within the boundaries of the canvas
@@ -237,7 +236,7 @@ function diverMovement() {
   }
   // Contrain diver's x and y position
   diver.y = constrain(diver.y, ocean.surface, height); // Prevent's diver from swimming above water
-  diver.x = constrain(diver.x, 0, width)
+  diver.x = constrain(diver.x, 0, width);
 }
 
 // Updates fish and checks for overlap
@@ -267,15 +266,15 @@ function updatePearlAndCheckScore() {
 
 //Animation of a fish moving from left to right, displays on the title screen and end screen
 function fishAnimation() {
-  animation.y = height/2 + 160
+  animation.y = height/2 + 160;
 
   imageMode(CENTER);
   image(fishImg, animation.x,animation.y,animation.size,animation.size);
-  animation.x += animation.vx
+  animation.x += animation.vx;
 
   //resets animation when is goes off screen
   if (animation.x === width + animation.size) {
-    animation.x = -100
+    animation.x = -100;
   }
 
 }
@@ -296,7 +295,7 @@ function instructions() {
   text('How to play', width/2, 310);
 
   // Displays the instructions when the mouse is over the rectangle
-  let d = dist(mouseX, mouseY, width/2, 310)
+  let d = dist(mouseX, mouseY, width/2, 310);
   if (d < 100){
     fill(135, 204, 204);
     rect(width/2, height/2 + 5 + 125, 650, 400, 20);
@@ -329,7 +328,7 @@ function title() {
 function gameOver(){
   fishAnimation();
   alpha = 100;
-  drawVignette()
+  drawVignette();
 
   push();
   fill(255);
@@ -344,7 +343,7 @@ function gameOver(){
 
   // If player runs out of breath, the end screen gets an extra line
   if (timer.x >= width) {
-    fill(0, 128, 128, 127)
+    fill(0, 128, 128, 127);
    textSize(25);
    text(`You forgot to breathe...`,width/2, height/2 - 30);
  }

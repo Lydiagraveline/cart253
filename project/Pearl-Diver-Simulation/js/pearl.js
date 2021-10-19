@@ -29,14 +29,12 @@ class Pearl {
     }
   }
 
-  // Calculates when a pearl is found by the diver + plays sounds
+  // Calculates when a pearl is found by the diver
   isFound() {
     let d = dist(this.x, this.y, diver.x, diver.y)
     if ( d < this.size/2 + diver.size/2) {
       this.y = diver.y
     }
-
-    
     if (this.y === ocean.surface) {
       newPoint.play(); //Plays sounds when the player earns a point
       return true;
