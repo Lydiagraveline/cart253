@@ -160,12 +160,21 @@ function checkTimerEnd() {
   }
 }
 
-// Displays the player's score in the upper right corner
+// Displays the player's score + an image of a pearl in the upper right corner
 function displayScore(){
   push();
+
   fill(208, 244, 245);
   textSize (20);
-  text((score), 50, 50);
+  text((score) + ` pearls`, 80, 50);
+
+  // Draws a shadow behind the pearl image
+  drawingContext.shadowOffsetX = -5;
+  drawingContext.shadowOffsetY = 5;
+  drawingContext.shadowBlur = 10;
+  drawingContext.shadowColor = `#436666`
+  image(pearlImg, 50, 45, 40, 40)
+
   pop();
 }
 
@@ -173,12 +182,13 @@ function displayScore(){
 function displayOcean() {
   push();
   noStroke();
-  // Displays the blue water
-  fill(46, 128, 128, 150);
-  rect(0, ocean.surface, width, height);
   // Displays the ocean floor
   fill(204,173,142);
   rect(0, height - 30, width, height);
+
+  // Displays the blue water
+  fill(46, 128, 128, 100);
+  rect(0, ocean.surface, width, height);
   pop();
 }
 
@@ -251,7 +261,6 @@ function fishAnimation() {
   }
 
 }
-
 
 function instructions() {
   push();

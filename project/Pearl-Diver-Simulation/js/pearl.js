@@ -5,13 +5,20 @@ class Pearl {
     this.x = random(100, width - 100);
     this.y = ocean.floor
     this.vy = 1
-    this.size = random(15, 20);
+    this.size = random(15, 25);
     this.found = false;
   }
 
   // Displays image of pearls & gravity
   display() {
     push();
+
+    // Shadow
+    drawingContext.shadowOffsetX = -1;
+    drawingContext.shadowOffsetY = 2;
+    drawingContext.shadowBlur = 5;
+    drawingContext.shadowColor = `#436666`
+
     imageMode(CENTER);
     image(pearlImg, this.x, this.y, this.size, this.size);
     pop();
@@ -38,7 +45,7 @@ class Pearl {
   update() {
     if (this.isFound())
       this.x = random(100, width - 100);
-      this.y = height - 50
+      this.y = ocean.floor
   }
 
 }
