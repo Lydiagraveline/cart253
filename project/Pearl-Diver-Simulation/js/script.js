@@ -37,18 +37,22 @@ let animation = {
   vx: 2,
   size: 150,
 }
-
-let button;   // Button that displays 'how to play' insturctions when clicked
-
+// Fish
 let allFish = [];
-let numFish = 10;
+let numFish = 10; //total number of dangerous fish, adjust for difficulty
 
+// Pealrs
 let pearls = [];
-let numPearls = 3;
+let numPearls = 3; // total number of pearls at the bottom of the ocean
 
 let state = `title` //can be Start, Simulation, Game Over
-
+let button;   // Button that displays 'how to play' insturctions when clicked
 let score;
+
+
+// Sounds
+let newPoint; //plays when player earns a point
+let gameOverSound; // Plays piano when player dies
 
 // Images
 let oysterImg;
@@ -57,10 +61,12 @@ let pearlImg;
 let fishImg;    // Fish facing left
 let fishImg2;   // Fish facing right
 let vignette;
-let kelpImg, create_kelpImg;
+let kelpImg;
   let alpha = 0; // transparency of vignette, which will decrease as the user runs out of air
 
+// Preloads all images and sounds files in the program
 function preload() {
+  //images
   oysterImg = loadImage ('assets/images/oyster.png');
   instructionsImg = loadImage ('assets/images/instructions.png');
   pearlImg = loadImage ('assets/images/pearl.png');
@@ -68,7 +74,10 @@ function preload() {
   fishImg2 = loadImage ('assets/images/fish2.png');
   vignette = loadImage ('assets/images/vignette.png');
   kelpImg = loadImage ('assets/images/kelp.gif');
-  //create_kelpImg = createImg('assets/images/kelp.gif');
+
+  //Sound files
+  newPoint = loadSound('assets/sounds/new-point.mp3');
+  gameOverSound = loadSound('assets/sounds/game-over.wav');
 
 }
 
@@ -88,7 +97,6 @@ function setup() {
 
   // Score begins at zero
   score = 0;
-
 }
 
 // Runs the title screen, the simulation, and the end screen
@@ -160,6 +168,7 @@ function drawVignette() {
 // If the player runs out of breath, the game ends
 function checkTimerEnd() {
   if (timer.x >= width) {
+    gameOverSound.play();
     state = `Game Over`;
   }
 }
@@ -181,7 +190,6 @@ function displayScore(){
 
   pop();
 }
-
 
 
 // Displays the ocean

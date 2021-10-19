@@ -23,19 +23,22 @@ class Pearl {
     image(pearlImg, this.x, this.y, this.size, this.size);
     pop();
 
-    // Pearl falls down if dropped
+    // Pearl falls down if dropped by the player
     if (this.y < ocean.floor ) {
       this.y += this.vy
     }
   }
 
-  // Calculates when a pearl is found by the diver
+  // Calculates when a pearl is found by the diver + plays sounds
   isFound() {
     let d = dist(this.x, this.y, diver.x, diver.y)
     if ( d < this.size/2 + diver.size/2) {
       this.y = diver.y
     }
+
+    
     if (this.y === ocean.surface) {
+      newPoint.play(); //Plays sounds when the player earns a point
       return true;
     }
     return false;

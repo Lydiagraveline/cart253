@@ -67,6 +67,7 @@ class fish {
  // Checks if a fish has overlaped the player
   overlappedDiver() {
     if (dist(this.x, this.y, diver.x, diver.y) < this.size/2 + diver.size/2) {
+      gameOverSound.play();
       return true;
     }
       return false;
