@@ -1,3 +1,5 @@
+// This code is an adapted version of "How to code Space Race!" by lukegarrigan. https://codeheir.com/2019/02/10/how-to-code-space-race-1973-2/
+
 class fish {
 
   constructor() {
@@ -8,8 +10,6 @@ class fish {
 
   // Spawns the fish at the left or right side of screen & gives direction based on which side they spawn
   resetFish() {
-
-
     this.y = random(ocean.surface + 100, ocean.floor - 50)
 
     let spawnLeftSide = random(1) < 0.5;
@@ -27,11 +27,8 @@ class fish {
   updateFish() {
     if (this.isGoingLeft) {
       this.x = this.x - this.speed - score*0.1;
-
-
     } else {
       this.x = this.x + this.speed + score*0.1;
-
 
     }
     if (this.isOffScreen()) {
@@ -67,6 +64,7 @@ class fish {
     pop();
   }
 
+ // Checks if a fish has overlaped the player
   overlappedDiver() {
     if (dist(this.x, this.y, diver.x, diver.y) < this.size/2 + diver.size/2) {
       return true;

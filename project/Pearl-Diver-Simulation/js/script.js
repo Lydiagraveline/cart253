@@ -53,6 +53,7 @@ let score;
 // Images
 let oysterImg;
 let instructionsImg;
+let pearlImg;
 let fishImg;    // Fish facing left
 let fishImg2;   // Fish facing right
 let vignette;
@@ -61,6 +62,7 @@ let vignette;
 function preload() {
   oysterImg = loadImage ('assets/images/oyster.png');
   instructionsImg = loadImage ('assets/images/instructions.png');
+  pearlImg = loadImage ('assets/images/pearl.png');
   fishImg = loadImage ('assets/images/fish.png');
   fishImg2 = loadImage ('assets/images/fish2.png');
   vignette = loadImage ('assets/images/vignette.png');

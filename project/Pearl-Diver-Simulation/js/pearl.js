@@ -1,5 +1,6 @@
 class Pearl {
 
+ // Describes pearls that spawn at the bottom of the water randomly on the x axis
   constructor() {
     this.x = random(100, width - 100);
     this.y = ocean.floor
@@ -8,18 +9,17 @@ class Pearl {
     this.found = false;
   }
 
+  // Displays image of pearls & gravity
   display() {
     push();
-    noStroke();
-    fill(255);
-    ellipse(this.x, this.y, this.size);
+    imageMode(CENTER);
+    image(pearlImg, this.x, this.y, this.size, this.size);
     pop();
 
     // Pearl falls down if dropped
     if (this.y < ocean.floor ) {
       this.y += this.vy
     }
-
   }
 
   // Calculates when a pearl is found by the diver
@@ -40,9 +40,5 @@ class Pearl {
       this.x = random(100, width - 100);
       this.y = height - 50
   }
-
-
-
-
 
 }
