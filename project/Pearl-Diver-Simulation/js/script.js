@@ -57,6 +57,7 @@ let pearlImg;
 let fishImg;    // Fish facing left
 let fishImg2;   // Fish facing right
 let vignette;
+let kelpImg, create_kelpImg;
   let alpha = 0; // transparency of vignette, which will decrease as the user runs out of air
 
 function preload() {
@@ -66,6 +67,9 @@ function preload() {
   fishImg = loadImage ('assets/images/fish.png');
   fishImg2 = loadImage ('assets/images/fish2.png');
   vignette = loadImage ('assets/images/vignette.png');
+  kelpImg = loadImage ('assets/images/kelp.gif');
+  //create_kelpImg = createImg('assets/images/kelp.gif');
+
 }
 
 function setup() {
@@ -178,6 +182,8 @@ function displayScore(){
   pop();
 }
 
+
+
 // Displays the ocean
 function displayOcean() {
   push();
@@ -185,6 +191,10 @@ function displayOcean() {
   // Displays the ocean floor
   fill(204,173,142);
   rect(0, height - 30, width, height);
+
+  // Displays kelp gif
+  image(kelpImg, 100, 480, 300, 400);
+    image(kelpImg, 600, 480, 300, 400);
 
   // Displays the blue water
   fill(46, 128, 128, 100);
