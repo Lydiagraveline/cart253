@@ -11,7 +11,7 @@ Pearl diving simulator!
 let diver = { //user controlled
     x: 350,
     y: 100,
-    size: 50,
+    size: 35,
     speed: 2.5
 };
 
@@ -268,7 +268,7 @@ function updatePearlAndCheckScore() {
 
 //Animation of a fish moving from left to right, displays on the title screen and end screen
 function fishAnimation() {
-  animation.y = height/2 + 160;
+
 
   imageMode(CENTER);
   image(fishImg, animation.x,animation.y);
@@ -300,8 +300,8 @@ function instructions() {
   let d = dist(mouseX, mouseY, width/2, 310);
   if (d < 100){
     fill(135, 204, 204);
-    rect(width/2, height/2 + 5 + 125, 650, 400, 20);
-    image(instructionsImg, width/2, height/2 + 125);
+    rect(width/2, height/2 + 130, 650, 400, 20);
+    image(instructionsImg, width/2, height/2 + 130, 630, 380);
   }
   pop();
 }
@@ -311,6 +311,7 @@ function title() {
   background (244,233,232);
 
   fishAnimation();
+  animation.y = height/2 + 160;
   instructions();
   image(oysterImg, width/2, 75);
 
@@ -329,6 +330,7 @@ function title() {
 //displays the end screen
 function gameOver(){
   fishAnimation();
+  animation.y = height/2 + 150;
   alpha = 100;
   drawVignette();
 
@@ -337,17 +339,17 @@ function gameOver(){
   textAlign(CENTER, CENTER);
 
   textSize(50);
-  text(`x_x`,width/2, height/2 - 150);
-  text(`GAME OVER`,width/2, height/2 - 80);
+  text(`x_x`,width/2, 80);
+  text(`GAME OVER`,width/2, 150);
 
   textSize(40);
-  text(`You got `+(score)+` pearls!`, width/2, height/2 + 10);
+  text(`You got `+(score)+` pearls!`, width/2, 250);
 
   // If player runs out of breath, the end screen gets an extra line
   if (timer.x >= width) {
     fill(0, 128, 128, 127);
    textSize(25);
-   text(`You forgot to breathe...`,width/2, height/2 - 30);
+   text(`You forgot to breathe...`, width/2, 200);
  }
  pop();
 }
