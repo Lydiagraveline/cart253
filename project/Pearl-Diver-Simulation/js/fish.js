@@ -3,7 +3,7 @@
 class fish {
 
   constructor() {
-    this.size = random(30, 50); // Size of the fish
+    this.size = random(50, 70); // Size of the fish
     this.speed = random(0.5, 2); // Speed of the fish
     this.resetFish();  // Fish are reset at start of program
     }
@@ -52,10 +52,10 @@ class fish {
 
     // Displays image of fish facing the direction it moves in
     if (this.isGoingLeft) {
-      image(fishImg2,this.x,this.y,this.size,this.size);
+      image(fishLeft,this.x,this.y, this.size, this.size + 25);
     }
     else {
-      image(fishImg,this.x,this.y,this.size,this.size);
+      image(fishRight,this.x,this.y, this.size, this.size + 25);
     }
     noFill();
     noStroke();

@@ -58,8 +58,9 @@ let gameOverSound; // Plays piano when player dies
 let oysterImg;
 let instructionsImg;
 let pearlImg;
-let fishImg;    // Fish facing left
-let fishImg2;   // Fish facing right
+let fishImg;    // Fish image with detail
+let fishRight;   // Fish facing right
+let fishLeft;  // Fish going left
 let vignette;
 let kelpImg;
   let alpha = 0; // transparency of vignette, which will decrease as the user runs out of air
@@ -71,7 +72,8 @@ function preload() {
   instructionsImg = loadImage ('assets/images/instructions.png');
   pearlImg = loadImage ('assets/images/pearl.png');
   fishImg = loadImage ('assets/images/fish.png');
-  fishImg2 = loadImage ('assets/images/fish2.png');
+  fishRight = loadImage ('assets/images/fish-right.png');
+  fishLeft = loadImage ('assets/images/fish-left.png');
   vignette = loadImage ('assets/images/vignette.png');
   kelpImg = loadImage ('assets/images/kelp.gif');
 
@@ -269,7 +271,7 @@ function fishAnimation() {
   animation.y = height/2 + 160;
 
   imageMode(CENTER);
-  image(fishImg, animation.x,animation.y,animation.size,animation.size);
+  image(fishImg, animation.x,animation.y);
   animation.x += animation.vx;
 
   //resets animation when is goes off screen
