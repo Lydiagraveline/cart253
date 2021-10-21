@@ -10,9 +10,10 @@ author, and this description to match your project!
 
 //New javascript object describing the user-controlled shape
 let user = {
-  x: undefined,
-  y: undefined,
+  x: 100,
+  y: 100,
   size: 50,
+  speed: 2,
 }
 
 // Create an empty array and assign it to the school variable
@@ -105,9 +106,29 @@ function displayFish(fish) {
 }
 
 function userInput() {
-  user.x = mouseX;
-  user.y = mouseY;
+  // A --> left
+  if (keyIsDown(65)) {         // A key code is 65
+    user.x -= user.speed;
+  }
+  // D --> right
+  if (keyIsDown(68)) {  // D key code is
+    user.x += user.speed;
+  }
+  // W --> up
+  if (keyIsDown(87)) {        // W key code is 87
+    user.y -= user.speed;
+  }
+  // S --> down
+  if (keyIsDown(83)) { // S key code is 83
+    user.y += user.speed;
+  }
+  // Contrain user's x and y position
+  user.y = constrain(user.y, 0, height);
+  user.x = constrain(user.x, 0, width);
 }
+  // user.x = mouseX;
+  // user.y = mouseY;
+
 
 // Displays the user as an ellipse
 function displayUser(user) {
