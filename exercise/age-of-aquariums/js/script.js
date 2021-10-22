@@ -16,7 +16,15 @@ let user = {
   speed: 2,
 }
 
+// Creates a new JavaScript Object describing the player's hunger
+let hunger = {
+  x: 400,
+  y: 50,
+  speedDecrease: 0.1,
+  max: 400,
+}
 
+let amountEaten = 10 //Player starts with full amountEatenbar
 
 // Create an empty array and assign it to the school variable
 let school = [];
@@ -25,6 +33,8 @@ let schoolSize = 1; // Amount of fish the program begins with
 // Create an empty array and assign it to the food variable
 let food = [];
 let numFood = 3
+
+let interval = 2;
 
 function setup() {
   createCanvas(600, 600);
@@ -42,7 +52,6 @@ function setup() {
 
 /////////////////////////////////// OBJECTS ///////////////////////////////////////////////////////////
 
-// createFish(x,y)
 // Creates a new JavaScript Object describing a fish and returns it
 function createFish(x, y) {
   let fish = {
@@ -56,6 +65,7 @@ function createFish(x, y) {
   return fish;
 }
 
+// Creates a new JavaScript Object describing food and returns it
 function createFood(x,y) {
   let food = {
     x: x,
@@ -72,6 +82,7 @@ function createFood(x,y) {
 // Moves and displays our fish + the user + food
 function draw() {
   background(95,158,160);
+
   userInput();
 
   for (let i = 0; i < school.length; i++) {
@@ -79,21 +90,20 @@ function draw() {
       displayFish(school[i]);
   }
 
+  // Check whether the user has eaten either food + displays food
   for (let i = 0; i < food.length; i++) {
     displayFood(food[i]);
     checkFood(food[i]);
   }
 
-  // Check whether the user has eaten either food
-  checkFood(food);
-  // Display the user and foods
+  // Display the user and their amountEatenbar
   displayUser(user);
-  displayFood(food);
+  displayhunger();
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-// moveFish(fish)
 // Chooses whether the provided fish changes direction and moves it
 function moveFish(fish) {
   // Choose whether to change direction
@@ -112,8 +122,6 @@ function moveFish(fish) {
   fish.y = constrain(fish.y, 0, height);
 }
 
-
-// displayFish(fish)
 // Displays the provided fish on the canvas
 function displayFish(fish) {
   push();
@@ -123,12 +131,30 @@ function displayFish(fish) {
   pop();
 }
 
+// Draw the food as an ellipse
+function displayFood(food) {
+  food.y = food.y + food.vy;
+
+    // Check if the food is still available to be eaten
+    if (!food.eaten) {
+        // Display the food as its position and with its size
+        push();
+        noStroke();
+        fill(255,);
+        ellipse(food.x, food.y, food.size);
+        pop();
+      }
+   
+}
+
 // Checks if the user overlaps the food object and eats it if so
 function checkFood(food) {
   if (!food.eaten) {
     let d = dist(user.x, user.y, food.x, food.y);
     if (d < user.size / 2 + food.size / 2) {
       food.eaten = true;
+      amountEaten = amountEaten + 1
+      hunger.x = hunger.x - amountEaten // Increases the hunger bar
     }
   }
 }
@@ -141,18 +167,27 @@ function displayUser(user) {
   pop();
 }
 
-// Draw the food as an ellipse
-function displayFood(food) {
-  food.y = food.y + food.vy;
-  // Check if the food is still available to be eaten
-  if (!food.eaten) {
-    // Display the food as its position and with its size
-    push();
-    noStroke();
-    fill(255,);
-    ellipse(food.x, food.y, food.size);
-    pop();
-  }
+// Displays a rectangle that indicates the player's hunger, which decreases slowly
+function displayhunger() {
+  //checkhungerEnd();
+
+  hunger.x = hunger.x + hunger.speedDecrease;
+
+  push();
+  text('hunger: ' + (amountEaten), 400, 100)
+  noStroke();
+    // When the user is almost out of food, the display turns red and a vignette appears
+    //if (hunger.x > width - 100) {
+    //  fill(255,0,0);
+      //alpha = alpha + 1
+      //drawVignette();
+    //} else {
+      fill(255);
+    //}
+  rect(hunger.x, hunger.y, hunger.x, 5);
+  pop();
+
+
 }
 
 //////////////////////////// USER INPUT ///////////////////////////////////////////////////////////
@@ -198,8 +233,3 @@ function userInput() {
 }
 
 ///////////////////////////// TEXT ////////////////////////////////////////////////////////////
-
-function displayHunger() {
-  push();
-  pop();
-}
