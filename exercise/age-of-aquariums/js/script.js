@@ -14,6 +14,7 @@ let user = {
   y: 100,
   size: 50,
   speed: 2,
+  eaten: false,
 }
 
 // Creates a new JavaScript Object describing the player's life
@@ -27,7 +28,7 @@ let life = {
 // Creates a new JavaScript Object describing the a shark
 let shark = {
   x: -500,
-  y: 0,
+  y: 300,
   size: 75,
   vy: 0,
   vx: 0,
@@ -41,12 +42,13 @@ let schoolSize = 4; // Amount of fish the program begins with
 // Create an empty array and assign it to the babies variable
 let babies = [];
 let numBabies = 0; // Amount of babies the player begins with
+let babiesEaten = 0; // Amount of babies eaten by the shark begins at 0
 
 function setup() {
   createCanvas(600, 600);
   noStroke();
 
-  shark.y = random(0, height);
+
 
   // Creates fish positioned randomly
   for (let i = 0; i < schoolSize; i++) {
@@ -82,9 +84,11 @@ function createBaby(x, y) {
     vx: 0,
     vy: 0,
     speed: random(1, 1.5),
+    eaten: false,
   };
   return baby;
 }
+
 
 
 ////////////////////////s/////////// DRAW ///////////////////////////////////////////////////////
@@ -92,6 +96,7 @@ function createBaby(x, y) {
 // Moves and displays our fish + the user
 function draw() {
   background(95,158,160);
+
 
   userInput();
 
@@ -103,6 +108,7 @@ function draw() {
   for (let i = 0; i < babies.length; i++) {
       moveBaby(babies[i]);
       displayBaby(babies[i]);
+      checkOverlap(babies[i]);
   }
 
   // Display the user and their life span
@@ -112,6 +118,7 @@ function draw() {
   displayShark();
   moveShark();
 
+  text (`you have ` + (numBabies) + ` babies. The shark ate `+ (babiesEaten) , 200, 200);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -167,11 +174,12 @@ function moveBaby(baby) {
 
 // Displays the provided babies on the canvas
 function displayBaby(baby) {
-  text (`you have ` + (numBabies) + ` babies`, 200, 200);
-  push();
-  fill(255);
-  ellipse (baby.x, baby.y, baby.size)
-  pop();
+  if (!baby.eaten) {
+    push();
+    fill(255);
+    ellipse (baby.x, baby.y, baby.size)
+    pop();
+  }
 }
 
 // Displays the user as an ellipse
@@ -208,8 +216,7 @@ function displayShark() {
   fill(`grey`);
   ellipse(shark.x, shark.y, shark.size);
   pop();
-
-  text((`shark!`), shark.x + 10, shark.y);
+  text((`shark!`), shark.x - 10, shark.y);
 }
 
   // Move the shark
@@ -232,6 +239,20 @@ function displayShark() {
     shark.x = shark.x + shark.vx
     shark.y = shark.y + shark.vy
 }
+
+function checkOverlap(baby) {
+
+  // db = distance between shark and babies
+  let db = dist(shark.x, shark.y, baby.x, baby.y)
+  if (!baby.eaten && db < shark.size/2 + baby.size/2 ) {
+    baby.eaten = true
+    babiesEaten++
+    numBabies--
+
+  }
+
+}
+
 
 //////////////////////////// USER INPUT ///////////////////////////////////////////////////////////
 
