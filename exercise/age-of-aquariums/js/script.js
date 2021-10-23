@@ -52,6 +52,7 @@ function setup() {
   createCanvas(600, 600);
   noStroke();
 
+
   // shark starts off screen
   shark.x = -shark.constrain
 
@@ -94,22 +95,24 @@ function createBaby(x, y) {
   return baby;
 }
 
-////////////////////////s/////////// DRAW ///////////////////////////////////////////////////////
+///////////////////////////////////////////// DRAW ///////////////////////////////////////////////////////
 
-// Moves and displays our fish + the user
+// Displays the simulation or the end screen
 function draw() {
+  background(95,158,160);
 
-  if (state = `liife`) {
+  if (state === `life`) {
     simulation();
   }
-  else if (state = `death`) {
+  if (state === `death`) {
     endScreen();
   }
 
 /////////////////////////////////////////// SIMULATION /////////////////////////////////////////////////////////////
 
+// Moves and displays our fish + the user + babies + the shark
 function simulation() {
-  background(95,158,160);
+
   userInput();
 
   //move and display the fish
@@ -133,7 +136,10 @@ function simulation() {
   moveShark();
   checkLifeEnd()
 
-  text (`you have ` + (numBabies) + ` babies. The shark ate `+ (babiesEaten) , 200, 200);
+  // How to play + score
+  text (`You are a fish! your goal is to have as many babies as you can before you die.`, 10, 20);
+  text(`Watch out! a shark is out to eat you and your babies!`, 10, 40);
+  text (`life ` + (numBabies) + ` babies. The shark ate `+ (babiesEaten) , 10, 60);
 }
 
 }
@@ -211,7 +217,7 @@ function displayLife() {
   life.x = life.x + life.speedDecrease;
 
   push();
-  text('life: ', 400, 100);
+  text('life ', 500, 40);
 
     // When the user is almost out of food, the display turns red and a vignette appears
     if (life.x > width - 100) {
@@ -228,10 +234,11 @@ function displayLife() {
 // Display the shark
 function displayShark() {
   push();
+  textAlign(CENTER);
   fill(`grey`);
   ellipse(shark.x, shark.y, shark.size);
   pop();
-  text((`shark!`), shark.x - 10, shark.y);
+  text((`shark!`), shark.x, shark.y);
 }
 
   // Move the shark
@@ -275,14 +282,12 @@ function checkLifeEnd() {
   let du = dist(shark.x, shark.y, user.x, user.y);
   // the user's life ends if the shark overlaps
   if (du < shark.size/2 + user.size/2) {
-    endLoop();
       state = `death`;
       cause = `shark attack`;
   }
 
   // The user's life end when the life bar runs out
   if (life.x >= width) {
-    endLoop();
     state = `death`;
     cause = `old age`;
   }
@@ -332,4 +337,13 @@ function userInput() {
   user.x = constrain(user.x, 0, width);
 }
 
-///////////////////////////// TEXT ////////////////////////////////////////////////////////////
+///////////////////////////// END SCREEN //////////////////////////////////////////////////////////////////////////////
+ function endScreen() {
+   textAlign(CENTER);
+   if (cause === `old age`){
+     text(`you died of old age`, width/2, height/2);
+   }
+   else if (cause === `shark attack`){
+     text(`the shark ate you!`, width/2, height/2);
+   }
+ }
