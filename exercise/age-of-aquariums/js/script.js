@@ -24,17 +24,13 @@ let hunger = {
   max: 400,
 }
 
-let amountEaten = 10 //Player starts with full amountEatenbar
+
 
 // Create an empty array and assign it to the school variable
 let school = [];
 let schoolSize = 1; // Amount of fish the program begins with
 
-// Create an empty array and assign it to the food variable
-let food = [];
-let numFood = 3
 
-let interval = 2;
 
 function setup() {
   createCanvas(600, 600);
@@ -43,10 +39,6 @@ function setup() {
   for (let i = 0; i < schoolSize; i++) {
     school[i] = createFish(random(0, width), random(0, height));
   }
-
-  // Creates food positioned randomly along the x axis
-  for (let i = 0; i < numFood; i++)
-    food[i] = createFood(random (0, width), 0);
 
 }
 
@@ -65,23 +57,14 @@ function createFish(x, y) {
   return fish;
 }
 
-// Creates a new JavaScript Object describing food and returns it
-function createFood(x,y) {
-  let food = {
-    x: x,
-    y: y,
-    size: 10,
-    vy: random(1, 1.5),   // Downward velocity
-    eaten: false // We want to track whether the user has eaten the food
-  };
-  return food;
-}
 
 /////////////////////////////////// DRAW ///////////////////////////////////////////////////////
 
-// Moves and displays our fish + the user + food
+// Moves and displays our fish + the user
 function draw() {
   background(95,158,160);
+
+
 
   userInput();
 
@@ -90,11 +73,6 @@ function draw() {
       displayFish(school[i]);
   }
 
-  // Check whether the user has eaten either food + displays food
-  for (let i = 0; i < food.length; i++) {
-    displayFood(food[i]);
-    checkFood(food[i]);
-  }
 
   // Display the user and their amountEatenbar
   displayUser(user);
@@ -131,33 +109,8 @@ function displayFish(fish) {
   pop();
 }
 
-// Draw the food as an ellipse
-function displayFood(food) {
-  food.y = food.y + food.vy;
 
-    // Check if the food is still available to be eaten
-    if (!food.eaten) {
-        // Display the food as its position and with its size
-        push();
-        noStroke();
-        fill(255,);
-        ellipse(food.x, food.y, food.size);
-        pop();
-      }
-   
-}
 
-// Checks if the user overlaps the food object and eats it if so
-function checkFood(food) {
-  if (!food.eaten) {
-    let d = dist(user.x, user.y, food.x, food.y);
-    if (d < user.size / 2 + food.size / 2) {
-      food.eaten = true;
-      amountEaten = amountEaten + 1
-      hunger.x = hunger.x - amountEaten // Increases the hunger bar
-    }
-  }
-}
 
 // Displays the user as an ellipse
 function displayUser(user) {
@@ -174,7 +127,7 @@ function displayhunger() {
   hunger.x = hunger.x + hunger.speedDecrease;
 
   push();
-  text('hunger: ' + (amountEaten), 400, 100)
+  text('hunger: ', 400, 100)
   noStroke();
     // When the user is almost out of food, the display turns red and a vignette appears
     //if (hunger.x > width - 100) {
@@ -186,6 +139,8 @@ function displayhunger() {
     //}
   rect(hunger.x, hunger.y, hunger.x, 5);
   pop();
+
+
 
 
 }
