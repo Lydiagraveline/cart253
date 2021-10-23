@@ -16,11 +16,11 @@ let user = {
   speed: 2,
 }
 
-// Creates a new JavaScript Object describing the player's hunger
-let hunger = {
+// Creates a new JavaScript Object describing the player's life
+let life = {
   x: 400,
   y: 50,
-  speedDecrease: 0.1,
+  speedDecrease: 0.05,
   max: 400,
 }
 
@@ -64,8 +64,6 @@ function createFish(x, y) {
 function draw() {
   background(95,158,160);
 
-
-
   userInput();
 
   for (let i = 0; i < school.length; i++) {
@@ -73,10 +71,9 @@ function draw() {
       displayFish(school[i]);
   }
 
-
-  // Display the user and their amountEatenbar
+  // Display the user and their life span
   displayUser(user);
-  displayhunger();
+  displayLife();
 
 }
 
@@ -109,9 +106,6 @@ function displayFish(fish) {
   pop();
 }
 
-
-
-
 // Displays the user as an ellipse
 function displayUser(user) {
   push();
@@ -120,24 +114,24 @@ function displayUser(user) {
   pop();
 }
 
-// Displays a rectangle that indicates the player's hunger, which decreases slowly
-function displayhunger() {
-  //checkhungerEnd();
+// Displays a rectangle that indicates the player's life span, which decreases slowly
+function displayLife() {
+  //checklifeEnd();
 
-  hunger.x = hunger.x + hunger.speedDecrease;
+  life.x = life.x + life.speedDecrease;
 
   push();
-  text('hunger: ', 400, 100)
+  text('life: ', 400, 100)
   noStroke();
     // When the user is almost out of food, the display turns red and a vignette appears
-    //if (hunger.x > width - 100) {
+    //if (life.x > width - 100) {
     //  fill(255,0,0);
       //alpha = alpha + 1
       //drawVignette();
     //} else {
       fill(255);
     //}
-  rect(hunger.x, hunger.y, hunger.x, 5);
+  rect(life.x, life.y, life.x, 5);
   pop();
 
 
