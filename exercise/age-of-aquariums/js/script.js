@@ -27,13 +27,17 @@ let life = {
 
 // Creates a new JavaScript Object describing the a shark
 let shark = {
-  x: -500,
+  x: 0,
   y: 300,
   size: 75,
   vy: 0,
   vx: 0,
   speed: 1,
+  constrain: 250,
 }
+
+let state = `life` //can be life or death
+let cause; //can be `old age` or `shark attack`
 
 // Create an empty array and assign it to the school variable
 let school = [];
@@ -48,14 +52,15 @@ function setup() {
   createCanvas(600, 600);
   noStroke();
 
-
+  // shark starts off screen
+  shark.x = -shark.constrain
 
   // Creates fish positioned randomly
   for (let i = 0; i < schoolSize; i++) {
     school[i] = createFish(random(0, width), random(0, height));
   }
 
-// Creates babies at the user's position
+  // Creates babies at the user's position
     for (let i = 0; i < numBabies; i++) {
       babies[i] = createBaby(user.x, user.y);
     }
@@ -89,26 +94,35 @@ function createBaby(x, y) {
   return baby;
 }
 
-
-
 ////////////////////////s/////////// DRAW ///////////////////////////////////////////////////////
 
 // Moves and displays our fish + the user
 function draw() {
+
+  if (state = `liife`) {
+    simulation();
+  }
+  else if (state = `death`) {
+    endScreen();
+  }
+
+/////////////////////////////////////////// SIMULATION /////////////////////////////////////////////////////////////
+
+function simulation() {
   background(95,158,160);
-
-
   userInput();
 
+  //move and display the fish
   for (let i = 0; i < school.length; i++) {
       moveFish(school[i]);
       displayFish(school[i]);
   }
 
+  // move and displays the babies + checks if they get eaten
   for (let i = 0; i < babies.length; i++) {
       moveBaby(babies[i]);
       displayBaby(babies[i]);
-      checkOverlap(babies[i]);
+      checkForEatenBabies(babies[i]);
   }
 
   // Display the user and their life span
@@ -117,11 +131,12 @@ function draw() {
 
   displayShark();
   moveShark();
+  checkLifeEnd()
 
   text (`you have ` + (numBabies) + ` babies. The shark ate `+ (babiesEaten) , 200, 200);
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
+}
 
 // Chooses whether the provided fish changes direction and moves it
 function moveFish(fish) {
@@ -191,12 +206,12 @@ function displayUser(user) {
 
 // Displays a rectangle that indicates the player's life span, which decreases slowly
 function displayLife() {
-  //checklifeEnd();
+  checkLifeEnd();
 
   life.x = life.x + life.speedDecrease;
 
   push();
-  text('life: ', 400, 100)
+  text('life: ', 400, 100);
 
     // When the user is almost out of food, the display turns red and a vignette appears
     if (life.x > width - 100) {
@@ -221,6 +236,7 @@ function displayShark() {
 
   // Move the shark
   function moveShark() {
+
   //shark follows the user's y position
   if (user.y < shark.y) {
     shark.vy = -shark.speed;
@@ -229,28 +245,47 @@ function displayShark() {
   }
 
   // Shark returns after going off screen
-  if (shark.x > width + 500) {
+  if (shark.x >= width + shark.constrain) {
     shark.vx = -shark.speed;
-  } else if (shark.x <= -500){
+  } else if (shark.x <= -shark.constrain){
     shark.vx = shark.speed;
   }
 
   //move the shark
-    shark.x = shark.x + shark.vx
-    shark.y = shark.y + shark.vy
+    shark.x = shark.x + shark.vx;
+    shark.y = shark.y + shark.vy;
 }
 
-function checkOverlap(baby) {
-
+function checkForEatenBabies(baby) {
   // db = distance between shark and babies
-  let db = dist(shark.x, shark.y, baby.x, baby.y)
+  let db = dist(shark.x, shark.y, baby.x, baby.y);
+
+
+  // Babies get eaten by the shark when overlap
   if (!baby.eaten && db < shark.size/2 + baby.size/2 ) {
     baby.eaten = true
     babiesEaten++
     numBabies--
-
   }
 
+}
+
+function checkLifeEnd() {
+  // du = distance between shark and the player
+  let du = dist(shark.x, shark.y, user.x, user.y);
+  // the user's life ends if the shark overlaps
+  if (du < shark.size/2 + user.size/2) {
+    endLoop();
+      state = `death`;
+      cause = `shark attack`;
+  }
+
+  // The user's life end when the life bar runs out
+  if (life.x >= width) {
+    endLoop();
+    state = `death`;
+    cause = `old age`;
+  }
 }
 
 
