@@ -24,27 +24,39 @@ let life = {
   max: 400,
 }
 
-
+// Creates a new JavaScript Object describing the a shark
+let shark = {
+  x: -500,
+  y: 0,
+  size: 75,
+  vy: 0,
+  vx: 0,
+  speed: 1,
+}
 
 // Create an empty array and assign it to the school variable
 let school = [];
-let schoolSize = 1; // Amount of fish the program begins with
+let schoolSize = 4; // Amount of fish the program begins with
 
+// Create an empty array and assign it to the babies variable
 let babies = [];
-let numBabies = 0;
+let numBabies = 0; // Amount of babies the player begins with
 
 function setup() {
   createCanvas(600, 600);
+  noStroke();
+
+  shark.y = random(0, height);
 
   // Creates fish positioned randomly
   for (let i = 0; i < schoolSize; i++) {
     school[i] = createFish(random(0, width), random(0, height));
   }
 
+// Creates babies at the user's position
     for (let i = 0; i < numBabies; i++) {
       babies[i] = createBaby(user.x, user.y);
     }
-
 }
 
 /////////////////////////////////// OBJECTS ///////////////////////////////////////////////////////////
@@ -69,13 +81,13 @@ function createBaby(x, y) {
     size: random(10,15),
     vx: 0,
     vy: 0,
-    speed: random(0.5, 1),
+    speed: random(1, 1.5),
   };
   return baby;
 }
 
 
-/////////////////////////////////// DRAW ///////////////////////////////////////////////////////
+////////////////////////s/////////// DRAW ///////////////////////////////////////////////////////
 
 // Moves and displays our fish + the user
 function draw() {
@@ -96,6 +108,9 @@ function draw() {
   // Display the user and their life span
   displayUser(user);
   displayLife();
+
+  displayShark();
+  moveShark();
 
 }
 
@@ -123,21 +138,23 @@ function moveFish(fish) {
 function displayFish(fish) {
   push();
   fill(200, 100, 100);
-  noStroke();
   ellipse(fish.x, fish.y, fish.size);
   pop();
 }
 
 // Babies follow the user
 function moveBaby(baby) {
+  let parentX = user.x;
+  let parentY = user.y;
+
   // changes direction based on position of the user
-    if (user.x < baby.x) {
+    if (parentX < baby.x) {
       baby.vx = -baby.speed;
     } else {
       baby.vx = baby.speed;
     }
 
-    if (user.y < baby.y) {
+    if (parentY < baby.y) {
       baby.vy = -baby.speed;
     } else {
       baby.vy = baby.speed;
@@ -146,14 +163,13 @@ function moveBaby(baby) {
     // Move the babies
     baby.x = baby.x + baby.vx;
     baby.y = baby.y + baby.vy;
-    }
 }
 
 // Displays the provided babies on the canvas
 function displayBaby(baby) {
+  text (`you have ` + (numBabies) + ` babies`, 200, 200);
   push();
   fill(255);
-  noStroke();
   ellipse (baby.x, baby.y, baby.size)
   pop();
 }
@@ -161,7 +177,6 @@ function displayBaby(baby) {
 // Displays the user as an ellipse
 function displayUser(user) {
   push();
-  noStroke();
   ellipse (user.x, user.y, user.size);
   pop();
 }
@@ -174,21 +189,48 @@ function displayLife() {
 
   push();
   text('life: ', 400, 100)
-  noStroke();
+
     // When the user is almost out of food, the display turns red and a vignette appears
-    //if (life.x > width - 100) {
-    //  fill(255,0,0);
+    if (life.x > width - 100) {
+      fill(255,0,0);
       //alpha = alpha + 1
       //drawVignette();
-    //} else {
+    } else {
       fill(255);
-    //}
+    }
   rect(life.x, life.y, life.x, 5);
   pop();
+}
 
+// Display the shark
+function displayShark() {
+  push();
+  fill(`grey`);
+  ellipse(shark.x, shark.y, shark.size);
+  pop();
 
+  text((`shark!`), shark.x + 10, shark.y);
+}
 
+  // Move the shark
+  function moveShark() {
+  //shark follows the user's y position
+  if (user.y < shark.y) {
+    shark.vy = -shark.speed;
+  } else {
+    shark.vy = shark.speed;
+  }
 
+  // Shark returns after going off screen
+  if (shark.x > width + 500) {
+    shark.vx = -shark.speed;
+  } else if (shark.x <= -500){
+    shark.vx = shark.speed;
+  }
+
+  //move the shark
+    shark.x = shark.x + shark.vx
+    shark.y = shark.y + shark.vy
 }
 
 //////////////////////////// USER INPUT ///////////////////////////////////////////////////////////
@@ -198,6 +240,7 @@ function addNewBaby(baby, user) {
     let newBaby = createBaby(user.x, user.y);
     console.log(`newBaby`);
     babies.push(newBaby);
+    numBabies++
 }
 
 // New fish created when user clicks + overlaps a fish
