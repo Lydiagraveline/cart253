@@ -52,7 +52,6 @@ function setup() {
   createCanvas(600, 600);
   noStroke();
 
-
   // shark starts off screen
   shark.x = -shark.constrain
 
@@ -78,6 +77,10 @@ function createFish(x, y) {
     vx: 0,
     vy: 0,
     speed: 2,
+    r: 212,
+    g: random(95, 129),
+    b: random(95, 212),
+
   };
   return fish;
 }
@@ -93,6 +96,10 @@ function createBaby(x, y) {
     eaten: false,
     growUp: false,
     age: random(0.01, 0.02),   // Rate the babies grow
+    r: random(232, 255),
+    g: random(125,150),
+    b: random(125,255),
+    alpha: 100,
   };
   return baby;
 }
@@ -149,7 +156,7 @@ function simulation() {
 //Check the age (size) of the babies + turns them into adults
 function checkAge(baby) {
   for (let i = 0; i < schoolSize; i++) {
-    if (baby.size > 50 && !baby.growUp) {
+    if (baby.size > 40 && !baby.growUp) {
     baby.growUp = true;
     babyGrowUp(school[i], baby);
     }
@@ -183,7 +190,7 @@ function moveFish(fish) {
 // Displays the provided fish on the canvas
 function displayFish(fish) {
   push();
-  fill(200, 100, 100);
+  fill(fish.r, fish.g, fish.b);
   ellipse(fish.x, fish.y, fish.size);
   pop();
 }
@@ -215,8 +222,9 @@ function moveBaby(baby) {
 function displayBaby(baby) {
   if (!baby.eaten && !baby.growUp) {
     push();
+    baby.alpha += 0.5;
     baby.size = baby.size + baby.age;   //babies slowly grow older
-    fill(255);
+    fill(baby.r, baby.g, baby.b, baby.alpha);
     ellipse (baby.x, baby.y, baby.size)
     pop();
   }
@@ -225,6 +233,9 @@ function displayBaby(baby) {
 // Displays the user as an ellipse
 function displayUser(user) {
   push();
+  fill(255, 200, 200);
+  stroke(255);
+  strokeWeight(5);
   ellipse (user.x, user.y, user.size);
   pop();
 }
@@ -250,11 +261,14 @@ function displayLife() {
 // Display the shark
 function displayShark() {
   push();
-  textAlign(CENTER);
   fill(`grey`);
   ellipse(shark.x, shark.y, shark.size);
-  pop();
+
+  textAlign(CENTER);
+  fill(255);
   text((`shark!`), shark.x, shark.y);
+  pop();
+
 }
 
   // Move the shark
@@ -356,10 +370,15 @@ function userInput() {
 ///////////////////////////// END SCREEN //////////////////////////////////////////////////////////////////////////////
  function endScreen() {
    textAlign(CENTER);
+   textSize(32);
+   fill(255);
    if (cause === `old age`){
-     text(`you died of old age`, width/2, height/2);
+     text(`you died of old age`, width/2, height/2 - 60);
    }
    else if (cause === `shark attack`){
-     text(`the shark ate you!`, width/2, height/2);
+     text(`the shark ate you!`, width/2, height/2 - 60);
    }
+   textSize(24);
+   text(`you had ` + (numBabies) + ` babies during your life.`, width/2, height/2 - 20);
+   text( `The shark ate `+ (babiesEaten) +` of them!`, width/2, height/2 + 20);
  }
