@@ -21,7 +21,7 @@ let user = {
 let life = {
   x: 400,
   y: 50,
-  speedDecrease: 0.05,
+  speedDecrease: 0.03,
   max: 400,
 }
 
@@ -236,13 +236,10 @@ function displayLife() {
   life.x = life.x + life.speedDecrease;
 
   push();
-  text('life ', 500, 40);
-
-    // When the user is almost out of food, the display turns red and a vignette appears
-    if (life.x > width - 100) {
+  text('life span ', 500, 40);
+    // When the user is almost out of food, the display turns red
+    if (life.x > width - 50) {
       fill(255,0,0);
-      //alpha = alpha + 1
-      //drawVignette();
     } else {
       fill(255);
     }
