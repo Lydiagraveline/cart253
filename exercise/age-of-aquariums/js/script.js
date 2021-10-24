@@ -12,7 +12,7 @@ author, and this description to match your project!
 let user = {
   x: 100,
   y: 100,
-  size: 50,
+  size: 45,
   speed: 2,
   eaten: false,
 }
@@ -74,7 +74,7 @@ function createFish(x, y) {
   let fish = {
     x: x,
     y: y,
-    size: random(25,50),
+    size: 50,
     vx: 0,
     vy: 0,
     speed: 2,
@@ -91,6 +91,8 @@ function createBaby(x, y) {
     vy: 0,
     speed: random(1, 1.5),
     eaten: false,
+    growUp: false,
+    age: random(0.01, 0.02),   // Rate the babies grow
   };
   return baby;
 }
@@ -107,6 +109,7 @@ function draw() {
   if (state === `death`) {
     endScreen();
   }
+}
 
 /////////////////////////////////////////// SIMULATION /////////////////////////////////////////////////////////////
 
@@ -126,6 +129,7 @@ function simulation() {
       moveBaby(babies[i]);
       displayBaby(babies[i]);
       checkForEatenBabies(babies[i]);
+      checkAge(babies[i]);
   }
 
   // Display the user and their life span
@@ -139,9 +143,23 @@ function simulation() {
   // How to play + score
   text (`You are a fish! your goal is to have as many babies as you can before you die.`, 10, 20);
   text(`Watch out! a shark is out to eat you and your babies!`, 10, 40);
-  text (`life ` + (numBabies) + ` babies. The shark ate `+ (babiesEaten) , 10, 60);
+  text (`you have ` + (numBabies) + ` babies. The shark ate `+ (babiesEaten) , 10, 60);
 }
 
+//Check the age (size) of the babies + turns them into adults
+function checkAge(baby) {
+  for (let i = 0; i < schoolSize; i++) {
+    if (baby.size > 50 && !baby.growUp) {
+    baby.growUp = true;
+    babyGrowUp(school[i], baby);
+    }
+  }
+}
+
+// Adds fish to array when a bay grows up
+function babyGrowUp(fish, baby) {
+  let newFish = createFish(baby.x, baby.y);
+  school.push(newFish);
 }
 
 // Chooses whether the provided fish changes direction and moves it
@@ -195,8 +213,9 @@ function moveBaby(baby) {
 
 // Displays the provided babies on the canvas
 function displayBaby(baby) {
-  if (!baby.eaten) {
+  if (!baby.eaten && !baby.growUp) {
     push();
+    baby.size = baby.size + baby.age;   //babies slowly grow older
     fill(255);
     ellipse (baby.x, baby.y, baby.size)
     pop();
@@ -269,7 +288,7 @@ function checkForEatenBabies(baby) {
 
 
   // Babies get eaten by the shark when overlap
-  if (!baby.eaten && db < shark.size/2 + baby.size/2 ) {
+  if (!baby.eaten && !baby.growUp && db < shark.size/2 + baby.size/2 ) {
     baby.eaten = true
     babiesEaten++
     numBabies--
