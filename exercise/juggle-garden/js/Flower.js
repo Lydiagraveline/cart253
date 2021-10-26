@@ -15,12 +15,13 @@ class Flower {
     this.size = 20;
     this.active = true; // flower starts as active
 
+    this.petalSize = 25;
     this.petalColor = {
       r: random(130, 255),
       g: random(100, 130),
       b: random(100, 240)
     }
-    this.petalSize = 25;
+
 
   }
 
@@ -47,6 +48,7 @@ class Flower {
     // flower is no longer active when it leaves the screen
     if (this.y - this.size/2 > height) {
       this.active = false;
+      numFlowers--;
     }
   }
 
@@ -61,6 +63,7 @@ class Flower {
       // Bounce
       let dx = this.x - paddleLeft.x;
       this.vx = this.vx + map(dx,-paddleLeft.width/2,paddleLeft.width/2,-2,2);
+      bounceCount++
 
       this.vy = -this.vy;
       this.ay = 0;
@@ -74,7 +77,7 @@ class Flower {
       // Bounce
       let dx = this.x - paddleRight.x;
       this.vx = this.vx + map(dx,-paddleRight.width/2,paddleRight.width/2,-2,2);
-
+      bounceCount++
       this.vy = -this.vy;
       this.ay = 0;
     }
@@ -90,8 +93,8 @@ class Flower {
     push();
     // draw the petals
     fill(this.petalColor.r, this.petalColor.g, this.petalColor.b);
-    stroke(this.petalColor.r, this.petalColor.g, this.petalColor.b);
-    strokeWeight(3);
+    stroke(0);
+  //  strokeWeight(3);
     // flower petal code is adapted from "Flower Garden Stamp" by rhymeandreason on P5js editor: https://editor.p5js.org/rhymeandreason/sketches/6hu5yaHoi
     for (var theta=0; theta<TWO_PI; theta+=PI/3){
       var petalx = this.size*cos(theta) + this.x;
@@ -99,7 +102,7 @@ class Flower {
       ellipse(petalx, petaly, this.size);
       }
     //draw the flower center
-    noStroke
+    //noStroke
     fill(255,255,0);
     ellipse(this.x, this.y, this.petalSize,);
     pop();

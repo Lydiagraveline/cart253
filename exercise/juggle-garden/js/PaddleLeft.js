@@ -25,7 +25,7 @@ class PaddleLeft {
   display() {
     push();
     fill(255);
-    noStroke();
+    stroke(0);
     rectMode(CENTER);
     rect(this.x,this.y,this.width,this.height);
     fill(0);
