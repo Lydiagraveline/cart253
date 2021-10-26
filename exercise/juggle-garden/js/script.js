@@ -11,7 +11,7 @@ Juggling simulator
 let gravityForce = 0.0025;
 
 // paddle variable
-let paddle;
+let paddleLeft;
 let paddleRight;
 
 // An array to store the balls
@@ -23,7 +23,7 @@ function setup() {
   createCanvas(windowWidth,windowHeight);
 
   // new paddle with chosen dimensions
-  paddle = new Paddle(300,20);
+  paddleLeft = new PaddleLeft(300,20);
   paddleRight = new PaddleRight(300,20);
 
   // creates the Ball objects and put them in the array
@@ -40,8 +40,8 @@ function draw() {
   background(0);
 
   // calls the paddle's move() and draw() methods
-  paddle.move();
-  paddle.display();
+  paddleLeft.move();
+  paddleLeft.display();
   paddleRight.move();
   paddleRight.display();
 
@@ -51,7 +51,7 @@ function draw() {
     if (ball.active) {
       ball.gravity(gravityForce);
       ball.move();
-      ball.bounce(paddle, paddleRight);
+      ball.bounce(paddleLeft, paddleRight);
       ball.display();
     }
   }

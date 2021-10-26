@@ -46,18 +46,18 @@ class Ball {
   }
 
   // Bounces the ball if it touches the paddle
-  bounce(paddle, paddleRight) {
-    
+  bounce(paddleLeft, paddleRight) {
+
     //Checks the left paddle
     if (
-        this.x > paddle.x - paddle.width/2 &&
-        this.x < paddle.x + paddle.width/2 &&
-        this.y + this.size/2 > paddle.y - paddle.height/2 &&
-        this.y - this.size/2 < paddle.y + paddle.height/2) {
+        this.x > paddleLeft.x - paddleLeft.width/2 &&
+        this.x < paddleLeft.x + paddleLeft.width/2 &&
+        this.y + this.size/2 > paddleLeft.y - paddleLeft.height/2 &&
+        this.y - this.size/2 < paddleLeft.y + paddleLeft.height/2) {
 
       // Bounce
-      let dx = this.x - paddle.x;
-      this.vx = this.vx + map(dx,-paddle.width/2,paddle.width/2,-2,2);
+      let dx = this.x - paddleLeft.x;
+      this.vx = this.vx + map(dx,-paddleLeft.width/2,paddleLeft.width/2,-2,2);
 
       this.vy = -this.vy;
       this.ay = 0;

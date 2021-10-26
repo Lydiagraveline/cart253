@@ -1,4 +1,4 @@
-class Paddle {
+class PaddleLeft {
 
   // Sets up a paddle's properties
   constructor(w,h) {
