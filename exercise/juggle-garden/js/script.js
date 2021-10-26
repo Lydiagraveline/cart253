@@ -15,10 +15,10 @@ let paddleLeft;
 let paddleRight;
 let paddleSpeed = 10  //variable that changes both paddle's speed
 
-// An array to store the balls
-let balls = [];
-// How many balls the program begins with
-let numBalls = 1;
+// An array to store the flowers
+let flowers = [];
+// How many flowers the program begins with
+let numflowers = 1;
 
 function setup() {
   createCanvas(windowWidth,windowHeight);
@@ -27,16 +27,16 @@ function setup() {
   paddleLeft = new PaddleLeft(300,20);
   paddleRight = new PaddleRight(300,20);
 
-  // creates the Ball objects and put them in the array
-  for (let i = 0; i < numBalls; i++) {
+  // creates the flower objects and put them in the array
+  for (let i = 0; i < numflowers; i++) {
     let x = random(0,width);
     let y = random(-400,-100);
-    let ball = new Ball(x,y);
-    balls.push(ball);
+    let flower = new Flower(x,y);
+    flowers.push(flower);
   }
 }
 
-// calls the paddle & balls
+// calls the paddle & flowers
 function draw() {
   background(0);
 
@@ -46,22 +46,22 @@ function draw() {
   paddleRight.move();
   paddleRight.display();
 
-  // Calls the ball's gravity(), move(), bounce(), and display() methods
-  for (let i = 0; i < balls.length; i++) {
-    let ball = balls[i];
-    if (ball.active) {
-      ball.gravity(gravityForce);
-      ball.move();
-      ball.bounce(paddleLeft, paddleRight);
-      ball.display();
+  // Calls the flower's gravity(), move(), bounce(), and display() methods
+  for (let i = 0; i < flowers.length; i++) {
+    let flower = flowers[i];
+    if (flower.active) {
+      flower.gravity(gravityForce);
+      flower.move();
+      flower.bounce(paddleLeft, paddleRight);
+      flower.display();
     }
   }
 }
 
-// Click to add new balls
+// Click to add new flowers
 function mousePressed(){
-  //for (let i = 0; i < balls.length; i++) {
-    let ball = new Ball(mouseX, mouseY);
-    balls.push(ball);
+  //for (let i = 0; i < flowers.length; i++) {
+    let flower = new Flower(mouseX, mouseY);
+    flowers.push(flower);
   //}
 }
