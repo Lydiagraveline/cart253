@@ -1,5 +1,6 @@
 class Paddle {
 
+  // Sets up a paddle's properties
   constructor(w,h) {
     this.width = w;
     this.height = h;
@@ -7,10 +8,12 @@ class Paddle {
     this.y = height - this.height/2;
   }
 
+  // Moves the paddle according to the user's input
   move() {
     this.x = mouseX;
   }
 
+  // Displays the paddle on the canvas
   display() {
     push();
     fill(255);
