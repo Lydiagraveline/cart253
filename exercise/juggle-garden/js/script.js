@@ -13,11 +13,12 @@ let gravityForce = 0.0025;
 // paddle variable
 let paddleLeft;
 let paddleRight;
+let paddleSpeed = 10  //variable that changes both paddle's speed
 
 // An array to store the balls
 let balls = [];
 // How many balls the program begins with
-let numBalls = 10;
+let numBalls = 1;
 
 function setup() {
   createCanvas(windowWidth,windowHeight);
@@ -55,4 +56,12 @@ function draw() {
       ball.display();
     }
   }
+}
+
+// Click to add new balls
+function mousePressed(){
+  //for (let i = 0; i < balls.length; i++) {
+    let ball = new Ball(mouseX, mouseY);
+    balls.push(ball);
+  //}
 }

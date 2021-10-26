@@ -4,9 +4,9 @@ class PaddleLeft {
   constructor(w,h) {
     this.width = w;
     this.height = h;
-    this.x = 0;
+    this.x = 0 + this.width/2;
     this.y = height - this.height/2;
-    this.speed = 5
+    this.speed = paddleSpeed
   }
 
   // Moves the paddle according to the user's input

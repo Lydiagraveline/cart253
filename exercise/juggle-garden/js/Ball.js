@@ -49,8 +49,7 @@ class Ball {
   bounce(paddleLeft, paddleRight) {
 
     //Checks the left paddle
-    if (
-        this.x > paddleLeft.x - paddleLeft.width/2 &&
+    if (this.x > paddleLeft.x - paddleLeft.width/2 &&
         this.x < paddleLeft.x + paddleLeft.width/2 &&
         this.y + this.size/2 > paddleLeft.y - paddleLeft.height/2 &&
         this.y - this.size/2 < paddleLeft.y + paddleLeft.height/2) {
@@ -63,8 +62,7 @@ class Ball {
       this.ay = 0;
     }
     //Checks the right paddle
-    if (
-        this.x > paddleRight.x - paddleRight.width/2 &&
+    if (this.x > paddleRight.x - paddleRight.width/2 &&
         this.x < paddleRight.x + paddleRight.width/2 &&
         this.y + this.size/2 > paddleRight.y - paddleRight.height/2 &&
         this.y - this.size/2 < paddleRight.y + paddleRight.height/2) {
