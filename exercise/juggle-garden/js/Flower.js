@@ -1,7 +1,7 @@
 class Flower {
 
   // The constructor() sets up a paddle's properties
-  constructor(x,y) {
+  constructor(x, y) {
     // size, and movement information
     this.x = x;
     this.y = y;
@@ -12,8 +12,16 @@ class Flower {
     this.ax = 0;
     this.ay = 0;
     this.maxSpeed = 10;
-    this.size = 40;
+    this.size = 20;
     this.active = true; // flower starts as active
+
+    this.petalColor = {
+      r: random(130, 255),
+      g: random(100, 130),
+      b: random(100, 240)
+    }
+    this.petalSize = 25;
+
   }
 
   // Gravity that causes the flower to accelerate downwards
@@ -24,9 +32,6 @@ class Flower {
 
   // Moves the flower accoring to its acceleration and velocity
   move() {
-    //constrains the flower within the edges of the screen
-    this.x = constrain(this.x, 0, width);
-
     // Adds acceleration to the velocity for both x and y axes
     this.vx = this.vx + this.ax;
     this.vy = this.vy + this.ay;
@@ -47,7 +52,6 @@ class Flower {
 
   // Bounces the flower if it touches the paddle
   bounce(paddleLeft, paddleRight) {
-
     //Checks the left paddle
     if (this.x > paddleLeft.x - paddleLeft.width/2 &&
         this.x < paddleLeft.x + paddleLeft.width/2 &&
@@ -84,9 +88,20 @@ class Flower {
   // Displays the flower on the canvas
   display() {
     push();
-    fill(255,50,50); //red
-    stroke(0);
-    ellipse(this.x,this.y,this.size);
+    // draw the petals
+    fill(this.petalColor.r, this.petalColor.g, this.petalColor.b);
+    stroke(this.petalColor.r, this.petalColor.g, this.petalColor.b);
+    strokeWeight(3);
+    // flower petal code is adapted from "Flower Garden Stamp" by rhymeandreason on P5js editor: https://editor.p5js.org/rhymeandreason/sketches/6hu5yaHoi
+    for (var theta=0; theta<TWO_PI; theta+=PI/3){
+      var petalx = this.size*cos(theta) + this.x;
+      var petaly = this.size*sin(theta) + this.y;
+      ellipse(petalx, petaly, this.size);
+      }
+    //draw the flower center
+    noStroke
+    fill(255,255,0);
+    ellipse(this.x, this.y, this.petalSize,);
     pop();
   }
 

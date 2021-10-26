@@ -18,7 +18,7 @@ let paddleSpeed = 10  //variable that changes both paddle's speed
 // An array to store the flowers
 let flowers = [];
 // How many flowers the program begins with
-let numflowers = 1;
+let numFlowers = 0;
 
 function setup() {
   createCanvas(windowWidth,windowHeight);
@@ -27,13 +27,20 @@ function setup() {
   paddleLeft = new PaddleLeft(300,20);
   paddleRight = new PaddleRight(300,20);
 
-  // creates the flower objects and put them in the array
-  for (let i = 0; i < numflowers; i++) {
-    let x = random(0,width);
-    let y = random(-400,-100);
-    let flower = new Flower(x,y);
-    flowers.push(flower);
-  }
+//  creates the flowers
+  // for (let i = 0; i < numFlowers; i++) {
+  //   let x = random(0,width);
+  //   let y = random(-400,-100);
+  //   let petalColor = {
+  //     r: random(100, 255),
+  //     g: random(100, 255),
+  //     b: random(100, 255)
+  //     }
+
+  //   let flower = new Flower (x,y);
+  //   flowers.push(flower);
+  // }
+
 }
 
 // calls the paddle & flowers
@@ -58,10 +65,9 @@ function draw() {
   }
 }
 
-// Click to add new flowers
+// creates a flower where the user clicks and puts it in the array
 function mousePressed(){
-  //for (let i = 0; i < flowers.length; i++) {
+
     let flower = new Flower(mouseX, mouseY);
     flowers.push(flower);
-  //}
 }
