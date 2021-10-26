@@ -12,6 +12,7 @@ let gravityForce = 0.0025;
 
 // paddle variable
 let paddle;
+let paddleRight;
 
 // An array to store the balls
 let balls = [];
@@ -23,6 +24,7 @@ function setup() {
 
   // new paddle with chosen dimensions
   paddle = new Paddle(300,20);
+  paddleRight = new PaddleRight(300,20);
 
   // creates the Ball objects and put them in the array
   for (let i = 0; i < numBalls; i++) {
@@ -33,13 +35,15 @@ function setup() {
   }
 }
 
-// calls the paddle
+// calls the paddle & balls
 function draw() {
   background(0);
 
   // calls the paddle's move() and draw() methods
   paddle.move();
   paddle.display();
+  paddleRight.move();
+  paddleRight.display();
 
   // Calls the ball's gravity(), move(), bounce(), and display() methods
   for (let i = 0; i < balls.length; i++) {
@@ -47,7 +51,7 @@ function draw() {
     if (ball.active) {
       ball.gravity(gravityForce);
       ball.move();
-      ball.bounce(paddle);
+      ball.bounce(paddle, paddleRight);
       ball.display();
     }
   }
