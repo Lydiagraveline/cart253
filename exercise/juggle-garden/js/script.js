@@ -27,12 +27,6 @@ let totalFlowers = 0;
 let droppedFlowers = 0;
 let lives = 3;
 
-// An array to store the trail behind the flowers
-let flowerTrail = [];
-// Trail length
-const MAX_POS = 50;
-
-
 
 function setup() {
   createCanvas(windowWidth,windowHeight);
@@ -47,7 +41,7 @@ function setup() {
 
 // Draws the background, title screen, the end screen, and the game itself
 function draw() {
-  background(255);
+  background(150, 200, 111);
 
 
 
@@ -131,7 +125,6 @@ function callFlowers() {
       flower.gravity(gravityForce);
       flower.move();
       flower.bounce(paddleLeft, paddleRight);
-      flower.trail();
       flower.display();
 
     }
