@@ -28,8 +28,6 @@ class PaddleRight {
     stroke(0);
     rectMode(CENTER);
     rect(this.x,this.y,this.width,this.height);
-    fill(0);
-    text(`use arrow keys`, this.x, this.y);
     pop();
   }
 

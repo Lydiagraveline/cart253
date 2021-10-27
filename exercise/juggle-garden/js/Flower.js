@@ -49,6 +49,7 @@ class Flower {
     if (this.y - this.size/2 > height) {
       this.active = false;
       numFlowers--;
+      lives --;
     }
   }
 
@@ -94,7 +95,6 @@ class Flower {
     // draw the petals
     fill(this.petalColor.r, this.petalColor.g, this.petalColor.b);
     stroke(0);
-  //  strokeWeight(3);
     // flower petal code is adapted from "Flower Garden Stamp" by rhymeandreason on P5js editor: https://editor.p5js.org/rhymeandreason/sketches/6hu5yaHoi
     for (var theta=0; theta<TWO_PI; theta+=PI/3){
       var petalx = this.size*cos(theta) + this.x;
@@ -102,7 +102,6 @@ class Flower {
       ellipse(petalx, petaly, this.size);
       }
     //draw the flower center
-    //noStroke
     fill(255,255,0);
     ellipse(this.x, this.y, this.petalSize,);
     pop();
