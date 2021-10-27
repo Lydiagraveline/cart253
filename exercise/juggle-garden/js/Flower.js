@@ -49,6 +49,7 @@ class Flower {
     if (this.y - this.size/2 > height) {
       this.active = false;
       numFlowers--;
+      droppedFlowers--;
       lives --;
     }
   }
@@ -64,7 +65,6 @@ class Flower {
       // Bounce
       let dx = this.x - paddleLeft.x;
       this.vx = this.vx + map(dx,-paddleLeft.width/2,paddleLeft.width/2,-2,2);
-      bounceCount++
 
       this.vy = -this.vy;
       this.ay = 0;
@@ -78,7 +78,6 @@ class Flower {
       // Bounce
       let dx = this.x - paddleRight.x;
       this.vx = this.vx + map(dx,-paddleRight.width/2,paddleRight.width/2,-2,2);
-      bounceCount++
       this.vy = -this.vy;
       this.ay = 0;
     }

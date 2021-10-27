@@ -19,14 +19,15 @@ let paddleSpeed = 10  //variable that changes both paddle's speed
 
 // An array to store the flowers
 let flowers = [];
-// How many flowers the program begins with
+// How many flowers are on screen
 let numFlowers = 0;
-
-// How many times flowers bounce on the paddle
-let bounceCount = 0;
-
+// How mant flowers get spawned over the course of the game
+let totalFlowers = 0;
 // How many times the player can drop a flower before the game ends
+let droppedFlowers = 0;
 let lives = 3;
+
+
 
 function setup() {
   createCanvas(windowWidth,windowHeight);
@@ -43,14 +44,16 @@ function setup() {
 function draw() {
   background(0);
 
+
   if (state === `title`) {
     callPaddles()
     instructions();
   }
   if (state === `simulation`) {
-    callPaddles()
+    displayLivesAndFlowers();
+    callPaddles();
     callFlowers();
-    checkGameOver()
+    checkGameOver();
   }
   if (state === `gameOver`) {
     endScreen();
@@ -71,6 +74,7 @@ function mousePressed(){
     let flower = new Flower(mouseX, mouseY);
     flowers.push(flower);
     numFlowers++
+    totalFlowers++
   }
 }
 
@@ -95,6 +99,15 @@ function instructions() {
 
 ///////////////////////////////////// SIMULATION ///////////////////////////////
 
+// Displays how many flowers are currently on screen, and how many lives the player has left
+function displayLivesAndFlowers() {
+  push();
+  fill(255);
+  textSize(18);
+  text((numFlowers)+` flowers`, 100, 100);
+  text((lives)+` lives`, width - 100, 100);
+  pop();
+}
 // calls the paddle's move() and draw() methods
 function callPaddles() {
   paddleLeft.move();
@@ -103,15 +116,8 @@ function callPaddles() {
   paddleRight.display();
 }
 
+// Calls the flower's gravity(), move(), bounce(), and display() methods
 function callFlowers() {
-  push();
-  fill(255);
-  text((numFlowers)+` flowers`, 100, 100);
-  text((bounceCount)+` bounces`, 100, 150);
-  text((lives)+` lives`, 100, 200);
-  pop();
-
-  // Calls the flower's gravity(), move(), bounce(), and display() methods
   for (let i = 0; i < flowers.length; i++) {
     let flower = flowers[i];
     if (flower.active) {
@@ -123,6 +129,7 @@ function callFlowers() {
   }
 }
 
+// Checks if the player has lost all their lives
 function checkGameOver() {
  if (lives === 0) {
    state = `gameOver`;
@@ -130,10 +137,24 @@ function checkGameOver() {
 }
 
 ///////////////////////////////////// END SCREEN ///////////////////////////////
+
+// Displays the end screen + player's score
 function endScreen() {
+  //calculates the player's score
+  let score = droppedFlowers + totalFlowers
   push();
   fill(255);
   textSize(32);
   text(`game over!`, width/2, height/2);
+  textSize(18);
+  text(`score: `+(score), width/2, height/2+50);
+
+
+  if (score <= 2) {
+    textSize(16);
+    text(`hint: try spawning more flowers at once!`, width/2, height/2+100);
+  } else if (score >= 10) {
+    text(`wow! not bad`, width/2, height/2+100)
+  }
   pop();
 }
