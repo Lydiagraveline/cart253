@@ -7,6 +7,8 @@ Juggling simulator
 
 "use strict";
 
+let state = `start` //can be start, simulation, and end
+
 // Declares a gravity variable
 let gravityForce = 0.0025;
 
@@ -20,10 +22,12 @@ let flowers = [];
 // How many flowers the program begins with
 let numFlowers = 0;
 
+// How many times flowers bounce on the paddle
 let bounceCount = 0;
 
 function setup() {
   createCanvas(windowWidth,windowHeight);
+  textAlign(CENTER);
 
   // new paddle with chosen dimensions
   paddleLeft = new PaddleLeft(300,20);
@@ -33,7 +37,6 @@ function setup() {
 // calls the paddle & flowers
 function draw() {
   background(0);
-
   fill(255);
   text((numFlowers)+` flowers`, 100, 100);
   text((bounceCount)+` bounces`, 100, 200);
@@ -44,6 +47,27 @@ function draw() {
   paddleRight.move();
   paddleRight.display();
 
+
+  if (state === `start`) {
+    instructions();
+  }
+  if (state === `simulation`) {
+    simulation();
+  }
+
+}
+
+function instructions() {
+  push();
+
+  textSize(32);
+  text(`click anywhere place the first flower!`, width/2, height/2);
+  textSize(18);
+  text(`goal: juggle as many as possible without letting any fall`, width/2, height/2 + 50);
+  pop();
+}
+
+function simulation() {
   // Calls the flower's gravity(), move(), bounce(), and display() methods
   for (let i = 0; i < flowers.length; i++) {
     let flower = flowers[i];
@@ -54,11 +78,21 @@ function draw() {
       flower.display();
     }
   }
+
 }
 
-// creates a flower where the user clicks and puts it in the array
+/////////////////////////////////////// USER INPUT //////////////////////////////////////////////////////////////////////////////
+
+// Begins the simulation when player clicks + spawns 1 flower
 function mousePressed(){
+  // Starts the game
+  if (state === `start`){
+    state = `simulation`
+  }
+  // creates a flower where the user clicks and puts it in the array
+  if (state === `simulation`) {
     let flower = new Flower(mouseX, mouseY);
     flowers.push(flower);
     numFlowers++
+  }
 }
