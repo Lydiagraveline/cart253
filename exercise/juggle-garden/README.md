@@ -1,3 +1,7 @@
-# Template p5 project
+# Juggle Garden
 
-This is the README file for the entire project. For more official projects you should write information here about the nature of the project, your name, any special explanations of how the project works, etc.
+Exercise by Lydia Graveline
+
+code is adapted from "Flower Garden Stamp" by rhymeandreason on P5js editor: https://editor.p5js.org/rhymeandreason/sketches/6hu5yaHoi
+
+Code from "Ellipse trail" by Cassie on p5js editor: https://editor.p5js.org/cassie/sketches/HJC08Is67

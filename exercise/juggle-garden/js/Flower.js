@@ -90,7 +90,7 @@ class Flower {
 
   // Displays the flower on the canvas
   display() {
-    push();
+
     // draw the petals
     fill(this.petalColor.r, this.petalColor.g, this.petalColor.b);
     stroke(0);
@@ -100,10 +100,31 @@ class Flower {
       var petaly = this.size*sin(theta) + this.y;
       ellipse(petalx, petaly, this.size);
       }
+
     //draw the flower center
     fill(255,255,0);
     ellipse(this.x, this.y, this.petalSize,);
-    pop();
+  }
+
+
+  // Creates a trail following the flowers
+  // Code from "Ellipse trail" by Cassie on p5js editor: https://editor.p5js.org/cassie/sketches/HJC08Is67
+  trail() {
+     fill(this.petalColor.r, this.petalColor.g, this.petalColor.b, 10);
+     noStroke();
+      //how you're storing the last 50 poses
+      flowerTrail.push({x: this.x, y: this.y});
+
+      //removes poses that are older than 50
+      if (flowerTrail.length > MAX_POS) {
+         flowerTrail.shift();
+      }
+
+    for (let i = 0; i < flowerTrail.length; i +=1) {
+      // how you want to draw the previous poses
+      // relate it to i to change pose drawing over time
+    	ellipse(flowerTrail[i].x, flowerTrail[i].y, i, i);
+    }
   }
 
 }

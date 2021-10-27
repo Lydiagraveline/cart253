@@ -27,6 +27,11 @@ let totalFlowers = 0;
 let droppedFlowers = 0;
 let lives = 3;
 
+// An array to store the trail behind the flowers
+let flowerTrail = [];
+// Trail length
+const MAX_POS = 50;
+
 
 
 function setup() {
@@ -42,7 +47,9 @@ function setup() {
 
 // Draws the background, title screen, the end screen, and the game itself
 function draw() {
-  background(0);
+  background(255);
+
+
 
 
   if (state === `title`) {
@@ -84,7 +91,7 @@ function mousePressed(){
 function instructions() {
   push();
   textSize(32);
-  fill(255);
+  fill(0);
   text(`click anywhere place the first flower!`, width/2, height/2);
   textSize(18);
   text(`goal: juggle as many as possible without letting any fall`, width/2, height/2 + 50);
@@ -102,7 +109,7 @@ function instructions() {
 // Displays how many flowers are currently on screen, and how many lives the player has left
 function displayLivesAndFlowers() {
   push();
-  fill(255);
+  fill(0);
   textSize(18);
   text((numFlowers)+` flowers`, 100, 100);
   text((lives)+` lives`, width - 100, 100);
@@ -124,7 +131,9 @@ function callFlowers() {
       flower.gravity(gravityForce);
       flower.move();
       flower.bounce(paddleLeft, paddleRight);
+      flower.trail();
       flower.display();
+
     }
   }
 }
@@ -143,7 +152,7 @@ function endScreen() {
   //calculates the player's score
   let score = droppedFlowers + totalFlowers
   push();
-  fill(255);
+  fill(0);
   textSize(32);
   text(`game over!`, width/2, height/2);
   textSize(18);
