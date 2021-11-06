@@ -1,8 +1,8 @@
 class Hot extends Particle {
   constructor(x, y) {
     super(x, y);
-    this.vx = 5; // X velocity
-    this.vy = 2; // Y velocity
+    this.vx = random(6,8); // X velocity
+    this.vy = random(3, 4); // Y velocity
   }
 
   // Display the hot particles

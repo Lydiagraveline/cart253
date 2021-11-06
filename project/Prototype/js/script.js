@@ -8,42 +8,44 @@ Lydia Graveline
 // The particles
 let coldParticles = [];
 let hotParticles = [];
-let numParticles = 10;
+let numParticles = 5;
 
 // Program begins with the door closed
-let door = `open`;
+let door = `closed`;
 
 // Set up the canvas and the particles
 function setup() {
-  createCanvas(700, 500);
+  createCanvas(800, 400);
 
-  // Create the correct number of particles and put them in our array
-  for (let i = 0; i < numParticles; i++) {
-    let x = random(0, width);
-    let y = random(0, height);
-    let particle = new Cold(x, y);
-    coldParticles.push(particle);
-  }
-
-  for (let i = 0; i < numParticles; i++) {
-    let x = random(0, width);
-    let y = random(0, height);
-    let particle = new Hot(x, y);
-    hotParticles.push(particle);
+// Create cold particles and put them in our array
+for (let i = 0; i < numParticles; i++) {
+  let x = random(10, width - 10);
+  let y = random(10, height - 10);
+  let particle = new Cold(x, y);
+  coldParticles.push(particle);
+}
+// Create hot particles and put them in our array
+for (let i = 0; i < numParticles; i++) {
+  let x = random(10, width - 10);
+  let y = random(10, height - 10);
+  let particle = new Hot(x, y);
+  hotParticles.push(particle);
   }
 }
 
 // Display and move the particles
 function draw() {
+  // Displays the background
   displayChambers();
 
-  // Go through all the particles and move, and display them
+  // Move and display cold particles
   for (let i = 0; i < coldParticles.length; i++) {
     let particle = coldParticles[i];
     particle.move();
     particle.display();
   }
 
+  // Move and display hot particles
   for (let i = 0; i < hotParticles.length; i++) {
     let particle = hotParticles[i];
     particle.move();
@@ -57,15 +59,15 @@ function draw() {
   }
 }
 
-// Displays the background as two chambers
+// Displays the background as two grey rectangles
 function displayChambers() {
   noStroke();
   //left chamber
   background(`gray`);
   // Right chamber
   rectMode(CORNER);
-  fill(169);
-  rect(width / 2, 0, height); // Draw gray rectangle
+  fill(169); // light grey
+  rect(width / 2, 0, width, height); // Draw gray rectangle
 }
 
 ////////////////////////////////////// User Input //////////////////////////////////////////////
@@ -73,10 +75,10 @@ function displayChambers() {
 // closes the door if the user presses the space bar
 function keyTyped() {
   if (keyCode === 32) {
-    door = `closed`;
+    door = `open`;
   }
 }
 
 function keyReleased() {
-  door = `open`;
+  door = `closed`;
 }

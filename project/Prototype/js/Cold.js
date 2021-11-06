@@ -1,8 +1,8 @@
 class Cold extends Particle {
   constructor(x, y) {
     super(x, y);
-    this.vx = 2; // X velocity
-    this.vy = 1; // Y velocity
+    this.vx = random(2, 4); // X velocity
+    this.vy = random(1, 2); // Y velocity
   }
 
   // Display the cold particles
