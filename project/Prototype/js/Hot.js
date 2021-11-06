@@ -8,9 +8,8 @@ class Hot extends Particle {
   // Display the hot particles
   display() {
     push();
-    fill(50); 
+    fill(50);
     ellipse(this.x, this.y, this.r * 2);
     pop();
   }
-
 }

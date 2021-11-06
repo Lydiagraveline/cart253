@@ -11,26 +11,26 @@ let hotParticles = [];
 let numParticles = 10;
 
 // Program begins with the door closed
-let door = `closed`;
+let door = `open`;
 
 // Set up the canvas and the particles
 function setup() {
   createCanvas(700, 500);
 
   // Create the correct number of particles and put them in our array
-    for (let i = 0; i < numParticles; i++) {
-      let x = random(0, width);
-      let y = random(0, height);
-      let particle = new Cold(x, y);
-      coldParticles.push(particle);
-    }
+  for (let i = 0; i < numParticles; i++) {
+    let x = random(0, width);
+    let y = random(0, height);
+    let particle = new Cold(x, y);
+    coldParticles.push(particle);
+  }
 
-    for (let i = 0; i < numParticles; i++) {
-      let x = random(0, width);
-      let y = random(0, height);
-      let particle = new Hot(x, y);
-      hotParticles.push(particle);
-    }
+  for (let i = 0; i < numParticles; i++) {
+    let x = random(0, width);
+    let y = random(0, height);
+    let particle = new Hot(x, y);
+    hotParticles.push(particle);
+  }
 }
 
 // Display and move the particles
@@ -38,26 +38,22 @@ function draw() {
   displayChambers();
 
   // Go through all the particles and move, and display them
-    for (let i = 0; i < coldParticles.length; i++) {
-      let particle = coldParticles[i];
-      particle.move();
-      particle.display();
-    }
+  for (let i = 0; i < coldParticles.length; i++) {
+    let particle = coldParticles[i];
+    particle.move();
+    particle.display();
+  }
 
-    for (let i = 0; i < hotParticles.length; i++) {
-      let particle = hotParticles[i];
-      particle.move();
-      particle.display();
-    }
-
-
-
-
+  for (let i = 0; i < hotParticles.length; i++) {
+    let particle = hotParticles[i];
+    particle.move();
+    particle.display();
+  }
 
   if (door === `closed`) {
     rectMode(CENTER);
-    fill (255);
-    rect(width/2, height/2, 10, height); // Draw thin white rectangle in center
+    fill(255);
+    rect(width / 2, height / 2, 10, height); // Draw thin white rectangle in center
   }
 }
 
@@ -69,5 +65,18 @@ function displayChambers() {
   // Right chamber
   rectMode(CORNER);
   fill(169);
-  rect(width/2, 0, height); // Draw gray rectangle
+  rect(width / 2, 0, height); // Draw gray rectangle
+}
+
+////////////////////////////////////// User Input //////////////////////////////////////////////
+
+// closes the door if the user presses the space bar
+function keyTyped() {
+  if (keyCode === 32) {
+    door = `closed`;
+  }
+}
+
+function keyReleased() {
+  door = `open`;
 }
