@@ -6,7 +6,8 @@ Lydia Graveline
 "use strict";
 
 // The particles
-let particles = [];
+let coldParticles = [];
+let hotParticles = [];
 let numParticles = 10;
 
 // Program begins with the door closed
@@ -20,8 +21,15 @@ function setup() {
     for (let i = 0; i < numParticles; i++) {
       let x = random(0, width);
       let y = random(0, height);
-      let particle = new Particle(x, y);
-      particles.push(particle);
+      let particle = new Cold(x, y);
+      coldParticles.push(particle);
+    }
+
+    for (let i = 0; i < numParticles; i++) {
+      let x = random(0, width);
+      let y = random(0, height);
+      let particle = new Hot(x, y);
+      hotParticles.push(particle);
     }
 }
 
@@ -30,8 +38,14 @@ function draw() {
   displayChambers();
 
   // Go through all the particles and move, and display them
-    for (let i = 0; i < particles.length; i++) {
-      let particle = particles[i];
+    for (let i = 0; i < coldParticles.length; i++) {
+      let particle = coldParticles[i];
+      particle.move();
+      particle.display();
+    }
+
+    for (let i = 0; i < hotParticles.length; i++) {
+      let particle = hotParticles[i];
       particle.move();
       particle.display();
     }
