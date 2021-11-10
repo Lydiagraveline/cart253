@@ -13,8 +13,6 @@ let numParticles = 5;
 // Program begins with the door closed
 let door = `closed`;
 
-let numHotParticlesLeft = 0;
-let numHotParticlesRight;
 
 // Set up the canvas and the particles
 function setup() {
@@ -41,7 +39,7 @@ function draw() {
   // Displays the background
   displayChambers();
   fill(0);
-  text((numHotParticlesLeft), 100, 100)
+  
 
 
   // Move and display cold particles
@@ -56,7 +54,6 @@ function draw() {
     let particle = hotParticles[i];
     particle.move();
     particle.display();
-    particle.calculatePosition();
   }
 
   if (door === `closed`) {

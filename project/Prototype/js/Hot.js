@@ -13,10 +13,7 @@ class Hot extends Particle {
     pop();
   }
 
-  calculatePosition(){
-    if (this.x < width/2){
-      numHotParticlesLeft = numHotParticlesLeft + 1;
-    }
 
-  }
+
+  
 }
