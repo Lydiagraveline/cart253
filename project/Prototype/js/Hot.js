@@ -12,4 +12,11 @@ class Hot extends Particle {
     ellipse(this.x, this.y, this.r * 2);
     pop();
   }
+
+  calculatePosition(){
+    if (this.x < width/2){
+      numHotParticlesLeft = numHotParticlesLeft + 1;
+    }
+
+  }
 }
