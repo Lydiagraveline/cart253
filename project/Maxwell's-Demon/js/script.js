@@ -10,16 +10,38 @@ Project 2 for CART253
 let gameMode = `title`; // can be title, game, end
 let level = `1`; // The game starts at level 1
 
-/**
-Description of setup
-*/
+
+
+
+// The particles
+let coldParticles = [];
+let hotParticles = [];
+let numParticles = 5;
+
+// Program begins with the door closed
+let door = `open`;
+
+// Set up the canvas and the particles
 function setup() {
   createCanvas(windowWidth, windowHeight);
+
+  // Create cold particles and put them in our array
+for (let i = 0; i < numParticles; i++) {
+  let x = width/2;
+  let y = height/2;
+  let particle = new Cold(x, y);
+  coldParticles.push(particle);
+}
+// Create hot particles and put them in our array
+for (let i = 0; i < numParticles; i++) {
+  let x = width/2;
+  let y = height/2;
+  let particle = new Hot(x, y);
+  hotParticles.push(particle);
+  }
+
 }
 
-/**
-Description of draw()
-*/
 function draw() {
   if (gameMode === `title`) {
     titleScreen();
@@ -53,7 +75,53 @@ function challengeMode() {
 function levelOne() {
   background(255);
   text(`level one`, 100, 100);
+  let containerWidth = 800
+  let containerHeight = 200
+  let x1 = width/2 - containerWidth/2
+  let y1 = height/2 - containerHeight/2
+  let x2 = width/2 + containerWidth/2
+  let y2 = height/2 + containerHeight/2
+
+  displayContainer(width/2, height/2, containerWidth, containerHeight);
+  drawParticles(x1, y1, x2, y2,)
+
 }
+
+function displayContainer(x, y, width, height) {
+  push()
+  noStroke();
+  rectMode(CENTER);
+  fill(`gray`);
+  rect(x, y, width, height)
+
+  // center line
+  stroke(5);
+  line(x, y - height/2, x, y + height/2);
+  pop();
+}
+
+// Display and move the particles
+function drawParticles(x, y, width, height) {
+  for (let i = 0; i < coldParticles.length; i++) {
+   let particle = coldParticles[i];
+   particle.move(x, y, width, height);
+   particle.display();
+ }
+
+ // Move and display hot particles
+ for (let i = 0; i < hotParticles.length; i++) {
+   let particle = hotParticles[i];
+   particle.move(x, y, width, height);
+   particle.display();
+ }
+
+ if (door === `closed`) {
+   rectMode(CENTER);
+   fill(255);
+   rect(width / 2, height / 2, 10, height); // Draw thin white rectangle in center
+ }
+}
+
 ///////////////////////////////// USER INPUT ///////////////////////////////////
 
 function mousePressed() {
