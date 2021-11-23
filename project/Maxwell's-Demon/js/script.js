@@ -22,10 +22,9 @@ let door = `open`;
 function setup() {
   createCanvas(windowWidth, windowHeight);
 
-  let level = new Level(800, 200)
+  let level = new Level(800, 200);
 
-  level.addParticles()
-
+  level.addParticles();
 }
 
 function draw() {
@@ -70,7 +69,6 @@ function levelOne() {
   container.display(); //width/2, height/2, containerWidth, containerHeight
 
   levelOne.drawParticles(); //(x1, y1, x2, y2,)
-
 }
 
 ///////////////////////////////// USER INPUT ///////////////////////////////////

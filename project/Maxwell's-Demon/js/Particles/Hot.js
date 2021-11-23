@@ -1,7 +1,7 @@
 class Hot extends Particle {
   constructor(x, y) {
     super(x, y);
-    this.vx = random(6,8); // X velocity
+    this.vx = random(6, 8); // X velocity
     this.vy = random(3, 4); // Y velocity
   }
 
@@ -12,8 +12,4 @@ class Hot extends Particle {
     ellipse(this.x, this.y, this.r * 2);
     pop();
   }
-
-
-
-  
 }

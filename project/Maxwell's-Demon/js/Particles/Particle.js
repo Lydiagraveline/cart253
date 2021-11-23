@@ -8,7 +8,8 @@ class Particle {
   }
 
   // Move the particles
-  move(x, y, width, height) { //x1, y1, x2, y2
+  move(x, y, width, height) {
+    //x1, y1, x2, y2
     this.x += this.vx;
     this.y += this.vy;
 
