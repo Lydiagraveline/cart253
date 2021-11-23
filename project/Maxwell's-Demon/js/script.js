@@ -10,9 +10,6 @@ Project 2 for CART253
 let gameMode = `title`; // can be title, game, end
 let level = `1`; // The game starts at level 1
 
-
-
-
 // The particles
 let coldParticles = [];
 let hotParticles = [];
@@ -52,6 +49,7 @@ function draw() {
 }
 
 ///////////////////////////////// TITLE SCREEN /////////////////////////////////
+
 // Displays the title screen
 function titleScreen() {
   background(0);
@@ -82,23 +80,26 @@ function levelOne() {
   let x2 = width/2 + containerWidth/2
   let y2 = height/2 + containerHeight/2
 
-  displayContainer(width/2, height/2, containerWidth, containerHeight);
+  let container = new Container
+
+  container.display(width/2, height/2, containerWidth, containerHeight);
+  //displayContainer(width/2, height/2, containerWidth, containerHeight);
   drawParticles(x1, y1, x2, y2,)
 
 }
 
-function displayContainer(x, y, width, height) {
-  push()
-  noStroke();
-  rectMode(CENTER);
-  fill(`gray`);
-  rect(x, y, width, height)
-
-  // center line
-  stroke(5);
-  line(x, y - height/2, x, y + height/2);
-  pop();
-}
+// function displayContainer(x, y, width, height) {
+//   push()
+//   noStroke();
+//   rectMode(CENTER);
+//   fill(`gray`);
+//   rect(x, y, width, height)
+//
+//   // center line
+//   stroke(5);
+//   line(x, y - height/2, x, y + height/2);
+//   pop();
+// }
 
 // Display and move the particles
 function drawParticles(x, y, width, height) {
