@@ -1,7 +1,6 @@
 class Container extends Level {
   constructor(width, height){
     super(width, height);
-
   }
 
   display() {

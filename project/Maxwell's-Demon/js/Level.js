@@ -12,6 +12,7 @@ class Level {
 
   addParticles(){
     // Create cold particles and put them in our array
+    // X and Y are random points inside the container
     for (let i = 0; i < numParticles; i++) {
       let x = random(this.x1, this.x2)
       let y = random(this.y1, this.y2);
@@ -19,6 +20,7 @@ class Level {
       coldParticles.push(particle);
     }
     // Create hot particles and put them in our array
+    // X and Y are random points inside the container
     for (let i = 0; i < numParticles; i++) {
       let x = random(this.x1, this.x2)
       let y = random(this.y1, this.y2);
