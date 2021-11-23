@@ -8,11 +8,11 @@ class Particle {
   }
 
   // Move the particles
-  move(x, y, width, height) {
+  move(x, y, width, height) { //x1, y1, x2, y2
     this.x += this.vx;
     this.y += this.vy;
 
-    // Bounces the particles off the borders on the container
+    // Bounces the particles off the borders of the container
     if (this.x > width - this.r || this.x < x + this.r) {
       this.vx = -this.vx;
     }

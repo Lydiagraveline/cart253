@@ -1,20 +1,21 @@
 class Container extends Level {
-  constructor(){
-    super();
-    this.containerWidth = 800
-    this.containerHeight = 200
+  constructor(width, height){
+    super(width, height);
+
   }
 
-  display(x, y, width, height) {
+  display() {
     push();
     noStroke();
     rectMode(CENTER);
     fill(`gray`);
-    rect(this.x1, this.y1, this.containerWidth, this.containerHeight)
+    rect(width/2, height/2, this.width, this.height)
 
     // center line
     stroke(5);
-    line(x, y - height/2, x, y + height/2);
+    line(width/2, this.y1, width/2, this.y2);
+
+    ellipse(this.x1, this.y2, 10)
     pop();
   }
 }
