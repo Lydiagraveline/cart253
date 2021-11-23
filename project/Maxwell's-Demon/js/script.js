@@ -82,24 +82,14 @@ function levelOne() {
 
   let container = new Container
 
-  container.display(width/2, height/2, containerWidth, containerHeight);
-  //displayContainer(width/2, height/2, containerWidth, containerHeight);
+  container.display();
+
+  //width/2, height/2, containerWidth, containerHeight
+  
   drawParticles(x1, y1, x2, y2,)
 
 }
 
-// function displayContainer(x, y, width, height) {
-//   push()
-//   noStroke();
-//   rectMode(CENTER);
-//   fill(`gray`);
-//   rect(x, y, width, height)
-//
-//   // center line
-//   stroke(5);
-//   line(x, y - height/2, x, y + height/2);
-//   pop();
-// }
 
 // Display and move the particles
 function drawParticles(x, y, width, height) {

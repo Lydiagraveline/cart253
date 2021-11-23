@@ -1,7 +1,8 @@
-class Container {
+class Container extends Level {
   constructor(){
-    this.width = 800;
-    this.height = 200;
+    super();
+    this.containerWidth = 800
+    this.containerHeight = 200
   }
 
   display(x, y, width, height) {
@@ -9,7 +10,7 @@ class Container {
     noStroke();
     rectMode(CENTER);
     fill(`gray`);
-    rect(x, y, width, height)
+    rect(this.x1, this.y1, this.containerWidth, this.containerHeight)
 
     // center line
     stroke(5);
