@@ -1,7 +1,6 @@
 class Container extends Level {
-  constructor(width, height;
-){
-    super(width, height);
+  constructor(containerWidth, containerHeight){
+    super(containerWidth, containerHeight);
   }
 
   display() {
@@ -13,9 +12,24 @@ class Container extends Level {
 
     // center line
     stroke(5);
-    line(width/2, this.y1, width/2, this.y2);
+    //line(width/2, this.y1, width/2, this.y2);
 
-    ellipse(this.x1, this.y2, 10)
+
+      rectMode(CENTER);
+      noStroke();
+      fill(255);
+
+
+      rect(width/2, this.y1 - this.doorHeight/2, 10, this.height); // Draw thin white rectangle in center
+      rect(width/2, this.y2 + this.doorHeight/2, 10, this.height);
+
+      if (door === 'closed') {
+        rect(width/2, height/2, 10, door);
+      }
+
+
+
+
     pop();
   }
 }

@@ -16,7 +16,7 @@ let hotParticles = [];
 let numParticles = 5;
 
 // Program begins with the door closed
-let door = `open`;
+let door = `closed`;
 
 // Set up the canvas and the particles
 function setup() {

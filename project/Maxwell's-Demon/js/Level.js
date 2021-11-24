@@ -2,10 +2,12 @@ class Level {
   constructor(containerWidth, containerHeight) {
     this.width = containerWidth;
     this.height = containerHeight;
-    this.x1 = windowWidth / 2 - this.width / 2;
-    this.y1 = windowHeight / 2 - this.height / 2;
-    this.x2 = windowWidth / 2 + this.width / 2;
-    this.y2 = windowHeight / 2 + this.height / 2;
+    this.x1 = width / 2 - this.width / 2;
+    this.y1 = height / 2 - this.height / 2;
+    this.x2 = width / 2 + this.width / 2;
+    this.y2 = height / 2 + this.height / 2;
+    this.doorHeight = 50
+
   }
 
   display() {}
@@ -33,21 +35,17 @@ class Level {
   drawParticles() {
     for (let i = 0; i < coldParticles.length; i++) {
       let particle = coldParticles[i];
-      particle.move(this.x1, this.y1, this.x2, this.y2);
+      particle.move(this.x1, this.y1, this.x2, this.y2,this.doorHeight);
       particle.display();
     }
 
     // Move and display hot particles
     for (let i = 0; i < hotParticles.length; i++) {
       let particle = hotParticles[i];
-      particle.move(this.x1, this.y1, this.x2, this.y2);
+      particle.move(this.x1, this.y1, this.x2, this.y2,this.doorHeight);
       particle.display();
     }
 
-    if (door === `closed`) {
-      rectMode(CENTER);
-      fill(255);
-      rect(width / 2, height / 2, 10, height); // Draw thin white rectangle in center
-    }
+
   }
 }
