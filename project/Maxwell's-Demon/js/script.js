@@ -80,3 +80,14 @@ function mousePressed() {
     console.log(gameMode);
   }
 }
+
+// closes the door if the user presses the space bar
+function keyTyped() {
+  if (keyCode === 32) {
+    door = `open`;
+  }
+}
+
+function keyReleased() {
+  door = `closed`;
+}

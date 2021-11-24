@@ -7,6 +7,7 @@ class Level {
     this.x2 = width / 2 + this.width / 2;
     this.y2 = height / 2 + this.height / 2;
     this.doorHeight = 50
+    this.doorWidth = 10
 
   }
 
@@ -35,14 +36,14 @@ class Level {
   drawParticles() {
     for (let i = 0; i < coldParticles.length; i++) {
       let particle = coldParticles[i];
-      particle.move(this.x1, this.y1, this.x2, this.y2,this.doorHeight);
+      particle.move(this.x1, this.y1, this.x2, this.y2,this.doorHeight,this.doorWidth );
       particle.display();
     }
 
     // Move and display hot particles
     for (let i = 0; i < hotParticles.length; i++) {
       let particle = hotParticles[i];
-      particle.move(this.x1, this.y1, this.x2, this.y2,this.doorHeight);
+      particle.move(this.x1, this.y1, this.x2, this.y2,this.doorHeight,this.doorWidth );
       particle.display();
     }
 

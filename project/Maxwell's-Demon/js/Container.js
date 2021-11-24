@@ -14,21 +14,16 @@ class Container extends Level {
     stroke(5);
     //line(width/2, this.y1, width/2, this.y2);
 
-
       rectMode(CENTER);
       noStroke();
       fill(255);
 
-
-      rect(width/2, this.y1 - this.doorHeight/2, 10, this.height); // Draw thin white rectangle in center
-      rect(width/2, this.y2 + this.doorHeight/2, 10, this.height);
+      rect(width/2, this.y1 - this.doorHeight/2, this.doorWidth , this.height); // Draw thin white rectangle in center
+      rect(width/2, this.y2 + this.doorHeight/2, this.doorWidth , this.height);
 
       if (door === 'closed') {
-        rect(width/2, height/2, 10, door);
+        rect(width/2, height/2, this.doorWidth , this.doorHeight);
       }
-
-
-
 
     pop();
   }
