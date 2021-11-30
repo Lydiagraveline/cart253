@@ -39,6 +39,9 @@ class Particle {
       this.x ++;
     }
 
+    this.x = constrain(this.x, width/2 - containerWidth/2, width/2 + containerWidth/2);
+    this.y = constrain(this.y, height/2 - containerHeight/2, height/2 + containerHeight/2);
+
   }
 
 

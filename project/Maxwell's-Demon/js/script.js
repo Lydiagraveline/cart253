@@ -8,7 +8,7 @@ Project 2 for CART253
 "use strict";
 
 let gameMode = `title`; // can be title, game, end
-let level = `1`; // The game starts at level 1
+let levelNum = 1; // The game starts at level 1
 
 
 // A timer to count the number of frames in the game state
@@ -17,9 +17,13 @@ let gameOverTimer = 0;
 let gameLength = 60 * 10; // 10 seconds
 
 // The particles
-let coldParticles = [];
-let hotParticles = [];
-let numParticles = 2;
+let numParticles = 0;
+
+let levelWidth = 800;
+let levelHeight = 400;
+
+let level;
+let container;
 
 // Program begins with the door closed
 let door = `closed`;
@@ -28,9 +32,12 @@ let door = `closed`;
 function setup() {
   createCanvas(windowWidth, windowHeight);
 
-  let level = new Level(100, 100); // How can I call this somewhere besides setup() ?
-  level.addParticles();
+  //numParticles = 2;
 
+  level = new Level(levelWidth, levelHeight, 2); // How can I call this somewhere besides setup() ?
+  //level.addParticles(numParticles);
+
+  //container = new Container(levelWidth, levelHeight);
 }
 
 // draw() checks the state and runs the appropriate state function
@@ -69,31 +76,35 @@ function challengeMode() {
   checkTimer();
   gameOver();
 
-  if (level === `1`) {
+  if (levelNum === 1) {
     levelOne();
     }
+    else if (levelNum === 2) {
+      levelTwo();
+      }
 }
 
 function levelOne() {
   background(255);
   text(`level one`, 100, 100);
-  text((level)+ ` level`, 100, 150);
+  text((levelNum)+ ` level`, 100, 150);
   text((numParticles)+` num particles`, 100, 200);
 
-  let levelOne = new Level(800, 400);
+  //let levelOne = new Level(levelWidth, levelHeight );
 
-  let container = new Container(800, 400);
 
-  container.display(); //width/2, height/2, containerWidth, containerHeight
-  levelOne.drawParticles(); //(x1, y1, x2, y2,)
+
+  level.display(levelWidth, levelHeight); //width/2, height/2, containerWidth, containerHeight
+  level.drawParticles(levelWidth, levelHeight); //(x1, y1, x2, y2,)
 
 }
 
 function levelTwo(){
-  let levelOne = new Level(800, 200);
-  let container = new Container(800, 200);
-  container.display(); //width/2, height/2, containerWidth, containerHeight
-  levelOne.drawParticles(); //(x1, y1, x2, y2,)
+  background(255);
+  levelWidth = 500;
+  levelHeight = 500;
+  level.display(levelWidth, levelHeight); //width/2, height/2, containerWidth, containerHeight
+  level.drawParticles(levelWidth, levelHeight); //(x1, y1, x2, y2,)
 }
 
 
@@ -134,20 +145,32 @@ function checkTimer(){
 ///////////////////////////////// USER INPUT ///////////////////////////////////
 
 function mousePressed() {
+
   // "click to start" changes the gameMode from
   if (gameMode === `title`) {
     gameMode = `challenge`;
     console.log(gameMode);
   }
+
 }
 
 // closes the door if the user presses the space bar
 function keyTyped() {
+  // opens the door
   if (keyCode === 32) {
     door = `open`;
   }
+  if (keyCode === ENTER && gameMode === 'challenge' && levelNum === 1) {
+    levelNum = 2;
+    numParticles = 5;
+    level = new Level(500, 500, 5);
+    //container = new Container (500, 500);
+    //level.addParticles(numParticles)
+  }
+  console.log(levelNum);
 }
 
+// closes the door
 function keyReleased() {
   door = `closed`;
 }
