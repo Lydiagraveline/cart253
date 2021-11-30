@@ -12,4 +12,11 @@ class Hot extends Particle {
     ellipse(this.x, this.y, this.r * 2);
     pop();
   }
+
+  check(){
+    if (thix.x > width / 2) {
+      
+    }
+  }
+
 }

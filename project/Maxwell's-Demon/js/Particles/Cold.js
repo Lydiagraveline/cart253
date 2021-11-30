@@ -9,7 +9,7 @@ class Cold extends Particle {
   display() {
     push();
     stroke(0);
-    fill(255); // light blue
+    fill(255); 
     ellipse(this.x, this.y, this.r * 2);
     pop();
   }
