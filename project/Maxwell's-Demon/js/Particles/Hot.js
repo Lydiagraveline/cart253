@@ -6,7 +6,7 @@ class Hot extends Particle {
   }
 
   // Display the hot particles
-  display() {
+  display(radius) {
     push();
     fill(50);
     ellipse(this.x, this.y, this.r * 2);
@@ -15,7 +15,7 @@ class Hot extends Particle {
 
   check(){
     if (thix.x > width / 2) {
-      
+
     }
   }
 

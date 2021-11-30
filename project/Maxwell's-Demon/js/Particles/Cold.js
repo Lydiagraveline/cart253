@@ -6,10 +6,10 @@ class Cold extends Particle {
   }
 
   // Display the cold particles
-  display() {
+  display(radius) {
     push();
     stroke(0);
-    fill(255); 
+    fill(255);
     ellipse(this.x, this.y, this.r * 2);
     pop();
   }

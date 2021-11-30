@@ -2,18 +2,17 @@ class Particle {
   constructor(x, y) {
     this.x = x;
     this.y = y;
-    this.r = 10; // radius
+    this.r = radius;
     this.vx = 0; // X velocity defined in subclasses
     this.vy = 0; // Y velocity defined in subclasses
   }
-
 
   check() {
 
   }
 
   // Move the particles
-  move(x, y, containerWidth, containerHeight, doorHeight, doorWidth) {
+  move(x, y, containerWidth, containerHeight, doorHeight, doorWidth, radius) {
     //x1, y1, x2, y2
     this.x += this.vx;
     this.y += this.vy;
