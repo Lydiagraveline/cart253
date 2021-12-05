@@ -83,7 +83,7 @@ class Level {
 
     // the demon
     imageMode(CENTER);
-    image(demonImg, width/2, this.y1);
+    image(demonTopImg, width/2, this.y1);
 
     // fill(0);
     // ellipse(this.x1 + this.r, this.y1, 10)

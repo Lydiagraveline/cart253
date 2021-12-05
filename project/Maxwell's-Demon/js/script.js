@@ -7,7 +7,7 @@ Project 2 for CART253
 
 "use strict";
 
-let gameMode = `title`; // can be title, challenge, end
+let gameMode = `title`; // can be title, challenge, sandbox
 let levelNum = 1; // The game starts at level 1
 let entropy = `high` //can be high or low
 
@@ -30,10 +30,14 @@ let level;
 // Program begins with the door closed
 let door = `closed`;
 
+// preload images
 let demonImg;
-
+let demonTopImg;
+let demonCornerImg;
 function preload() {
   demonImg = loadImage('assets/images/demon.png');
+  demonTopImg = loadImage('assets/images/demon-top.png');
+  demonCornerImg = loadImage('assets/images/demon-corner.png');
 }
 
 // Set up the canvas and the particles for level 1
@@ -41,6 +45,7 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   // creates a new level
   level = new Level(levelWidth, levelHeight, numParticles, doorHeight, radius);
+
 }
 
 // draw() checks the state and runs the appropriate state function
@@ -51,12 +56,10 @@ function draw() {
   else if (gameMode === `challenge`) {
     challengeMode();
   }
-  else if (state === `win`) {
-    win();
+  else if (gameMode === `sandbox`) {
+    sandbox();
   }
-  else if (state === `lose`) {
-    lose();
-  }
+
 }
 
 
@@ -120,6 +123,17 @@ function displayText(insructions) {
   pop();
 }
 
+function sandbox() {
+  levelWidth = 600;
+  levelHeight = 400;
+  numParticles = 3;
+  background(255);
+
+  newLevel(levelWidth, levelHeight, radius);
+
+
+}
+
 
 ///////////////////////////////// USER INPUT ///////////////////////////////////
 
@@ -127,9 +141,18 @@ function displayText(insructions) {
 // "click to start"
 function mousePressed() {
   if (gameMode === `title`) {
-    gameMode = `challenge`;
-    console.log(gameMode);
+    if (mouseX > 325 && mouseX < 575){
+      //button 1
+      if (mouseY > 315 && mouseY < 415 ){
+        gameMode = `challenge`
+      }
+      if (mouseY > 450 && mouseY < 550){
+        gameMode = `sandbox`
+      }
+    }
   }
+
+  print(mouseX, mouseY)
 
 }
 
@@ -156,19 +179,39 @@ function keyTyped() {
 // closes the door
 function keyReleased() {
   door = `closed`;
+
 }
 
 ///////////////////////////////// TITLE SCREEN /////////////////////////////////
 
 // Displays the title screen
 function titleScreen() {
-  background(0);
+  background(255);
   push();
-  fill(255);
-  textAlign(CENTER);
+  // button boxes
+  rectMode(CENTER);
+  fill(`gray`);
+  rect(width / 2, height / 4, 500, 100);
+  rect(width / 2, height / 2, 250, 100);
+  rect(width / 2, 500, 250, 100);
+
+  // text
+  textAlign(CENTER, CENTER);
+  fill(0);
   textSize(60);
-  text(`Maxwell's Demon`, width / 2, height / 2 - 100);
+  text(`Maxwell's Demon`, width / 2, height / 4);
+  // button 1
+  fill(255)
   textSize(40);
-  text(`click to play`, width / 2, height / 2);
+  text(`start game`, width / 2, height / 2);
+  // button 2
+  text(`sandbox`, width / 2, 500);
+
+  // Images
+  imageMode(CENTER);
+  image(demonCornerImg, width / 2 - 250, height / 4 - 60);
+  image(demonImg, 700, 440)
   pop();
+
+
 }
