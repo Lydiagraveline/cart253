@@ -9,6 +9,7 @@ Project 2 for CART253
 
 let gameMode = `title`; // can be title, challenge, end
 let levelNum = 1; // The game starts at level 1
+let entropy = `high` //can be high or low
 
 // A timer to count the number of frames in the game state
 let gameOverTimer = 0;
@@ -28,6 +29,12 @@ let level;
 
 // Program begins with the door closed
 let door = `closed`;
+
+let demonImg;
+
+function preload() {
+  demonImg = loadImage('assets/images/demon.png');
+}
 
 // Set up the canvas and the particles for level 1
 function setup() {
@@ -57,11 +64,12 @@ function draw() {
 function challengeMode() {
   if (levelNum === 1) {
     newLevel(levelWidth, levelHeight, radius);
-    displayText(`Get all particles on one side`)
+    // displayText(`Get all particles on one side`)
+    text(entropy, 100, 100);
     }
     else if (levelNum === 2) {
       newLevel(levelWidth, levelHeight, radius);
-      displayText(`Get all particles on one side`)
+      // displayText(`Get all particles on one side`)
       }
       else if (levelNum === 3) {
         newLevel(levelWidth, levelHeight, radius);

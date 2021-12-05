@@ -16,15 +16,14 @@ class Level {
 
   // Create the particles and put them in an array
   addParticles(numParticles) {
-
       // Create cold particles and put them in our array
       // X and Y are random points inside the container
       for (let i = 0; i < numParticles; i++) {
         let x = random(this.x1 + this.r, this.x2 - this.r);
         let y = random(this.y1 + this.r, this.y2 - this.r);
-        if (width/2 - this.doorWidth - this.r <= x >= width/2 + this.doorWidth + this.r){
-          x++
-        }
+        // if (width/2 - this.doorWidth - this.r <= x >= width/2 + this.doorWidth + this.r){
+        //   x++
+        // }
         let particle = new Cold(x, y);
         this.coldParticles.push(particle);
       }
@@ -34,9 +33,9 @@ class Level {
       for (let i = 0; i < numParticles; i++) {
         let x = random(this.x1 + this.r, this.x2 - this.r);
         let y = random(this.y1 + this.r, this.y2 - this.r);
-        if (width/2 - this.doorWidth - this.r <= x >= width/2 + this.doorWidth + this.r){
-          x++
-        }
+        // if ( x === width / 2 ){
+        //   x = x + this.doorWidth + this.r;
+        // }
         let particle = new Hot(x, y);
         this.hotParticles.push(particle);
       }
@@ -50,6 +49,7 @@ class Level {
       let particle = this.coldParticles[i];
       particle.move(this.x1, this.y1, this.x2, this.y2,this.doorHeight,this.doorWidth, this.r);
       particle.display(this.r);
+      particle.check();
     }
 
     // Hot particles
@@ -57,8 +57,11 @@ class Level {
       let particle = this.hotParticles[i];
       particle.move(this.x1, this.y1, this.x2, this.y2,this.doorHeight,this.doorWidth, this.r);
       particle.display(this.r);
+      particle.check();
     }
   }
+
+
 
   display(levelWidth, levelHeight) {
 
@@ -77,6 +80,10 @@ class Level {
     if (door === 'closed') {
       rect(width/2, height/2, this.doorWidth , this.doorHeight);
     }
+
+    // the demon
+    imageMode(CENTER);
+    image(demonImg, width/2, this.y1);
 
     // fill(0);
     // ellipse(this.x1 + this.r, this.y1, 10)

@@ -34,6 +34,10 @@ class Particle {
         this.vy = - this.vy;
       }
 
+    if (this.x === width/2){
+      //fix particles getting stuck in door
+    }
+
     if (this.x < x) {
       this.x ++;
     }
