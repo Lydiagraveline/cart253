@@ -3,8 +3,8 @@ class Particle {
     this.x = x;
     this.y = y;
     this.r = radius;
-    this.vx = 0; // X velocity defined in subclasses
-    this.vy = 0; // Y velocity defined in subclasses
+    this.vx = undefined; // X velocity defined in subclasses
+    this.vy = undefined; // Y velocity defined in subclasses
   }
 
   check() {
@@ -13,7 +13,9 @@ class Particle {
 
   // Move the particles
   move(x, y, containerWidth, containerHeight, doorHeight, doorWidth, radius) {
-    //x1, y1, x2, y2
+
+
+
     this.x += this.vx;
     this.y += this.vy;
 

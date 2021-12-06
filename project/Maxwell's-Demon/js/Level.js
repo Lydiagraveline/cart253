@@ -42,6 +42,20 @@ class Level {
 
   }
 
+  inputCold() {
+    for (let i = 0; i < numParticles; i++){
+      let particle = new Cold(userX, userY);
+      this.coldParticles.push(particle);
+    }
+  }
+
+  inputHot(){
+    for (let i = 0; i < numParticles; i++){
+    let particle = new Hot(userX, userY);
+    this.hotParticles.push(particle);
+    }
+  }
+
   // Display and move the particles
   drawParticles(levelWidth, levelHeight) {
     // Cold particles
@@ -78,7 +92,10 @@ class Level {
 
     // draw a door that opens and closes
     if (door === 'closed') {
+      stroke(1);
+      fill(`lightGray`)  ;
       rect(width/2, height/2, this.doorWidth , this.doorHeight);
+      constrain(doorHeight, this.y1,this.y2)
     }
 
     // the demon
@@ -95,5 +112,8 @@ class Level {
     // rect (width/2 - this.doorWidth - this.r, this.y1, width/2 + this.doorWidth + this.r, this.y2)
 
     pop();
+
+
   }
+
 }
