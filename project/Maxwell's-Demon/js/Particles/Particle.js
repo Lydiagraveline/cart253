@@ -10,7 +10,7 @@ class Particle {
   //Check particle arrangement
   check() {
     if (this.x < width/2) {
-      foundIncorrectParticle = true
+      foundIncorrectParticle = false
     }
   }
 

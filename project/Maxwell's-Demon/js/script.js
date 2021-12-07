@@ -9,8 +9,8 @@ Project 2 for CART253
 
 let gameMode = `title`; // can be title, challenge, sandbox
 let levelNum = 1; // The game starts at level 1
-let entropy = `high` //can be high or low
-let demonDisplay = `top` // can be top, corner, standing //easter egg
+//let entropy = `high` //can be high or low
+let demonDisplay = `top` // can be top, corner, cornerLeft, standing //easter egg
 
 // A timer to count the number of frames in the game state
 let gameOverTimer = 0;
@@ -37,26 +37,30 @@ let door = `closed`;
 let button, numParticlesInp, radiusInp;
 //slider
 let sliderW, sliderH, sliderD, sliderR;
+// button that changes the level
+let levelButton
 
 // Fonts
 let blackLetter;
-let grenzeGotisch;
+let blackLetter2;
 
 // images
 let demonImg;
 let demonTopImg;
 let demonCornerImg;
+let demonCornerLeftImg;
 
 // preload images and fonts
 function preload() {
   demonImg = loadImage('assets/images/demon.png');
   demonTopImg = loadImage('assets/images/demon-top.png');
   demonCornerImg = loadImage('assets/images/demon-corner.png');
+  demonCornerLeftImg = loadImage('assets/images/demon-corner-left.png');
 
   //blackLetter = loadFont(`assets/fonts/UnifrakturMaguntia-Regular.ttf`)
   //blackLetter = loadFont(`assets/fonts/UnifrakturCook-Bold.ttf`)
   blackLetter = loadFont(`assets/fonts/NewRocker-Regular.ttf`)
-  grenzeGotisch = loadFont(`assets/fonts/GrenzeGotisch-VariableFont_wght.ttf`)
+  blackLetter2 = loadFont(`assets/fonts/GrenzeGotisch-VariableFont_wght.ttf`)
 }
 
 // Set up the canvas, particles for level 1, and inputs for sandbox mode
@@ -67,12 +71,17 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
 
   // Main font
-  textFont(grenzeGotisch);
+  textFont(blackLetter2);
 
   // creates a new level
   level = new Level(levelWidth, levelHeight, numParticles, doorHeight, radius);
 
-  // Create a button and hide it
+  // Create a new level button and hide it
+  levelButton = createButton('Next Level');
+  levelButton.mousePressed(newLevel);
+  levelButton.style('display', 'none')
+
+  // Create an update sandbox button and hide it
   button = createButton('go');
   button.mousePressed(updateSandbox);
   button.style('display', 'none')
@@ -116,21 +125,20 @@ function draw() {
 
 }
 
-
 ///////////////////////////////// GAME /////////////////////////////////////////
 function challengeMode() {
+  checkLevelPass()
   if (levelNum === 1) {
     drawLevel(levelWidth, levelHeight, radius);
-    // displayText(`Get all particles on one side`)
-    text(entropy, 100, 100);
+    displayText(`one`, `Organize the particles`)
     }
     else if (levelNum === 2) {
       drawLevel(levelWidth, levelHeight, radius);
-      // displayText(`Get all particles on one side`)
+       displayText(`two`, `Get all particles on one side`)
       }
       else if (levelNum === 3) {
         drawLevel(levelWidth, levelHeight, radius);
-        displayText(`Get all particles on one side`)
+        displayText(`three`, `Get all particles on one side`)
         }
 }
 
@@ -144,9 +152,6 @@ function drawLevel(levelWidth, levelHeight, radius){
 
 function levelOne() {
   background(255);
-  text(`level one`, 100, 100);
-  text((levelNum)+ ` level`, 100, 150);
-  text((numParticles)+` num particles`, 100, 200);
 }
 
 function levelTwo(){
@@ -165,22 +170,51 @@ function levelThree(){
   level = new Level(levelWidth, levelHeight, numParticles, doorHeight, radius);
 }
 
-// displayText() displays the provided message in the center of the canvas
-function displayText(insructions) {
+// displayText() displays the provided message on each level
+function displayText(number, insructions) {
   push();
   fill(0);
   textSize(32);
   textAlign(CENTER, CENTER);
-  text(`Level ` + (levelNum), width / 2, height / 10);
-  textSize(16);
-  text(insructions, width/2, height - 100)
+  textFont(blackLetter)
+  text(`Level ` + (number), width / 2, height/2 - levelHeight/2 - 150);
+  textSize(18);
+  textFont(blackLetter2);
+  text(insructions, width/2, height - 100);
   pop();
+}
+
+// displays new level button if player passes the current level
+function checkLevelPass(){
+  if (gameMode === `challenge` && foundIncorrectParticle === false){
+    demonDisplay = `cornerLeft`;
+    levelButton.show();
+    button.style("height","50px");
+    levelButton.position(width/2 - 75, height/2 - levelHeight/2 - 100);
+  }
+}
+
+function newLevel() {
+  if (gameMode === `challenge`){
+  //level 2
+  if (levelNum === 1) {
+      levelNum = 2;
+      levelTwo();
+  // Level 3
+  } else if (levelNum === 2){
+      levelNum = 3;
+      levelThree();
+  // Level 4
+  } else if (levelNum === 3){
+
+  }
+  }
 }
 
 function sandbox() {
   background(255);
   rectMode(CORNERS);
-  fill(`whiteSmoke`)
+  fill(`whiteSmoke`);
   rect(0, 0, 175, height);
 
   // show inputs, slider, and button
@@ -215,24 +249,25 @@ function sandbox() {
   level.drawParticles(levelWidth, levelHeight, radius);
 }
 
+// Updates the sandbox level based on user input
 function updateSandbox() {
   levelWidth = sliderW.value();
   levelHeight = sliderH.value();
   doorHeight = sliderD.value();
   numParticles = numParticlesInp.value();
   radius = sliderR.value();
-
-
   level = new Level(levelWidth, levelHeight, numParticles, doorHeight, radius);
-
 }
 
 
 ///////////////////////////////// USER INPUT ///////////////////////////////////
 
+
 // changes the gameMode from title to challenge
 // "click to start"
 function mousePressed() {
+  console.log(`level ` + levelNum)
+
   if (gameMode === `title`) {
     if (mouseX > width/2 - 125 && mouseX < width/2 + 125){
       //button 1
@@ -246,7 +281,7 @@ function mousePressed() {
   }
 
   // easter egg: if player clicks on the demon img, it changes to a new position/image
-    if (gameMode === `sandbox` || gameMode === `challenge`){
+    if (gameMode === `sandbox` || gameMode === `challenge` && !foundIncorrectParticle === false){
       // changes display from top to corner if clicked on
       if (demonDisplay === `top`){
         if (mouseX < width/2 + 100 && mouseX > width/2 - 100){
@@ -265,12 +300,8 @@ function mousePressed() {
       }
     }
 
-console.log(demonDisplay)
+console.log(`demon display: ` + demonDisplay)
   print(mouseX, mouseY)
-
-}
-
-function changeImage() {
 
 }
 
@@ -284,18 +315,18 @@ function keyTyped() {
   if (keyCode === ENTER && gameMode === 'sandbox') {
     updateSandbox()
   }
-  // Level 2
-  else if (keyCode === ENTER && gameMode === 'challenge' && levelNum === 1) {
-    levelNum = 2;
-    levelTwo();
-    // newLevel(levelWidth, levelHeight, radius);
-    // Level 3
-  } else if (keyCode === ENTER && gameMode === 'challenge' && levelNum === 2) {
-    levelNum = 3;
-    levelThree();
-    // newLevel(levelWidth, levelHeight, radius);
-  }
-  //console.log(levelNum);
+  // // Level 2
+  // else if (keyCode === ENTER && gameMode === 'challenge' && levelNum === 1) {
+  //   levelNum = 2;
+  //   levelTwo();
+  //   // newLevel(levelWidth, levelHeight, radius);
+  //   // Level 3
+  // } else if (keyCode === ENTER && gameMode === 'challenge' && levelNum === 2) {
+  //   levelNum = 3;
+  //   levelThree();
+  //   // newLevel(levelWidth, levelHeight, radius);
+  // }
+  // //console.log(levelNum);
 }
 
 // closes the door
@@ -308,7 +339,7 @@ function keyReleased() {
 
 // Displays the title screen
 function titleScreen() {
-  background(255);
+  background(`whiteSmoke`);
   push();
   // button boxes
   rectMode(CENTER);

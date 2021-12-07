@@ -67,7 +67,7 @@ class Level {
       //Check particle arrangement
       particle.check();
 
-      console.log(foundIncorrectParticle);
+      //console.log(foundIncorrectParticle);
     }
 
     // Hot particles
@@ -75,6 +75,7 @@ class Level {
       let particle = this.hotParticles[i];
       particle.move(this.x1, this.y1, this.x2, this.y2,this.doorHeight,this.doorWidth, this.r);
       particle.display(this.r);
+
       //Check particle arrangement
       particle.check();
     }
@@ -114,6 +115,8 @@ class Level {
     image(demonCornerImg, this.x1, this.y1 - 10);
   } else if (demonDisplay === `standing`) {
     image(demonImg, width/2, this.y1);
+  } else if (demonDisplay === `cornerLeft`){
+    image(demonCornerLeftImg, this.x1, this.y1 - 13);
   }
 
     // fill(0);
