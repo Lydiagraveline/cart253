@@ -13,13 +13,4 @@ class Hot extends Particle {
     pop();
   }
 
-  check(){
-    // if (this.x > width/2 ){
-    //   entropy = `high`
-    // }
-    // else if (this.x < width/2){
-    //   entropy = `low`
-    // }
-  }
-
 }
