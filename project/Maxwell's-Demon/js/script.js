@@ -20,6 +20,8 @@ let gameLength = 60 * 10; // 10 seconds
 // The particles
 let numParticles = 2;  // game starts with 2 particles at level 1
 
+let foundIncorrectParticle = false
+
 // container size for level 1
 let levelWidth = 800;
 let levelHeight = 400;
@@ -36,15 +38,25 @@ let button, numParticlesInp, radiusInp;
 //slider
 let sliderW, sliderH, sliderD, sliderR;
 
+// Fonts
+let blackLetter;
+let grenzeGotisch;
+
 // images
 let demonImg;
 let demonTopImg;
 let demonCornerImg;
-// preload images
+
+// preload images and fonts
 function preload() {
   demonImg = loadImage('assets/images/demon.png');
   demonTopImg = loadImage('assets/images/demon-top.png');
   demonCornerImg = loadImage('assets/images/demon-corner.png');
+
+  //blackLetter = loadFont(`assets/fonts/UnifrakturMaguntia-Regular.ttf`)
+  //blackLetter = loadFont(`assets/fonts/UnifrakturCook-Bold.ttf`)
+  blackLetter = loadFont(`assets/fonts/NewRocker-Regular.ttf`)
+  grenzeGotisch = loadFont(`assets/fonts/GrenzeGotisch-VariableFont_wght.ttf`)
 }
 
 // Set up the canvas, particles for level 1, and inputs for sandbox mode
@@ -53,6 +65,9 @@ function setup() {
   imageMode(CENTER);
   rectMode(CENTER);
   createCanvas(windowWidth, windowHeight);
+
+  // Main font
+  textFont(grenzeGotisch);
 
   // creates a new level
   level = new Level(levelWidth, levelHeight, numParticles, doorHeight, radius);
@@ -306,7 +321,10 @@ function titleScreen() {
   textAlign(CENTER, CENTER);
   fill(0);
   textSize(60);
+  push();
+  textFont(blackLetter);
   text(`Maxwell's Demon`, width / 2, height / 4);
+  pop();
   // button 1
   fill(255)
   textSize(40);

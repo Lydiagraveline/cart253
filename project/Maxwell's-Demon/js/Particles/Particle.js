@@ -7,8 +7,11 @@ class Particle {
     this.vy = undefined; // Y velocity defined in subclasses
   }
 
+  //Check particle arrangement
   check() {
-
+    if (this.x < width/2) {
+      foundIncorrectParticle = true
+    }
   }
 
   // Move the particles

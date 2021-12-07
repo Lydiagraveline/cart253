@@ -63,7 +63,11 @@ class Level {
       let particle = this.coldParticles[i];
       particle.move(this.x1, this.y1, this.x2, this.y2,this.doorHeight,this.doorWidth, this.r);
       particle.display(this.r);
+
+      //Check particle arrangement
       particle.check();
+
+      console.log(foundIncorrectParticle);
     }
 
     // Hot particles
@@ -71,6 +75,7 @@ class Level {
       let particle = this.hotParticles[i];
       particle.move(this.x1, this.y1, this.x2, this.y2,this.doorHeight,this.doorWidth, this.r);
       particle.display(this.r);
+      //Check particle arrangement
       particle.check();
     }
   }
