@@ -30,6 +30,8 @@ let radius = 20;
 
 let level;
 
+let hint;
+
 // Program begins with the door closed
 let door = `closed`;
 
@@ -130,7 +132,8 @@ function challengeMode() {
   checkLevelPass()
   if (levelNum === 1) {
     drawLevel(levelWidth, levelHeight, radius);
-    displayText(`one`, `Organize the particles`)
+    displayText(`one`, `Get the hot particle to the left side.`)
+
     }
     else if (levelNum === 2) {
       drawLevel(levelWidth, levelHeight, radius);
@@ -180,9 +183,11 @@ function displayText(number, insructions) {
   textAlign(CENTER, CENTER);
   textFont(blackLetter)
   text(`Level ` + (number), width / 2, 50);
-  textSize(18);
+  textSize(25);
   textFont(blackLetter2);
-  text(insructions, width/2, height - 100);
+  text(insructions, width/2, height - 125);
+  textSize(18);
+  text(`hint: hot particles move faster`, width/2, height - 75)
   pop();
 }
 
@@ -311,9 +316,13 @@ console.log(`demon display: ` + demonDisplay)
 
 // closes the door if the user presses the space bar
 function keyTyped() {
+
   // opens the door
   if (keyCode === 32) {
     door = `open`;
+    fill(0);
+    textSize(18);
+    text(`hint: hot particles move faster`, 100, 100);
   }
 
   if (keyCode === ENTER && gameMode === 'sandbox') {

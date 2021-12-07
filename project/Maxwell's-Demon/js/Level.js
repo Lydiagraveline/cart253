@@ -19,11 +19,24 @@ class Level {
       // Create cold particles and put them in our array
       // X and Y are random points inside the container
       for (let i = 0; i < numParticles; i++) {
-        let x = random(this.x1 + this.r, this.x2 - this.r);
-        let y = random(this.y1 + this.r, this.y2 - this.r);
-        // if (width/2 - this.doorWidth - this.r <= x >= width/2 + this.doorWidth + this.r){
-        //   x++
-        // }
+        let x;
+        let y;
+
+        // level 1
+        if (levelNum === 1){
+          x = this.width / 2
+          y = this.height
+        } else {
+          x = random(this.x1 + this.r, this.x2 - this.r);
+          y = random(this.y1 + this.r, this.y2 - this.r);
+        }
+
+        if (gameMode === `sandbox`) {
+          x = random(this.x1 + this.r, this.x2 - this.r);
+          y = random(this.y1 + this.r, this.y2 - this.r);
+        }
+
+        // Add to the array
         let particle = new Cold(x, y);
         this.coldParticles.push(particle);
       }
@@ -31,30 +44,30 @@ class Level {
       // Create hot particles and put them in our array
       // X and Y are random points inside the container
       for (let i = 0; i < numParticles; i++) {
-        let x = random(this.x1 + this.r, this.x2 - this.r);
-        let y = random(this.y1 + this.r, this.y2 - this.r);
-        // if ( x === width / 2 ){
-        //   x = x + this.doorWidth + this.r;
-        // }
+        let x;
+        let y;
+
+        // level 1
+        if (levelNum === 1){
+          x = this.width / 2
+          y = this.height
+        } else {
+          x = random(this.x1 + this.r, this.x2 - this.r);
+          y = random(this.y1 + this.r, this.y2 - this.r);
+        }
+
+        // random if sandbox
+        if (gameMode === `sandbox`) {
+          x = random(this.x1 + this.r, this.x2 - this.r);
+          y = random(this.y1 + this.r, this.y2 - this.r);
+        }
+
+        // Add to the array
         let particle = new Hot(x, y);
         this.hotParticles.push(particle);
       }
 
   }
-
-  // inputCold() {
-  //   for (let i = 0; i < numParticles; i++){
-  //     let particle = new Cold(userX, userY);
-  //     this.coldParticles.push(particle);
-  //   }
-  // }
-  //
-  // inputHot(){
-  //   for (let i = 0; i < numParticles; i++){
-  //   let particle = new Hot(userX, userY);
-  //   this.hotParticles.push(particle);
-  //   }
-  // }
 
   // Display and move the particles
   drawParticles(levelWidth, levelHeight) {
@@ -63,11 +76,6 @@ class Level {
       let particle = this.coldParticles[i];
       particle.move(this.x1, this.y1, this.x2, this.y2,this.doorHeight,this.doorWidth, this.r);
       particle.display(this.r);
-
-      //Check particle arrangement
-      //particle.check();
-
-      //console.log(foundIncorrectParticle);
     }
 
     // Hot particles
@@ -75,12 +83,10 @@ class Level {
       let particle = this.hotParticles[i];
       particle.move(this.x1, this.y1, this.x2, this.y2,this.doorHeight,this.doorWidth, this.r);
       particle.display(this.r);
-
-      //Check particle arrangement
-      //particle.check();
     }
   }
 
+// Check if particles have been correctly organized
   allParticlesCorrect() {
   // Check all hot particles for correctness
   for (let i = 0; i < this.hotParticles.length; i++) {
@@ -106,10 +112,10 @@ class Level {
    // are on the right side
    return true;
  }
- 
 
 
 
+// Display the level container, walls, and images
   display(levelWidth, levelHeight) {
     push();
     noStroke();
@@ -130,7 +136,7 @@ class Level {
       constrain(doorHeight, this.y1,this.y2)
     }
 
-    // the demon
+    // Display demon images
     if (demonDisplay === `top`) {
     //imageMode(CENTER);
     image(demonTopImg, width/2, this.y1);
@@ -144,16 +150,6 @@ class Level {
   } else if (demonDisplay === `cornerLeft`){
     image(demonCornerLeftImg, this.x1, this.y1 - 13);
   }
-
-    // fill(0);
-    // ellipse(this.x1 + this.r, this.y1, 10)
-    // ellipse(width/2 - this.doorWidth - this.r, this.y1, 10)
-
-    // ellipse(width/2 + this.doorWidth + this.r, this.y1, 10)
-    // ellipse(this.x2 - this.r, this.y1, 10)
-    // rectMode(CORNERS);
-    // rect (width/2 - this.doorWidth - this.r, this.y1, width/2 + this.doorWidth + this.r, this.y2)
-
     pop();
 
 
