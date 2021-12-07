@@ -10,6 +10,7 @@ Project 2 for CART253
 let gameMode = `title`; // can be title, challenge, sandbox
 let levelNum = 1; // The game starts at level 1
 let entropy = `high` //can be high or low
+let demonDisplay = `top` // can be top, corner, standing //easter egg
 
 // A timer to count the number of frames in the game state
 let gameOverTimer = 0;
@@ -229,7 +230,32 @@ function mousePressed() {
     }
   }
 
+  // easter egg: if player clicks on the demon img, it changes to a new position/image
+    if (gameMode === `sandbox` || gameMode === `challenge`){
+      // changes display from top to corner if clicked on
+      if (demonDisplay === `top`){
+        if (mouseX < width/2 + 100 && mouseX > width/2 - 100){
+        if (mouseY < height/2 - levelHeight/2 && mouseY > 100){
+          demonDisplay = `corner`
+        }
+        }
+      }
+      else if (demonDisplay === `corner`){
+        if(width/2 + levelWidth/2 + 100 && width/2 + levelWidth/2 - 100){
+        if(mouseY < height/2 - levelHeight/2 && mouseY > 100){
+          demonDisplay = `top`
+        }
+        }
+
+      }
+    }
+
+console.log(demonDisplay)
   print(mouseX, mouseY)
+
+}
+
+function changeImage() {
 
 }
 
@@ -256,8 +282,6 @@ function keyTyped() {
   }
   //console.log(levelNum);
 }
-
-
 
 // closes the door
 function keyReleased() {

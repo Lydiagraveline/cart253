@@ -99,8 +99,17 @@ class Level {
     }
 
     // the demon
-    imageMode(CENTER);
+    if (demonDisplay === `top`) {
+    //imageMode(CENTER);
     image(demonTopImg, width/2, this.y1);
+  } else if (demonDisplay === `corner`) {
+    //flip image over horizontal axis
+    translate(width, 0);
+    scale (-1, 1);
+    image(demonCornerImg, this.x1, this.y1 - 10);
+  } else if (demonDisplay === `standing`) {
+    image(demonImg, width/2, this.y1);
+  }
 
     // fill(0);
     // ellipse(this.x1 + this.r, this.y1, 10)
