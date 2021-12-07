@@ -42,19 +42,19 @@ class Level {
 
   }
 
-  inputCold() {
-    for (let i = 0; i < numParticles; i++){
-      let particle = new Cold(userX, userY);
-      this.coldParticles.push(particle);
-    }
-  }
-
-  inputHot(){
-    for (let i = 0; i < numParticles; i++){
-    let particle = new Hot(userX, userY);
-    this.hotParticles.push(particle);
-    }
-  }
+  // inputCold() {
+  //   for (let i = 0; i < numParticles; i++){
+  //     let particle = new Cold(userX, userY);
+  //     this.coldParticles.push(particle);
+  //   }
+  // }
+  //
+  // inputHot(){
+  //   for (let i = 0; i < numParticles; i++){
+  //   let particle = new Hot(userX, userY);
+  //   this.hotParticles.push(particle);
+  //   }
+  // }
 
   // Display and move the particles
   drawParticles(levelWidth, levelHeight) {
@@ -65,7 +65,7 @@ class Level {
       particle.display(this.r);
 
       //Check particle arrangement
-      particle.check();
+      //particle.check();
 
       //console.log(foundIncorrectParticle);
     }
@@ -77,14 +77,40 @@ class Level {
       particle.display(this.r);
 
       //Check particle arrangement
-      particle.check();
+      //particle.check();
     }
   }
+
+  allParticlesCorrect() {
+  // Check all hot particles for correctness
+  for (let i = 0; i < this.hotParticles.length; i++) {
+    let p = this.hotParticles[i];
+    if (p.x < width / 2) {
+      // If the hot particle is to the left, then it's in the wrong side
+      // so we can immediately return FALSE to say we found an incorrect particle
+      return false;
+    }
+  }
+
+  // Check all cold particles for correctness
+   for (let i = 0; i < this.coldParticles.length; i++) {
+     let p = this.coldParticles[i];
+     if (p.x > width / 2) {
+       // If the cold particle is to the right, then it's in the wrong side
+       // so we can immediately return FALSE to say we found an incorrect particle
+       return false;
+     }
+   }
+
+   // If we get all the way to here, then we know all the particles
+   // are on the right side
+   return true;
+ }
+ 
 
 
 
   display(levelWidth, levelHeight) {
-
     push();
     noStroke();
     rectMode(CENTER);

@@ -18,9 +18,9 @@ let gameOverTimer = 0;
 let gameLength = 60 * 10; // 10 seconds
 
 // The particles
-let numParticles = 2;  // game starts with 2 particles at level 1
+let numParticles = 1;  // game starts with 2 particles at level 1
 
-let foundIncorrectParticle = false
+//let foundIncorrectParticle = false
 
 // container size for level 1
 let levelWidth = 800;
@@ -148,6 +148,8 @@ function drawLevel(levelWidth, levelHeight, radius){
   level.display(levelWidth, levelHeight);
   // draws the level particles
   level.drawParticles(levelWidth, levelHeight, radius);
+  // Check if the level is solved
+
 }
 
 function levelOne() {
@@ -177,7 +179,7 @@ function displayText(number, insructions) {
   textSize(32);
   textAlign(CENTER, CENTER);
   textFont(blackLetter)
-  text(`Level ` + (number), width / 2, height/2 - levelHeight/2 - 150);
+  text(`Level ` + (number), width / 2, 50);
   textSize(18);
   textFont(blackLetter2);
   text(insructions, width/2, height - 100);
@@ -186,11 +188,13 @@ function displayText(number, insructions) {
 
 // displays new level button if player passes the current level
 function checkLevelPass(){
-  if (gameMode === `challenge` && foundIncorrectParticle === false){
+  if (gameMode === `challenge` && level.allParticlesCorrect()){
     demonDisplay = `cornerLeft`;
     levelButton.show();
     button.style("height","50px");
     levelButton.position(width/2 - 75, height/2 - levelHeight/2 - 100);
+  } else if (!level.allParticlesCorrect()){
+    levelButton.hide();
   }
 }
 
@@ -281,7 +285,7 @@ function mousePressed() {
   }
 
   // easter egg: if player clicks on the demon img, it changes to a new position/image
-    if (gameMode === `sandbox` || gameMode === `challenge` && !foundIncorrectParticle === false){
+    if (gameMode === `sandbox` || gameMode === `challenge`){
       // changes display from top to corner if clicked on
       if (demonDisplay === `top`){
         if (mouseX < width/2 + 100 && mouseX > width/2 - 100){
@@ -332,6 +336,10 @@ function keyTyped() {
 // closes the door
 function keyReleased() {
   door = `closed`;
+
+  if (level.allParticlesCorrect()) {
+    console.log("SOLVED!");
+ }
 
 }
 

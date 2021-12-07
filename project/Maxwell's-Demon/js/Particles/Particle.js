@@ -8,11 +8,13 @@ class Particle {
   }
 
   //Check particle arrangement
-  check() {
-    if (this.x < width/2) {
-      foundIncorrectParticle = false
-    }
-  }
+  // check() {
+  //   if (this.x > width/2) {
+  //     foundIncorrectParticle = true
+  //   } else if (this.x < width/2){
+  //     foundIncorrectParticle = false
+  //   }
+  // }
 
   // Move the particles
   move(x, y, containerWidth, containerHeight, doorHeight, doorWidth, radius) {
