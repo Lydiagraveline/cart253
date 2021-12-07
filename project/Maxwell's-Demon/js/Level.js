@@ -26,10 +26,27 @@ class Level {
         if (levelNum === 1){
           x = this.width / 2
           y = this.height
-        } else {
-          x = random(this.x1 + this.r, this.x2 - this.r);
-          y = random(this.y1 + this.r, this.y2 - this.r);
-        }
+        // level 2
+        } else if (levelNum === 2) {
+          x = this.width
+          y = this.height
+        // level 3
+        } else if (levelNum === 3) {
+          x = this.width
+          y = this.height
+        // level 4
+        } else if (levelNum === 4) {
+          x = this.width
+          y = this.height
+        } else if (levelNum === 5) {
+           x = this.width
+           y = this.height
+        } else if (levelNum === 6) {
+           x = this.width
+           y = this.height
+         }
+
+         // Correct cold = left side
 
         if (gameMode === `sandbox`) {
           x = random(this.x1 + this.r, this.x2 - this.r);
@@ -51,10 +68,26 @@ class Level {
         if (levelNum === 1){
           x = this.width / 2
           y = this.height
-        } else {
-          x = random(this.x1 + this.r, this.x2 - this.r);
-          y = random(this.y1 + this.r, this.y2 - this.r);
-        }
+        // level 2
+        } else if (levelNum === 2) {
+          x = this.width
+          y = this.height
+        } else if (levelNum === 3) {
+          x = this.width / 2
+          y = this.height
+        } else if (levelNum === 4) {
+           x = random(this.width / 2, this.width)
+           y = this.height
+         } else if (levelNum === 5) {
+            x = this.width
+            y = this.height
+         } else if (levelNum === 6) {
+            x = this.width
+            y = this.height
+          }
+
+          // Correct Hot = left side
+
 
         // random if sandbox
         if (gameMode === `sandbox`) {

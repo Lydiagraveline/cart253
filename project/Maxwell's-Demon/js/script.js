@@ -128,55 +128,92 @@ function draw() {
 }
 
 ///////////////////////////////// GAME /////////////////////////////////////////
-function challengeMode() {
-  checkLevelPass()
-  if (levelNum === 1) {
-    drawLevel(levelWidth, levelHeight, radius);
-    displayText(`one`, `Get the hot particle to the left side.`)
-
-    }
-    else if (levelNum === 2) {
-      drawLevel(levelWidth, levelHeight, radius);
-       displayText(`two`, `Get all particles on one side`)
-      }
-      else if (levelNum === 3) {
-        drawLevel(levelWidth, levelHeight, radius);
-        displayText(`three`, `Get all particles on one side`)
-        }
-}
-
+// draws the level container and particles
 function drawLevel(levelWidth, levelHeight, radius){
   background(255);
   // displays the level container
   level.display(levelWidth, levelHeight);
   // draws the level particles
   level.drawParticles(levelWidth, levelHeight, radius);
-  // Check if the level is solved
-
 }
 
-function levelOne() {
-  background(255);
+// Handles each level and its idividual display
+function challengeMode() {
+  checkLevelPass()
+  if (levelNum === 1) {
+    background(255);
+    drawLevel(levelWidth, levelHeight, radius);
+    displayText(`one`, `Get the hot particle to the right side.`, `hint: hot particles move faster`);
+    }
+    else if (levelNum === 2) {
+      demonDisplay = `corner`
+      drawLevel(levelWidth, levelHeight, radius);
+       displayText(`two`, `Now get the cold particle on the left.`);
+      }
+      else if (levelNum === 3) {
+        drawLevel(levelWidth, levelHeight, radius);
+        displayText(`three`, `Try to get both particles on the correct side.`);
+        }
+        else if (levelNum === 4) {
+          drawLevel(levelWidth, levelHeight, radius);
+          displayText(`four`, `Get all particles on one side`);
+          }
+          else if (levelNum === 5) {
+            drawLevel(levelWidth, levelHeight, radius);
+            displayText(`five`, `Get all particles on one side`);
+            }
+            else if (levelNum === 6) {
+              drawLevel(levelWidth, levelHeight, radius);
+              displayText(`six`, `Get all particles on one side`);
+              }
 }
 
-function levelTwo(){
-  levelWidth = 500;
-  levelHeight = 500;
-  numParticles = 5;
-  doorHeight = 100;
-  radius = 10;
+// changes to the next level when button is pressed
+function newLevel() {
+  if (gameMode === `challenge`){
+  //level 2
+  if (levelNum === 1) {
+      levelNum = 2;
+      level = new Level(levelWidth, levelHeight, numParticles, doorHeight, radius);
+  // Level 3
+  } else if (levelNum === 2){
+      doorHeight = 250;
+      levelNum = 3;
+      level = new Level(levelWidth, levelHeight, numParticles, doorHeight, radius);
+  // Level 4
+  } else if (levelNum === 3){
+    levelNum = 4
+    numParticles = 2;
+    level = new Level(levelWidth, levelHeight, numParticles, doorHeight, radius);
+  // Level 5
+  } else if (levelNum === 4){
+    levelNum = 5
+    levelFive();
+  } else if (levelNum === 5){
+    levelNum = 6
+    levelSix();
+  }
+  }
+}
+
+//level 5 inputs
+function levelFive(){
+  levelWidth = 800;
+  levelHeight = 400;
+  numParticles = 1;
   level = new Level(levelWidth, levelHeight, numParticles, doorHeight, radius);
 }
 
-function levelThree(){
-  levelWidth = 600;
+//level 6 inputs
+function levelSix(){
+  levelWidth = 800;
   levelHeight = 400;
-  numParticles = 3;
+  numParticles = 1;
   level = new Level(levelWidth, levelHeight, numParticles, doorHeight, radius);
 }
 
 // displayText() displays the provided message on each level
-function displayText(number, insructions) {
+function displayText(number, insructions, sub) {
   push();
   fill(0);
   textSize(32);
@@ -187,7 +224,7 @@ function displayText(number, insructions) {
   textFont(blackLetter2);
   text(insructions, width/2, height - 125);
   textSize(18);
-  text(`hint: hot particles move faster`, width/2, height - 75)
+  text((sub), width/2, height - 75)
   pop();
 }
 
@@ -200,23 +237,6 @@ function checkLevelPass(){
     levelButton.position(width/2 - 75, height/2 - levelHeight/2 - 100);
   } else if (!level.allParticlesCorrect()){
     levelButton.hide();
-  }
-}
-
-function newLevel() {
-  if (gameMode === `challenge`){
-  //level 2
-  if (levelNum === 1) {
-      levelNum = 2;
-      levelTwo();
-  // Level 3
-  } else if (levelNum === 2){
-      levelNum = 3;
-      levelThree();
-  // Level 4
-  } else if (levelNum === 3){
-
-  }
   }
 }
 
@@ -305,19 +325,17 @@ function mousePressed() {
           demonDisplay = `top`
         }
         }
-
       }
     }
 
 console.log(`demon display: ` + demonDisplay)
   print(mouseX, mouseY)
-
 }
 
-// closes the door if the user presses the space bar
+// Handles key inputs
 function keyTyped() {
 
-  // opens the door
+  // opens the door when user pressed the space bar
   if (keyCode === 32) {
     door = `open`;
     fill(0);
@@ -325,21 +343,11 @@ function keyTyped() {
     text(`hint: hot particles move faster`, 100, 100);
   }
 
+// updates the sandbox when ENTER is pressed
   if (keyCode === ENTER && gameMode === 'sandbox') {
     updateSandbox()
   }
-  // // Level 2
-  // else if (keyCode === ENTER && gameMode === 'challenge' && levelNum === 1) {
-  //   levelNum = 2;
-  //   levelTwo();
-  //   // newLevel(levelWidth, levelHeight, radius);
-  //   // Level 3
-  // } else if (keyCode === ENTER && gameMode === 'challenge' && levelNum === 2) {
-  //   levelNum = 3;
-  //   levelThree();
-  //   // newLevel(levelWidth, levelHeight, radius);
-  // }
-  // //console.log(levelNum);
+
 }
 
 // closes the door
@@ -349,8 +357,32 @@ function keyReleased() {
   if (level.allParticlesCorrect()) {
     console.log("SOLVED!");
  }
+}
+
+// handles action keys
+function keyPressed() {
+
+  // skips to the next level
+  if (keyCode === RIGHT_ARROW && gameMode === 'challenge') {
+    newLevel();
+    console.log(`level ` + levelNum);
+  }
+
+  // returns to the previous level
+  if (keyCode === LEFT_ARROW && gameMode === 'challenge' && levelNum > 1) {
+    levelNum--
+    level = new Level(levelWidth, levelHeight, numParticles, doorHeight, radius);
+    console.log(`level ` + levelNum);
+  }
+
+  // refreshes the current level
+  if (keyCode === BACKSPACE){
+    level = new Level(levelWidth, levelHeight, numParticles, doorHeight, radius);
+  }
 
 }
+
+
 
 ///////////////////////////////// TITLE SCREEN /////////////////////////////////
 
