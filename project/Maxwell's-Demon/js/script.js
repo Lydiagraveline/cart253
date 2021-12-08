@@ -20,16 +20,12 @@ let gameLength = 60 * 10; // 10 seconds
 // The particles
 let numParticles = 1; // game starts with 2 particles at level 1
 
-//let foundIncorrectParticle = false
-
 // level inputs for level 1
 let levelWidth = 800;
 let levelHeight = 400;
 let doorHeight = 200;
 let radius = 20;
 let speed = 6;
-
-//let strokeColor, strokeWeight, rect, wall, door;
 
 let level;
 
@@ -148,6 +144,8 @@ function draw() {
     titleScreen();
   } else if (gameMode === `challenge`) {
     challengeMode();
+  } else if (gameMode === `random`) {
+    randomLevel();
   } else if (gameMode === `sandbox`) {
     sandbox();
   }
@@ -176,20 +174,21 @@ function challengeMode() {
       `hint: hot particles move faster`
     );
   } else if (levelNum === 2) {
-    demonDisplay = `corner`;
     drawLevel();
     displayText(`Two`, `Now get the cold particle on the left side.`);
   } else if (levelNum === 3) {
+    demonDisplay = `top`;
     drawLevel();
     displayText(`Three`, `Try to get both particles on the correct side.`);
   } else if (levelNum === 4) {
     drawLevel();
     displayText(
       `Four`,
-      `Organize all particles into the correct side`, `Tip: Press the ENTER key to reset the level.`
-
+      `Organize all particles into the correct side`,
+      `Tip: Press the ENTER key to reset the level.`
     );
   } else if (levelNum === 5) {
+    demonDisplay = `corner`;
     drawLevel();
     displayText(
       `Five`,
@@ -200,8 +199,36 @@ function challengeMode() {
     drawLevel();
     displayText(
       `six`,
+      `Practice makes perfect!`,
+      `Hot particles on the right, cold particles on the left. Press the ENTER key to reset the level.`
+    );
+  } else if (levelNum === 7) {
+    drawLevel();
+    displayText(
+      `Seven`,
+      `not bad!`,
+      `Hot particles on the right, cold particles on the left. Press the ENTER key to reset the level.`
+    );
+  } else if (levelNum === 8) {
+    drawLevel();
+    displayText(
+      `Eight`,
+      `Now we're talking.`,
+      `Hot particles on the right, cold particles on the left. Press the ENTER key to reset the level.`
+    );
+  } else if (levelNum === 9) {
+    drawLevel();
+    displayText(
+      `Nine`,
       `Organize some more particles.`,
-      `remember: hot particles on the right, cold particles on the left.`
+      `Hot particles on the right, cold particles on the left. Press the ENTER key to reset the level.`
+    );
+  } else if (levelNum === 10) {
+    drawLevel();
+    displayText(
+      `Ten`,
+      `Organize some more particles.`,
+      `Hot particles on the right, cold particles on the left. Press the ENTER key to reset the level.`
     );
   }
 }
@@ -246,9 +273,9 @@ function newLevel() {
       );
       // Level 5
     } else if (levelNum === 4) {
+      levelNum = 5;
       radius = 15;
       speed = 6;
-      levelNum = 5;
       level = new Level(
         levelWidth,
         levelHeight,
@@ -272,7 +299,9 @@ function newLevel() {
       );
       // Level 7
     } else if (levelNum === 6) {
-      levelNum = 6;
+      levelNum = 7;
+      levelWidth = 700;
+      levelHeight = 400;
       level = new Level(
         levelWidth,
         levelHeight,
@@ -280,6 +309,45 @@ function newLevel() {
         doorHeight,
         radius
       );
+      // Level 8
+    } else if (levelNum === 7) {
+      levelNum = 8;
+      numParticles = 4;
+      radius = 12;
+      level = new Level(
+        levelWidth,
+        levelHeight,
+        numParticles,
+        doorHeight,
+        radius
+      );
+      // Level 9
+    } else if (levelNum === 8) {
+      levelNum = 9;
+      levelHeight = 200;
+      doorHeight = 150;
+      level = new Level(
+        levelWidth,
+        levelHeight,
+        numParticles,
+        doorHeight,
+        radius
+      );
+      // Level 10
+    } else if (levelNum === 9) {
+      levelNum = 10;
+      levelHeight = 500;
+      level = new Level(
+        levelWidth,
+        levelHeight,
+        numParticles,
+        doorHeight,
+        radius
+      );
+      // random
+    } else if (levelNum === 10) {
+      gameMode = `random`;
+      //level = new Level(levelWidth, levelHeight, numParticles, doorHeight, radius);
     }
   }
 }
@@ -312,9 +380,44 @@ function checkLevelPass() {
   }
 }
 
+// displays the randomly generated level + text
+function randomLevel() {
+  drawLevel();
+  push();
+  textAlign(CENTER, CENTER);
+  textSize(50);
+  text(`RANDOM!!!`, width / 2, 40);
+  textSize(25);
+  text(`Press ENTER to generate a new random level.`, width / 2, height - 90);
+  textSize(18);
+  text(
+    `Hot particles on the right, cold particles on the left... not that it natters anymore, this is the last level.`,
+    width / 2,
+    height - 50
+  );
+  if (level.allParticlesCorrect()) {
+    textSize(32);
+    text("SOLVED!", width/2, 85);
+  }
+  pop();
+}
+
+// generates a level with random inputs
+function updateRandomLevel() {
+  levelWidth = random(400, width - 50);
+  levelHeight = random(200, 600);
+  doorHeight = random(200, levelHeight);
+  radius = random(8, 20);
+  speed = random(5, 8);
+  numParticles = random(1, 10);
+  level = new Level(levelWidth, levelHeight, numParticles, doorHeight, radius);
+}
+
 // Runs the sandbox mode simulation
 function sandbox() {
-  background(255);
+  //background(255);
+
+  drawLevel();
   rectMode(CORNERS);
   fill(`whiteSmoke`);
   rect(0, 0, 175, height);
@@ -351,8 +454,14 @@ function sandbox() {
 
   button.position(20, 700);
 
-  level.display(levelWidth, levelHeight);
-  level.drawParticles(levelWidth, levelHeight, radius);
+
+  if (level.allParticlesCorrect()) {
+    push();
+    textAlign(CENTER);
+    textSize(32);
+    text("SOLVED!", width/2, 50);
+    pop();
+  }
 }
 
 // Updates the sandbox level based on user input
@@ -417,7 +526,6 @@ function keyTyped() {
     door = `open`;
     fill(0);
     textSize(18);
-    text(`hint: hot particles move faster`, 100, 100);
   }
 
   // updates the sandbox when ENTER is pressed
@@ -425,8 +533,13 @@ function keyTyped() {
     updateSandbox();
   }
 
+  // generates new random level when player presses ENTER
+  else if (keyCode === ENTER && gameMode === "random") {
+    updateRandomLevel();
+  }
+
   // refreshes the current level
-  if (keyCode === ENTER && gameMode === "challenge") {
+  else if (keyCode === ENTER && gameMode === "challenge") {
     level = new Level(
       levelWidth,
       levelHeight,
