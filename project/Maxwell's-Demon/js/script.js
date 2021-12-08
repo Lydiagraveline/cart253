@@ -380,7 +380,7 @@ function checkLevelPass() {
     demonDisplay = `cornerLeft`;
     levelButton.show();
     button.style("height", "50px");
-    levelButton.position(width / 2 - 75, height / 2 - levelHeight / 2 - 125);
+    levelButton.position(width / 2 - 75, height / 2 - levelHeight / 2 - 80);
   } else {
     levelButton.hide();
   }
