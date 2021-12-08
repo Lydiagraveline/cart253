@@ -365,7 +365,7 @@ function displayText(number, insructions, sub) {
   textSize(32);
   textAlign(CENTER, CENTER);
   textFont(blackLetter);
-  text(`Level ` + number, width / 2, height / 2 - levelHeight / 2 - 125);
+  text(`Level ` + number, width / 2, height / 2 - levelHeight / 2 - 150);
   textSize(25);
   textFont(blackLetter);
   text(insructions, width / 2, height - 125);
@@ -380,7 +380,7 @@ function checkLevelPass() {
     demonDisplay = `cornerLeft`;
     levelButton.show();
     button.style("height", "50px");
-    levelButton.position(width / 2 - 75, height / 2 - levelHeight / 2 - 80);
+    levelButton.position(width / 2 - 75, height / 2 - levelHeight / 2);
   } else {
     levelButton.hide();
   }
