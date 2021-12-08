@@ -3,14 +3,13 @@ class Particle {
     this.x = x;
     this.y = y;
     this.r = radius;
+    this.direction = undefined;
     this.vx = undefined; // X velocity defined in subclasses
     this.vy = undefined; // Y velocity defined in subclasses
-    this.speed = speed;
   }
 
   // Move the particles
   move(x, y, containerWidth, containerHeight, doorHeight, doorWidth, radius) {
-
     // Bounces the particles off the borders of the container
     if (this.x >= containerWidth - this.r|| this.x <= x + this.r) {
       this.vx = -this.vx;
