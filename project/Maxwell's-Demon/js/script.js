@@ -253,6 +253,7 @@ function newLevel() {
       );
       // Level 4
     } else if (levelNum === 3) {
+      demonDisplay = `corner`;
       doorHeight = 300;
       speed = 8;
       numParticles = 2;
@@ -266,6 +267,7 @@ function newLevel() {
       );
       // Level 5
     } else if (levelNum === 4) {
+      demonDisplay = `top`;
       levelNum = 5;
       numParticles = 3;
       radius = 15;
@@ -282,6 +284,7 @@ function newLevel() {
       levelHeight = 250;
       doorHeight = 250;
       numParticles = 4;
+      radius = 14;
       speed = 7;
       levelNum = 6;
       level = new Level(
@@ -297,6 +300,7 @@ function newLevel() {
       levelWidth = 700;
       levelHeight = 400;
       numParticles = 4;
+      radius = 13;
       level = new Level(
         levelWidth,
         levelHeight,
@@ -321,9 +325,8 @@ function newLevel() {
       // Level 9
     } else if (levelNum === 8) {
       levelNum = 9;
-      levelHeight = 200;
+      levelHeight = 325;
       doorHeight = 150;
-      numParticles = 5;
       level = new Level(
         levelWidth,
         levelHeight,
@@ -373,7 +376,7 @@ function displayText(number, insructions, sub) {
 
 // displays new level button if player passes the current level
 function checkLevelPass() {
-  if (gameMode === `challenge` && level.allParticlesCorrect() && door === 'closed') {
+  if (gameMode === `challenge` && level.allParticlesCorrect()) {
     demonDisplay = `cornerLeft`;
     levelButton.show();
     button.style("height", "50px");

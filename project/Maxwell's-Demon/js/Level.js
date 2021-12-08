@@ -37,10 +37,7 @@ class Level {
       } else if (`challenge`) {
         x = random(this.x1 + this.r, this.x2 - this.r);
       }
-
-      // Correct cold = left side
-
-      if (gameMode === `sandbox`) {
+      if (gameMode === `sandbox` || gameMode === `random`) {
         x = random(this.x1 + this.r, this.x2 - this.r);
       }
 
@@ -131,7 +128,10 @@ class Level {
         return false;
       }
     }
-    return true;
+    if (door === `closed`) {
+      return true;
+    }
+
   }
 
   // Display the level container, walls, and images
