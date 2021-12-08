@@ -22,15 +22,14 @@ let numParticles = 1;  // game starts with 2 particles at level 1
 
 //let foundIncorrectParticle = false
 
-// container size for level 1
+// level inputs for level 1
 let levelWidth = 800;
 let levelHeight = 400;
 let doorHeight = 200;
 let radius = 20;
+let speed = 6;
 
 let level;
-
-let hint;
 
 // Program begins with the door closed
 let door = `closed`;
@@ -343,9 +342,14 @@ function keyTyped() {
     text(`hint: hot particles move faster`, 100, 100);
   }
 
-// updates the sandbox when ENTER is pressed
+  // updates the sandbox when ENTER is pressed
   if (keyCode === ENTER && gameMode === 'sandbox') {
     updateSandbox()
+  }
+
+  // refreshes the current level
+  if (keyCode === ENTER && gameMode === 'challenge'){
+    level = new Level(levelWidth, levelHeight, numParticles, doorHeight, radius);
   }
 
 }
@@ -375,10 +379,7 @@ function keyPressed() {
     console.log(`level ` + levelNum);
   }
 
-  // refreshes the current level
-  if (keyCode === BACKSPACE){
-    level = new Level(levelWidth, levelHeight, numParticles, doorHeight, radius);
-  }
+
 
 }
 

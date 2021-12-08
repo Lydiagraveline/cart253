@@ -1,17 +1,15 @@
 class Particle {
-  constructor(x, y) {
+  constructor(x, y, speed) {
     this.x = x;
     this.y = y;
     this.r = radius;
     this.vx = undefined; // X velocity defined in subclasses
     this.vy = undefined; // Y velocity defined in subclasses
+    this.speed = speed;
   }
 
   // Move the particles
   move(x, y, containerWidth, containerHeight, doorHeight, doorWidth, radius) {
-
-    this.x += this.vx;
-    this.y += this.vy;
 
     // Bounces the particles off the borders of the container
     if (this.x >= containerWidth - this.r|| this.x <= x + this.r) {
@@ -20,6 +18,9 @@ class Particle {
     if (this.y >= containerHeight - this.r || this.y <= y + this.r) {
       this.vy = -this.vy;
     }
+
+    this.x += this.vx;
+    this.y += this.vy;
 
     // Handle the door
     if (door === `closed` && this.x > width / 2 - this.r - doorWidth / 2 && this.x < width / 2 + this.r + doorWidth / 2) {
@@ -37,6 +38,7 @@ class Particle {
    }
 
   }
+
 
   display() {
     //Define this in the subclasses
