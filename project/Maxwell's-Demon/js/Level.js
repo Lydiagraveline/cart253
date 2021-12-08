@@ -114,14 +114,12 @@ class Level {
     }
   }
 
-  // Check if particles have been correctly organized
+  // Check if particles have been correctly organized  // thx for this bit pippin! :p
   allParticlesCorrect() {
     // Check all hot particles for correctness
     for (let i = 0; i < this.hotParticles.length; i++) {
       let p = this.hotParticles[i];
       if (p.x < width / 2) {
-        // If the hot particle is to the left, then it's in the wrong side
-        // so we can immediately return FALSE to say we found an incorrect particle
         return false;
       }
     }
@@ -130,14 +128,9 @@ class Level {
     for (let i = 0; i < this.coldParticles.length; i++) {
       let p = this.coldParticles[i];
       if (p.x > width / 2) {
-        // If the cold particle is to the right, then it's in the wrong side
-        // so we can immediately return FALSE to say we found an incorrect particle
         return false;
       }
     }
-
-    // If we get all the way to here, then we know all the particles
-    // are on the right side
     return true;
   }
 

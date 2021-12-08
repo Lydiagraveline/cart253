@@ -33,9 +33,9 @@ let level;
 let door = `closed`;
 
 // inputs
-let button, numParticlesInp, radiusInp;
+let button;
 //slider
-let sliderW, sliderH, sliderD, sliderR, sliderS;
+let sliderW, sliderH, sliderD, sliderR, sliderS, sliderN;
 // button that changes the level
 let levelButton;
 
@@ -110,32 +110,28 @@ function setup() {
   button.style("display", "none");
 
   // Create a width slider and hide it
-  sliderW = createSlider(0, width, 800);
+  sliderW = createSlider(200, width - 400, 800);
   sliderW.style("display", "none");
 
   // Create a height slider and hide it
-  sliderH = createSlider(0, height, 400);
+  sliderH = createSlider(200, 600, 400);
   sliderH.style("display", "none");
 
   // Create a "door height" slider and hide it
-  sliderD = createSlider(radius, levelHeight, 200);
+  sliderD = createSlider(100, 600, 200);
   sliderD.style("display", "none");
 
   // Create a radius slider and hide it
-  sliderR = createSlider(5, 30, 20);
+  sliderR = createSlider(5, 25, 20);
   sliderR.style("display", "none");
 
   // Create a speed slider and hide it
   sliderS = createSlider(1, 15, 6);
   sliderS.style("display", "none");
 
-  // Create a number particles input and hide it
-  numParticlesInp = createInput();
-  numParticlesInp.style("display", "none");
-
-  // Create a radius input and hide it
-  radiusInp = createInput();
-  radiusInp.style("display", "none");
+  // Create a number particles slider and hide it
+  sliderN = createSlider(0, 20, 1);
+  sliderN.style("display", "none");
 }
 
 // draw() checks the state and runs the appropriate state function
@@ -163,10 +159,8 @@ function drawLevel() {
 
 // Handles each level and its idividual display
 function challengeMode() {
-  //let help = createDiv('help');
   checkLevelPass();
   if (levelNum === 1) {
-    //background(white);
     drawLevel();
     displayText(
       `One`,
@@ -177,7 +171,6 @@ function challengeMode() {
     drawLevel();
     displayText(`Two`, `Now get the cold particle on the left side.`);
   } else if (levelNum === 3) {
-    demonDisplay = `top`;
     drawLevel();
     displayText(`Three`, `Try to get both particles on the correct side.`);
   } else if (levelNum === 4) {
@@ -188,7 +181,6 @@ function challengeMode() {
       `Tip: Press the ENTER key to reset the level.`
     );
   } else if (levelNum === 5) {
-    demonDisplay = `corner`;
     drawLevel();
     displayText(
       `Five`,
@@ -198,15 +190,15 @@ function challengeMode() {
   } else if (levelNum === 6) {
     drawLevel();
     displayText(
-      `six`,
-      `Practice makes perfect!`,
+      `Six`,
+      `Not bad eh!`,
       `Hot particles on the right, cold particles on the left. Press the ENTER key to reset the level.`
     );
   } else if (levelNum === 7) {
     drawLevel();
     displayText(
       `Seven`,
-      `not bad!`,
+      `Practice makes perfect.`,
       `Hot particles on the right, cold particles on the left. Press the ENTER key to reset the level.`
     );
   } else if (levelNum === 8) {
@@ -220,14 +212,14 @@ function challengeMode() {
     drawLevel();
     displayText(
       `Nine`,
-      `Organize some more particles.`,
+      `You got this!`,
       `Hot particles on the right, cold particles on the left. Press the ENTER key to reset the level.`
     );
   } else if (levelNum === 10) {
     drawLevel();
     displayText(
       `Ten`,
-      `Organize some more particles.`,
+      `Take your time.`,
       `Hot particles on the right, cold particles on the left. Press the ENTER key to reset the level.`
     );
   }
@@ -261,6 +253,7 @@ function newLevel() {
       );
       // Level 4
     } else if (levelNum === 3) {
+      doorHeight = 300;
       speed = 8;
       numParticles = 2;
       levelNum = 4;
@@ -274,6 +267,7 @@ function newLevel() {
       // Level 5
     } else if (levelNum === 4) {
       levelNum = 5;
+      numParticles = 3;
       radius = 15;
       speed = 6;
       level = new Level(
@@ -287,7 +281,7 @@ function newLevel() {
     } else if (levelNum === 5) {
       levelHeight = 250;
       doorHeight = 250;
-      numParticles = 3;
+      numParticles = 4;
       speed = 7;
       levelNum = 6;
       level = new Level(
@@ -302,6 +296,7 @@ function newLevel() {
       levelNum = 7;
       levelWidth = 700;
       levelHeight = 400;
+      numParticles = 4;
       level = new Level(
         levelWidth,
         levelHeight,
@@ -312,7 +307,9 @@ function newLevel() {
       // Level 8
     } else if (levelNum === 7) {
       levelNum = 8;
-      numParticles = 4;
+      levelWidth = 900;
+      levelHeight = 300;
+      doorHeight = 200;
       radius = 12;
       level = new Level(
         levelWidth,
@@ -326,6 +323,7 @@ function newLevel() {
       levelNum = 9;
       levelHeight = 200;
       doorHeight = 150;
+      numParticles = 5;
       level = new Level(
         levelWidth,
         levelHeight,
@@ -335,8 +333,13 @@ function newLevel() {
       );
       // Level 10
     } else if (levelNum === 9) {
+      demonDisplay = `corner`;
       levelNum = 10;
+      levelWidth = 1000;
       levelHeight = 500;
+      doorHeight = 350;
+      numParticles = 6;
+      radius = 10;
       level = new Level(
         levelWidth,
         levelHeight,
@@ -347,7 +350,7 @@ function newLevel() {
       // random
     } else if (levelNum === 10) {
       gameMode = `random`;
-      //level = new Level(levelWidth, levelHeight, numParticles, doorHeight, radius);
+      updateRandomLevel();
     }
   }
 }
@@ -370,18 +373,19 @@ function displayText(number, insructions, sub) {
 
 // displays new level button if player passes the current level
 function checkLevelPass() {
-  if (gameMode === `challenge` && level.allParticlesCorrect()) {
+  if (gameMode === `challenge` && level.allParticlesCorrect() && door === 'closed') {
     demonDisplay = `cornerLeft`;
     levelButton.show();
     button.style("height", "50px");
     levelButton.position(width / 2 - 75, height / 2 - levelHeight / 2 - 100);
-  } else if (!level.allParticlesCorrect()) {
+  } else {
     levelButton.hide();
   }
 }
 
 // displays the randomly generated level + text
 function randomLevel() {
+  levelButton.hide();
   drawLevel();
   push();
   textAlign(CENTER, CENTER);
@@ -397,7 +401,7 @@ function randomLevel() {
   );
   if (level.allParticlesCorrect()) {
     textSize(32);
-    text("SOLVED!", width/2, 85);
+    text("SOLVED!", width / 2, 85);
   }
   pop();
 }
@@ -428,16 +432,17 @@ function sandbox() {
   sliderD.show();
   sliderR.show();
   sliderS.show();
+  sliderN.show();
   button.show();
-  numParticlesInp.show();
+  //numParticlesInp.show();
 
   textSize(16);
   fill(0);
 
-  text(`Width`, 20, 20);
+  text(`Width = ` + levelWidth, 20, 20);
   sliderW.position(20, 20);
 
-  text(`Height`, 20, 60);
+  text(`Height = ` + levelHeight, 20, 60);
   sliderH.position(20, 60);
 
   text(`Door = ` + doorHeight, 20, 100);
@@ -449,17 +454,16 @@ function sandbox() {
   text(`Particle Speed = ` + speed, 20, 180);
   sliderS.position(20, 180);
 
-  text(`number of particles`, 20, 220);
-  numParticlesInp.position(20, 225);
+  text(`Particles = ` + numParticles, 20, 220);
+  sliderN.position(20, 220);
 
   button.position(20, 700);
-
 
   if (level.allParticlesCorrect()) {
     push();
     textAlign(CENTER);
     textSize(32);
-    text("SOLVED!", width/2, 50);
+    text("SOLVED!", width / 2, height - 50);
     pop();
   }
 }
@@ -471,7 +475,7 @@ function updateSandbox() {
   doorHeight = sliderD.value();
   radius = sliderR.value();
   speed = sliderS.value();
-  numParticles = numParticlesInp.value();
+  numParticles = sliderN.value();
   level = new Level(levelWidth, levelHeight, numParticles, doorHeight, radius);
 }
 
@@ -553,10 +557,6 @@ function keyTyped() {
 // closes the door
 function keyReleased() {
   door = `closed`;
-
-  if (level.allParticlesCorrect()) {
-    console.log("SOLVED!");
-  }
 }
 
 // handles action keys
@@ -620,7 +620,7 @@ function titleScreen() {
 
   // Images
   imageMode(CENTER);
-  image(demonCornerImg, 77, height / 4 - 87);
+  image(demonCornerImg, width / 2 - 400, height / 4 - 87);
   // image(demonImg, 700, 440)
   pop();
 }
