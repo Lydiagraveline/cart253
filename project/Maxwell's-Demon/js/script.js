@@ -37,7 +37,7 @@ let door = `closed`;
 // inputs
 let button, numParticlesInp, radiusInp;
 //slider
-let sliderW, sliderH, sliderD, sliderR;
+let sliderW, sliderH, sliderD, sliderR, sliderS;
 // button that changes the level
 let levelButton
 
@@ -102,6 +102,10 @@ function setup() {
   // Create a radius slider and hide it
   sliderR = createSlider(5, 30, 20);
   sliderR.style('display', 'none')
+
+  // Create a speed slider and hide it
+  sliderS = createSlider(1, 15, 6);
+  sliderS.style('display', 'none')
 
   // Create a number particles input and hide it
   numParticlesInp = createInput();
@@ -250,6 +254,7 @@ function sandbox() {
   sliderH.show();
   sliderD.show();
   sliderR.show();
+  sliderS.show();
   button.show();
   numParticlesInp.show();
 
@@ -268,8 +273,11 @@ function sandbox() {
   text(`Particle Size = `  + (radius), 20, 140);
   sliderR.position(20, 140);
 
-  text(`number of particles`, 20, 180);
-  numParticlesInp.position(20, 185);
+  text(`Particle Speed = `  + (speed), 20, 180);
+  sliderS.position(20, 180);
+
+  text(`number of particles`, 20, 220);
+  numParticlesInp.position(20, 225);
 
   button.position(20, 700);
 
@@ -282,8 +290,9 @@ function updateSandbox() {
   levelWidth = sliderW.value();
   levelHeight = sliderH.value();
   doorHeight = sliderD.value();
-  numParticles = numParticlesInp.value();
   radius = sliderR.value();
+  speed = sliderS.value();
+  numParticles = numParticlesInp.value();
   level = new Level(levelWidth, levelHeight, numParticles, doorHeight, radius);
 }
 

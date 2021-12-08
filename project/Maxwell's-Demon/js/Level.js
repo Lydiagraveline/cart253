@@ -27,21 +27,21 @@ class Level {
           x = this.width / 2
           y = this.height
         // level 2
-        } else if (levelNum === 2) {
+        } else if (levelNum === 2 && gameMode === `challenge`) {
           x = this.width
           y = this.height
         // level 3
-        } else if (levelNum === 3) {
+        } else if (levelNum === 3 && gameMode === `challenge`) {
           x = this.width
           y = this.height
         // level 4
-        } else if (levelNum === 4) {
+        } else if (levelNum === 4 && gameMode === `challenge`) {
           x = this.width
           y = this.height
-        } else if (levelNum === 5) {
+        } else if (levelNum === 5 && gameMode === `challenge`) {
            x = this.width
            y = this.height
-        } else if (levelNum === 6) {
+        } else if (levelNum === 6 && gameMode === `challenge`) {
            x = this.width
            y = this.height
          }
@@ -69,22 +69,23 @@ class Level {
           x = this.width / 2
           y = this.height
         // level 2
-        } else if (levelNum === 2) {
+        } else if (levelNum === 2 && gameMode === `challenge`) {
           x = this.width
           y = this.height
-        } else if (levelNum === 3) {
+        } else if (levelNum === 3 && gameMode === `challenge`) {
           x = this.width / 2
           y = this.height
-        } else if (levelNum === 4) {
+        } else if (levelNum === 4 && gameMode === `challenge`) {
            x = random(this.width / 2, this.width)
            y = this.height
-         } else if (levelNum === 5) {
+         } else if (levelNum === 5 && gameMode === `challenge`) {
             x = this.width
             y = this.height
-         } else if (levelNum === 6) {
+         } else if (levelNum === 6 && gameMode === `challenge`) {
             x = this.width
             y = this.height
           }
+
 
           // Correct Hot = left side
 
